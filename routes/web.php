@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Sirve la vista 'index' para todas las rutas que no comienzan con 'api'
+Route::get('/{path?}', function () {
+    return view('index'); // Sirve la vista 'index' para la aplicación React
+})->where('path', '^(?!api).*$'); // Excluye rutas que comienzan con 'api'
+
