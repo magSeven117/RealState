@@ -4,6 +4,7 @@ import React from 'react';
 
 // Componente para mostrar las casas
 export function RenderHouses({ currentItems }) {
+
     return (
         <>
             {
