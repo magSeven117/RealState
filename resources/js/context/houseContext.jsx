@@ -19,7 +19,7 @@ export function HouseProvider({ children }) {
     useEffect(() => {
         if(urlAPI){
             // Obtener datos de casas desde la API
-            fetch(urlAPI)
+            fetch("http://192.168.1.117:8000"+urlAPI)
                 .then(res => res.json()) // Convierte la respuesta a JSON
                 .then(res => setHouses(res)) // Actualiza el estado de las casas
                 .catch(() => {
@@ -33,7 +33,7 @@ export function HouseProvider({ children }) {
         const url_2 = "/api/features";
 
         // Obtener datos de características y tipos de casas desde la API
-        fetch(url_2)
+        fetch("http://192.168.1.117:8000"+url_2)
             .then(res => res.json()) // Convierte la respuesta a JSON
             .then(res => {
                 setFeature(res.data.Feature); // Actualiza el estado de características
@@ -44,7 +44,7 @@ export function HouseProvider({ children }) {
                 setTypeHouse({ status: 400 }); // Manejo de errores, establece el estado de tipos de casas en error
             });
     }, [])
-
+    
     return (
         // Proveedor del contexto de casas
         // Proporciona el estado de casas, características, tipos de casas, y las funciones para actualizar estos estados

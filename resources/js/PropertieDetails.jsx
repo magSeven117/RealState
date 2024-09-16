@@ -2,17 +2,21 @@ import { Footer } from "./components/General/Footer";
 import { Header } from "./components/General/Nav";
 import { Heading } from "./components/General/Heading";
 import { useParams } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader } from "./components/General/Loader";
-import { bathroom, houseSingle, room, sizeIcon } from "./components/ImageAssets";
+import { bathroom, room, sizeIcon } from "./components/ImageAssets";
 import React from 'react';
+import { LinkVisit } from "./components/General/LinkVisit";
+import { CarouselRenderHouses } from "./components/Houses/CarouselRenderHouses";
 
-const URL_API_HOUSE = '/api/houses/?id='
+const URL_API_HOUSE = '/api/houses/?id=';
 
 export function PropertieDetails () {
-    const { id } = useParams()
-    const [ house, setHouse ] = useState({})
-    const [ response, setResponse ] = useState(false)
+    const { id } = useParams();
+    const [ house, setHouse ] = useState({});
+    const [ response, setResponse ] = useState(false);
+    const [ activeCarousel , setActiveCarousel ] = useState(false);
+
 
     useEffect(()=>{
         fetch(URL_API_HOUSE+id)
@@ -24,7 +28,15 @@ export function PropertieDetails () {
             .catch(e => {
                 setResponse(false);
             })
-    }, [])
+    }, []);
+
+    const handleActiveCarousel = (value) => {
+        setActiveCarousel(value);
+        if(value)
+            document.body.style.overflow = "hidden";
+        else 
+            document.body.style.overflow = "";
+    };
 
     return (
         <>
@@ -44,8 +56,23 @@ export function PropertieDetails () {
                         <div className="row">
                             <div className="col-lg-8">
                                 <div className="main-image">
-                                    <img src={houseSingle} alt={`house${id}`} />
+                                    <img
+                                        src={house.images[0]}
+                                        alt={`house principal`}
+                                        className="image-details"
+                                        style={{ cursor:"pointer" }}
+                                        onClick={()=>handleActiveCarousel(true)}
+                                    />
+
+                                    <div style={{ marginTop:"10px" }}>
+                                        <span style={{ fontWeight:"600", cursor:"pointer" }} onClick={()=>handleActiveCarousel(true)}>
+                                            View More Images
+                                        </span>
+                                    </div>
                                 </div>
+                                { 
+                                    activeCarousel && <CarouselRenderHouses house={house} handleActiveCarousel={handleActiveCarousel}/>
+                                }
 
                                 <div className="main-content">
                                     <div className="content-info-price">
@@ -105,9 +132,12 @@ export function PropertieDetails () {
                                 </div>
                             </div>
                             
-                            <div className="col-lg-4">
+                            <div className="col-lg-4" style={{ padding: "0 35px" }}>
+                                <div style={{ marginBottom:"20px" }}>
+                                    <LinkVisit id={id} />
+                                </div>
                                 <div className="info-table">
-                                    <ul>
+                                    <ul style={{ paddingLeft: "0" }}>
                                         <li>
                                             <img src={sizeIcon} alt="" style={{ width:"50px" }}/>
                                             <h4>
@@ -132,8 +162,9 @@ export function PropertieDetails () {
                                                 <span>Total {house.bathroom > 1 ? 'Bathrooms' : 'Bathroom'}</span>
                                             </h4>
                                         </li>
-                                        
+
                                     </ul>
+
                                 </div>
                             </div>
                         </div>
@@ -151,5 +182,5 @@ export function PropertieDetails () {
                 <Footer />
             {/* ***** Properties Section End ***** */}
         </>
-    )
+    );
 }

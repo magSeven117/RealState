@@ -1,15 +1,19 @@
 import { CancelButton, FilterButton, TrashIcon } from "../ImageAssets";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { HouseContext } from "../../context/houseContext";
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 
 export function RenderFilter({ handleChangeFilter, handleClearFilter, query }) {
     // Estado para controlar la visibilidad del menú de filtros
     const [showFilter, getShowFilter] = useState(true);
-
+    const [searchValue, setSearchValue] = useState('');
     // Obtiene las características y tipos de casas del contexto
     const { feature, typeHouse } = useContext(HouseContext);
     
+    let debounceTimeout;
+    const navigate = useNavigate();
+
     // Función para alternar la visibilidad del menú de filtros
     const handleFilter = () => {
         getShowFilter(!showFilter);
@@ -19,34 +23,159 @@ export function RenderFilter({ handleChangeFilter, handleClearFilter, query }) {
         ? query.get('features').split(",") 
         : [];
 
+    const handleSearch = (e) => {
+        
+        const regex = /^[a-zA-Z0-9 ]+$/;
+
+        if(!regex.test(searchValue)) return;
+
+        clearTimeout(debounceTimeout);
+
+        if (searchValue.length > 3) {
+            debounceTimeout = setTimeout(() => {
+                navigate("?search=" + encodeURIComponent(searchValue));
+            }, 600);
+        }
+    };
+
+    useEffect(()=>{
+        if(query.get('search')){
+            setSearchValue(query.get('search'));
+        } else {
+            setSearchValue("")
+        }
+    }, []);
+
+    useEffect(()=>{
+        if(searchValue.length === 0){
+            setTimeout(() => {
+                const searchParams = new URLSearchParams(window.location.search);
+                searchParams.delete('search'); // Elimina solo el parámetro 'search'
+                navigate("?" + searchParams.toString());
+            }, 500);
+        }
+    }, [searchValue]); 
+
     return(
         <>
             {/* Botón para mostrar el menú de filtros */}
-            <ul className="properties-filter">
-                <button title="filter" className="filter-button" onClick={handleFilter}>
-                    <FilterButton />
-                </button>
-            </ul>
+            <div className="properties-filter">
+                <div className="container-icon-filter">
+                    {/* Filtros */}
+                    <div>
+                        <button title="filter" className="filter-button" onClick={handleFilter}>
+                            
+                            <FilterButton />
+                            
+                        </button>
+                        <span style={{ fontSize:"12px", fontWeight:"500" }}>
+                            Filter
+                        </span>
+                    </div>
+
+                    {/* Limpiar Filtros */}
+                    <div 
+                        style={{ display:"flex", justifyContent:"space-around", flexDirection:"column", alignItems:"center" }} 
+                        onClick={()=>{ 
+                            handleClearFilter()
+                            setSearchValue("")
+                            }}>
+                        <button className="bin-button">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="#000000"
+                                viewBox="0 0 39 7"
+                                className="bin-top"
+                            >
+                                <line strokeWidth="4" stroke="black" y2="5" x2="39" y1="5"></line>
+                                <line
+                                strokeWidth="3"
+                                stroke="black"
+                                y2="1.5"
+                                x2="26.0357"
+                                y1="1.5"
+                                x1="12"
+                                ></line>
+                            </svg>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="#000000"
+                                viewBox="0 0 33 39"
+                                className="bin-bottom"
+                            >
+                                <mask fill="white" id="path-1-inside-1_8_19">
+                                <path
+                                    d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"
+                                ></path>
+                                </mask>
+                                <path
+                                mask="url(#path-1-inside-1_8_19)"
+                                fill="rgb(77, 77, 77)"
+                                d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z"
+                                ></path>
+                                <path strokeWidth="4" stroke="rgb(77, 77, 77)" d="M12 6L12 29"></path>
+                                <path strokeWidth="4" stroke="rgb(77, 77, 77)" d="M21 6V29"></path>
+                            </svg>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 89 80"
+                                className="garbage"
+                            >
+                                <path
+                                fill="black"
+                                d="M20.5 10.5L37.5 15.5L42.5 11.5L51.5 12.5L68.75 0L72 11.5L79.5 12.5H88.5L87 22L68.75 31.5L75.5066 25L86 26L87 35.5L77.5 48L70.5 49.5L80 50L77.5 71.5L63.5 58.5L53.5 68.5L65.5 70.5L45.5 73L35.5 79.5L28 67L16 63L12 51.5L0 48L16 25L22.5 17L20.5 10.5Z"
+                                ></path>
+                            </svg>
+                        </button>
+                        <span style={{ fontSize:"12px", fontWeight:"500" }}>
+                            Clear Filter
+                        </span>
+                    </div>
+                </div>
+                
+
+                {/* Busqueda */}
+                <div className="group-search" >
+                    <input 
+                        placeholder="Search Houses" 
+                        type="text" value={searchValue} 
+                        className="search__input" 
+                        id="searchHouse" 
+                        onChange={(e)=>setSearchValue(e.target.value)}
+                        onKeyDown={(e)=>{
+                            if(e.key === 'Enter'){
+                                handleSearch();
+                            }
+                        }}
+                    />
+                    <button className="search__button" onClick={handleSearch}>
+                        <svg
+                        viewBox="0 0 16 16"
+                        className="bi bi-search"
+                        fill="currentColor"
+                        height="16"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                        >
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"
+                        ></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
 
             {/* Menú de filtros */}
             <div className={`Menu-Filter ${showFilter && 'hidden'}`}>
                 <div>
                     {/* Botón para cerrar el menú de filtros */}
-                    <CancelButton style={{width:"30px",position:"absolute", top:"5px", right:"18px", cursor:"pointer", color:"#f35525"}} handleFilter={handleFilter}/>
-                    <span style={{ position:"absolute", right:"2px", top:"30px", fontSize:"12px", fontWeight:"600", cursor:"pointer"}} onClick={handleFilter}>
-                        Close Filter
-                    </span>
-
-                    {/* Botón para limpiar los filtros */}
-                    <TrashIcon style={{width:"19px",position:"absolute", top:"8px", left:"19px", cursor:"pointer"}} handleClearFilter={handleClearFilter}/>
-                    <span style={{ position:"absolute", left:"2px", top:"30px", fontSize:"12px", fontWeight:"600", cursor:"pointer"}} onClick={handleClearFilter}>
-                        Clear Filter
-                    </span>
+                    <CancelButton style={{width:"25px",position:"absolute", top:"10px", right:"10px", cursor:"pointer", color:"#f35525"}} onClick={handleFilter}/>
                 </div>
 
                 {/* Formulario de filtros */}
                 <form>
-                    <h2 style={{color:"#1e1e1e", textAlign:"center", fontWeight:"bold", fontSize:"25px"}}>Search Filter</h2>
+                    <h2 style={{color:"#1e1e1e", textAlign:"center", fontWeight:"bold", fontSize:"22px", textTransform:"uppercase"}}>Search Filter</h2>
                     
                     {/* Filtro de Precio */}
                     <div className="container-form">
@@ -120,13 +249,14 @@ export function RenderFilter({ handleChangeFilter, handleClearFilter, query }) {
                                 <option value="0">All</option>
 
                                 {
-                                    typeHouse.map(item => {
+                                    typeHouse.length > 0 ? typeHouse.map(item => {
                                         return (
                                             <option key={item.id} value={item.type_house}>
                                                 {item.type_house}
                                             </option>
                                         )
                                     })
+                                    : ""
                                 }
                             </select>
                         </div>
@@ -167,7 +297,7 @@ export function RenderFilter({ handleChangeFilter, handleClearFilter, query }) {
                     <div className="container-form selected-checkbox">
                         <label>Features</label>
                         {
-                            feature.map((item, index) => {
+                            feature.length > 0 ? feature.map((item, index) => {
                                 return (
                                     <div key={item.id}>
                                         <input 
@@ -182,6 +312,7 @@ export function RenderFilter({ handleChangeFilter, handleClearFilter, query }) {
                                     </div>
                                 )
                             })
+                            : ""
                         }
                     </div>
                 </form>

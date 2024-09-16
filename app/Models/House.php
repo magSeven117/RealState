@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use function PHPUnit\Framework\isNull;
+
 class House extends Model
 {
     use HasFactory;
@@ -107,5 +109,12 @@ class House extends Model
         }
 
         return $query;
+    }
+
+    public function scopeSearch($query, $value)
+    {
+        if(!is_null($value)){
+            return $query->where("address", "LIKE", "%".$value."%");
+        }
     }
 }

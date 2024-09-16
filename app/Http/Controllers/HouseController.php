@@ -52,15 +52,35 @@ class HouseController extends Controller
             ->MaxSize($request->maxSize)
             ->Quarter($request->quarter)
             ->Bath($request->bathroom)
+            ->Search($request->search)
             ->TypeHouse($request->type_house);
 
-        if($request->has('id')) $query->find($request->id);
 
         // Aplica el límite si está presente
         if($request->has('limit')) $query->limit($request->limit);
         
+        if($request->has('id')) $query->find($request->id);
+        
         // Se llama a la consulta una vez todos los filtros aplicados
         $houses = $query->get();
+
+        // Modifica las URLs de las imágenes en cada casa
+        $houses->transform(function ($house) {
+            // Asegúrate de que $house->images es un array
+            if (is_string($house->images)) {
+                // Convierte la cadena en un array
+                $house->images = json_decode($house->images, true);
+            }
+    
+            // Verifica si $house->images es un array antes de usar array_map
+            if (is_array($house->images)) {
+                $house->images = array_map(function ($image) {
+                    return url('storage/' . $image);
+                }, $house->images);
+            }
+    
+            return $house;
+        });
 
         // Retorna una respuesta JSON con los datos de las casas y un mensaje de éxito.
         return response()->json([

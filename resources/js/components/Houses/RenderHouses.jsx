@@ -1,4 +1,3 @@
-import { house01, house02, house03, house04, house05, house06 } from "../ImageAssets";
 import { Link } from 'react-router-dom';
 import React from 'react';
 
@@ -10,11 +9,6 @@ export function RenderHouses({ currentItems }) {
             {
                 // Itera sobre los elementos actuales (casas) y los muestra
                 currentItems.map(item => {
-                    // Array de imágenes de casas para seleccionar aleatoriamente
-                    const array = [house01, house02, house03, house04, house05, house06];
-                    // Selecciona una imagen aleatoria del array
-                    let image = array[Math.floor(Math.random() * array.length)];
-
                     // Formatea el precio para que use el formato de números alemanes (con separador de miles)
                     const price = Number(Math.floor(item.price)).toLocaleString("de-DE");
 
@@ -23,7 +17,7 @@ export function RenderHouses({ currentItems }) {
                             <div className="item">
                                 {/* Enlace a los detalles de la propiedad */}
                                 <Link to={`/propertie-details/${item.id}`}>
-                                    <img src={image} alt={item.id} />
+                                    <img src={item.images[0]} alt={item.id} style={{ height:"235px", objectFit:"cover" }}/>
                                 </Link>
                                 {/* Categoría de la propiedad */}
                                 <span className="category">

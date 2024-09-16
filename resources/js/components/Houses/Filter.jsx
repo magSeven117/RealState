@@ -15,10 +15,11 @@ export function Filter() {
     useEffect(() => {
         const url = query.toString();
 
-        if(url)
+        if(url){
             setUrlAPI("/api/houses/?" + url);
-        else 
+        } else {
             setUrlAPI("/api/houses");
+        } 
     }, [query]);
 
     // Maneja el cambio de los filtros y construye la URL de consulta
@@ -80,7 +81,7 @@ export function Filter() {
 
     // Maneja el reinicio de los filtros
     const handleClearFilter = () => {
-        let newURL = "http://localhost/api/houses/?";
+        let newURL = "http://localhost/api/houses/";
         
         // Restablece los valores de los filtros a sus valores predeterminados
         document.getElementById('priceMin').value = '0';
@@ -88,6 +89,7 @@ export function Filter() {
         document.getElementById('sizeMin').value = '0';
         document.getElementById('sizeMax').value = '0';
         document.getElementById('typeHouse').value = '0';
+        document.getElementById('searchHouse').value = '';
 
         // Desmarca los radios de habitaciones y baños
         const radios = document.querySelectorAll('input[type="radio"][name="room"], input[type="radio"][name="bath"]');
@@ -97,7 +99,7 @@ export function Filter() {
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         checkboxes.forEach(checkbox => checkbox.checked = false);
 
-        navigate("?")
+        navigate("")
 
         // Restablece la URL de la API
         setUrlAPI(newURL);
@@ -106,7 +108,7 @@ export function Filter() {
     // Renderiza el componente de filtros y pasa las funciones de manejo de eventos como props
     return (
         <>
-            <RenderFilter handleChangeFilter={handleChangeFilter} handleClearFilter={handleClearFilter} query={query}/>
+            <RenderFilter handleChangeFilter={handleChangeFilter} handleClearFilter={handleClearFilter} query={query} />
         </>
     )
 }

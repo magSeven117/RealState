@@ -6,6 +6,7 @@ import { Properties } from './properties.jsx';
 import { Productions } from './components/production.jsx';
 import { PropertieDetails } from './PropertieDetails.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { MakeVisit } from "./MakeVisit.jsx";
 
 function App() {
 	return (
@@ -15,6 +16,7 @@ function App() {
 				<Route path="/properties" element={<Properties />} />
 				<Route path="/contact" element={<Contact />} />
 				<Route path="/propertie-details/:id" element={<PropertieDetails />} />
+				<Route path="/visit/:id" element={<MakeVisit />} />
 			</Routes>
 		</Router>
 	)

@@ -134,7 +134,7 @@ body {
 }
 
 .section {
-  margin-top: 120px;
+  margin-top: 60px;
 }
 
 .section-heading {
@@ -411,6 +411,10 @@ Header Style
   -o-transition: all 0.3s ease 0s;
   transition: all 0.3s ease 0s;
   display: inline-block;
+  height: 100px;
+
+
+
 }
 
 .header-area .main-nav .logo h1 {
@@ -468,27 +472,67 @@ Header Style
   letter-spacing: .25px;
 }
 
-.header-area .main-nav .nav li:last-child a {
-  background-color: #1e1e1e;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 400;
-  text-transform: none;
-  border-radius: 20px;
-  padding-left: 0px;
+.visit {
+  display: block !important;
+  padding-right: 20px !important;
+  height: 40px !important;
+  line-height: 30px !important;
+  border: transparent !important;
+  letter-spacing: .25px !important;
+  background-color: #1e1e1e !important;
+  color: #fff !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  text-transform: none !important;
+  border-radius: 20px !important;
+  padding-left: 0px !important;
 }
 
-.header-area .main-nav .nav li:last-child a i {
-  background-color: #f35525;
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  text-align: center;
-  line-height: 40px;
-  margin-right: 10px;
-  border-radius: 50%;
-  margin-left: -1px;
+.visit i {
+  background-color: #f35525 !important;
+  display: inline-block !important;
+  width: 40px !important;
+  height: 40px !important;
+  text-align: center !important;
+  line-height: 40px !important;
+  margin-right: 10px !important;
+  border-radius: 50% !important;
+  margin-left: -1px !important;
 }
+
+.image-container-details {
+  width: 100%;
+  height: 100%;
+  background-color: #000000ad;
+  position: fixed; /* Cambia de absolute a fixed para asegurarte de que esté en la pantalla */
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex; /* Usa flex para centrar el contenedor */
+  align-items: center;
+  justify-content: center;
+}
+
+.image-subcontainer-details {
+  padding: 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-height: 100vh; /* Asegúrate de que el contenedor no exceda el alto de la vista */
+  box-sizing: border-box; /* Incluye el padding en el cálculo del ancho/alto */
+}
+
+.image-details {
+  width: 100%;       
+  max-width: 850px;    
+  height: 100%;       
+  max-height: 425px;  
+  object-fit: cover;   
+  display: block;      
+}
+
+
 
 .header-area .main-nav .nav li:last-child:hover a {
   background-color: #1e1e1e;
@@ -765,6 +809,9 @@ Banner Style
 @media (max-width: 992px) {
   .menu{
     top: 0;
+  }
+  .row{
+    gap: 20px;
   }
 }
 @media (max-width: 640px) {
@@ -1060,6 +1107,181 @@ Video Style
 Fun Facts Style
 --------------------------------------------- 
 */
+
+.previewHouses {
+  display: flex;
+  margin-top: 110px;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 50px;
+}
+
+.previewHouses div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.previewHouses div img {
+  width: 100%;
+  height: 600px;
+  object-fit: cover;
+}
+
+.previewHouses .content-info {
+  background-color: #ffffff6b;
+  height: 350px; /* Se adapta al contenido */
+  min-width: 250px; /* Limita el tamaño mínimo */
+  max-width: 800px; /* No se desborda del contenedor principal */
+  width: fit-content; /* Se ajusta al contenido */
+  position: absolute;
+  padding: 10px;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  box-sizing: border-box;
+  word-wrap: break-word; /* El texto se adapta a la línea */
+  overflow: hidden; /* Evita desbordamientos */
+  margin: 0 30px;
+}
+
+.previewHouses .content-info span {
+  font-size: 16px;
+  font-weight: 600;
+  word-break: break-word; /* Asegura que las palabras largas se corten si es necesario */
+  white-space: normal; /* Permite que el texto se ajuste en múltiples líneas */
+  text-align: center; /* Centra el texto */
+}
+
+/* Form */
+.Container-form{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.formVisit{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+}
+
+.formVisit div{
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  align-items: center;
+}
+
+.formVisit div label{
+  margin: 0;
+}
+
+.input-visit {
+  font-family: "SF Pro";
+  width: 100%;
+  padding: 0.875rem;
+  font-size: 1rem;
+  border: 1.5px solid #000;
+  border-radius: 0.5rem;
+  box-shadow: 2.5px 3px 0 #000;
+  outline: none;
+  transition: ease 0.25s;
+}
+
+.input-visit:focus {
+  box-shadow: 5.5px 7px 0 black;
+}
+
+button {
+  /* Variables */
+  --button_radius: 0.75em;
+  background-color: #fff;
+  font-size: 17px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  border-radius: var(--button_radius);
+  /* background: var(--button_outline_color); */
+}
+
+.button_top {
+  display: block;
+  box-sizing: border-box;
+  border: 2px solid var(--button_outline_color);
+  border-radius: var(--button_radius);
+  padding: 0.75em 1.5em;
+  background-color: #fff;
+  border: 1.5px solid #000;
+  box-shadow: 2.5px 3px 0 #000;
+  color: var(--button_outline_color);
+  transform: translateY(-0.2em);
+  transition: transform 0.1s ease;
+}
+
+button:hover .button_top {
+  /* Pull the button upwards when hovered */
+  transform: translateY(-0.33em);
+}
+
+button:active .button_top {
+  /* Push the button downwards when pressed */
+  transform: translateY(0);
+}
+
+/* CheckBox Visit */
+.container-checkbox {
+  --input-focus: #2d8cf0;
+  --input-out-of-focus: #ccc;
+  --bg-color: #fff;
+  --bg-color-alt: #666;
+  --main-color: #323232;
+  position: relative;
+  cursor: pointer;
+}
+
+.container-checkbox input {
+  position: absolute;
+  opacity: 0;
+}
+
+.checkmark {
+  width: 30px !important;
+  height: 30px;
+  position: relative;
+  top: 0;
+  left: 0;
+  border: 2px solid var(--main-color);
+  border-radius: 5px;
+  box-shadow: 2.5px 3px 0 #000;
+  background-color: #fff;
+  transition: all 0.3s;
+}
+
+.container-checkbox input:checked ~ .checkmark {
+  background-color: #f35525;
+}
+
+.checkmark:after {
+  content: "";
+  width: 7px;
+  height: 15px;
+  position: absolute;
+  top: 4px;
+  left: 11px;
+  display: none;
+  border: solid var(--bg-color);
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+}
+
+.container-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
 
 .fun-facts {
   text-align: center;
@@ -1395,12 +1617,15 @@ Footer Style
 
 footer.footer-no-gap {
   margin-top: 0px;
+
 }
 
 footer {
   margin-top: 150px;
   background-color: #1e1e1e;
   min-height: 100px;
+  position: absolute;
+  width: 100%;
 }
 
 footer p {
@@ -1499,7 +1724,7 @@ Properties Style
   left: 0;
   width: 300px;
   height: 100%;
-  background-color: #fafafa;
+  background-color: #fff;
   z-index: 100;
   padding: 10px 15px;
   overflow-y: auto;
@@ -1562,6 +1787,7 @@ Properties Style
 .selected-checkbox div label{
   width: 100%;
   text-transform: capitalize;
+  font-size: 14px;
 }
 
 .error {
@@ -1587,14 +1813,122 @@ Properties Style
   color: #fff;
 }
 
+.group-search {
+  display: flex;
+  line-height: 28px;
+  align-items: center;
+  position: relative;
+  max-width: 500px;
+  width: 100%;
+ }
+
+ .search__input {
+  font-family: inherit;
+  font-size: inherit;
+  border: 1px solid #767676;
+  color: #767676;
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin-right: -1.5rem;
+  height: 34px;
+  width: 100%;
+}
+
+.search__input::-webkit-input-placeholder {
+  font-weight: 400;
+  color: #767676;
+  font-size: 14px;
+}
+
+.search__button {
+  border: none;
+  background-color: #fff;
+  position: absolute;
+  right: 1px;
+}
+
+.search__button:hover {
+  cursor: pointer;
+}
+
+.search input:focus {
+  outline: none;
+}
+
+ .bin-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  background-color: #fff;
+  cursor: pointer;
+  border: 1px solid #00000069;
+  transition-duration: 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.bin-bottom {
+  width: 15px;
+  z-index: 2;
+}
+.bin-top {
+  width: 17px;
+  transform-origin: right;
+  transition-duration: 0.3s;
+  z-index: 2;
+}
+.bin-button:hover .bin-top {
+  transform: rotate(45deg);
+}
+.bin-button:hover {
+  background-color: rgba(255, 255, 255, 0.397);
+}
+.bin-button:active {
+  transform: scale(0.9);
+}
+.garbage {
+  position: absolute;
+  width: 14px;
+  height: auto;
+  z-index: 1;
+  opacity: 0;
+  transition: all 0.3s;
+}
+.bin-button:hover .garbage {
+  animation: throw 0.4s linear;
+}
+@keyframes throw {
+  from {
+    transform: translate(-400%, -700%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(0%, 0%);
+    opacity: 1;
+  }
+}
 
 
+.no-show-nav{
+  display: none !important;
+}
+
+.show-nav{
+  display: flex !important;
+}
 
 
-.properties ul.properties-filter {
+.properties div.properties-filter {
   list-style: none;
   text-align: center;
   margin-bottom: 70px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .properties ul.properties-filter li {
@@ -1780,6 +2114,11 @@ Properties Style
 Single Page Style
 --------------------------------------------- 
 */
+.single-property .main-image{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .single-property .main-image img {
   float: none;
@@ -1847,7 +2186,6 @@ Single Page Style
   border-radius: 10px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
   padding: 35px 30px;
-  margin-left: 60px;
 }
 
 .content-info-price{
@@ -2008,7 +2346,18 @@ body {
   overflow-x: hidden;
 }
 
+.container-icon-filter{
+  display: flex;
+  gap:10px;
+}
+
 @media (max-width: 767px) {
+  .container-icon-filter{
+    width: 100%;
+    justify-content: space-between;
+  }
+
+
   .header-area .main-nav .logo h1 {
     line-height: 80px !important;
   }
@@ -2132,3 +2481,5 @@ body {
     margin-right: 100px;
   }
 }
+
+

@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import React from 'react';
+import { LinkVisit } from "./LinkVisit";
 
 export function Header () {
-    const [showMenu, getShowMenu] = useState(false);
+    const [showMenu, getShowMenu] = useState(true);
     const location = useLocation();
-
+    const { id } = useParams();
+    
     const handleScroll = () => {
         // Asegurarse de que el elemento existe antes de aplicar estilo
         const menuElement = document.getElementsByClassName("menu")[0];
@@ -26,7 +28,19 @@ export function Header () {
         handleScroll()
         
         window.addEventListener("scroll", handleScroll);
-        
+
+        if(window.innerWidth <= 765)
+            getShowMenu(false);
+        else 
+            getShowMenu(true);
+
+        window.addEventListener('resize', ()=>{
+            if(window.innerWidth <= 765)
+                getShowMenu(false);
+            else 
+                getShowMenu(true);
+        });
+
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
@@ -67,7 +81,7 @@ export function Header () {
                                 </Link>
                                 {/* ***** Logo End ***** */}
                                 {/* ***** Menu Start ***** */}
-                                <ul className="nav" style={{display : showMenu ? 'block' : ''}}>
+                                <ul className={`nav ${showMenu ? 'show-nav' : 'no-show-nav'}`}>
                                     <li>
                                         <Link to="/" className={`${location.pathname == '/' && 'active'}`}>Home</Link>
                                     </li>
@@ -78,12 +92,12 @@ export function Header () {
                                         <a href="/contact" className={`${location.pathname == '/contact' && 'active'}`}>Contact Us</a>
                                     </li>
                                     <li>
-                                        <a href="#">
-                                            <i className="fa fa-calendar"></i> Schedule a visit
-                                        </a>
+                                        {
+                                            id ? <LinkVisit id={id} /> : ""
+                                        }
                                     </li>
                                 </ul>
-                                <a onClick={handleClick} className={`menu-trigger ${showMenu && 'active'}`}>
+                                <a onClick={handleClick} className={`menu-trigger ${showMenu ? 'active' : ''}`}>
                                     <span>Menu</span>
                                 </a>
                                 {/* ***** Menu End ***** */}
