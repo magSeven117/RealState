@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('visits', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('house_id');
+            $table->foreign('house_id')->references('id')->on('houses')->onDelete('cascade');
+            $table->string('name');
+            $table->string('lastname');
+            $table->string('email');
+            $table->string('phone');
+            $table->datetime('date_visit');
+            $table->datetime('visited_date')->nullable();
+
             $table->timestamps();
         });
     }

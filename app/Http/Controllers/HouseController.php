@@ -26,8 +26,8 @@ class HouseController extends Controller
             return response()->json([
                 'message' => 'Operation failed',
                 'error' => $result['message'],
-                'status' => 200
-            ]);
+                'status' => 422
+            ], 422);
         }
 
         // Construye la consulta para obtener las casas basadas en los filtros proporcionados.

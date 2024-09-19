@@ -11,7 +11,7 @@ import { CarouselRenderHouses } from "./components/Houses/CarouselRenderHouses";
 
 const URL_API_HOUSE = '/api/houses/?id=';
 
-export function PropertieDetails () {
+export function PropertiesDetails () {
     const { id } = useParams();
     const [ house, setHouse ] = useState({});
     const [ response, setResponse ] = useState(false);

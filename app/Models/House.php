@@ -27,6 +27,11 @@ class House extends Model
         return $this->belongsToMany(Feature::class, 'feature_house');
     }
 
+    public function visits()
+    {
+        return $this->hasMany(Visit::class);
+    }
+
     //================================== Filtros de busquedas ==================================
     public function scopeMaxPrice($query, $price)
     {
