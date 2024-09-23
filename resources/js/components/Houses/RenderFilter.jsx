@@ -297,7 +297,7 @@ export function RenderFilter({ handleChangeFilter, handleClearFilter, query }) {
                     <div className="container-form selected-checkbox">
                         <label>Features</label>
                         {
-                            feature.length > 0 ? feature.map((item, index) => {
+                            feature.length > 0 && feature.map((item, index) => {
                                 return (
                                     <div key={item.id}>
                                         <input 
@@ -312,7 +312,6 @@ export function RenderFilter({ handleChangeFilter, handleClearFilter, query }) {
                                     </div>
                                 )
                             })
-                            : ""
                         }
                     </div>
                 </form>

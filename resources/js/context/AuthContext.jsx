@@ -5,6 +5,7 @@ export const AuthContext = createContext();
 export function AuthProvider ({ children }) {
     const [user, setUser ] = useState();
     const [html, setHtml ] = useState();
+    const [loginSuccessful, setLoginSuccessful ] = useState(false);
 
     useEffect(()=>{
         fetch('/api/authorization')
@@ -16,6 +17,7 @@ export function AuthProvider ({ children }) {
             }
 
             setUser(res.user);
+            setLoginSuccessful(true)
             setHtml();
         })
         .catch(e=>{
@@ -25,7 +27,7 @@ export function AuthProvider ({ children }) {
 
 
     return(
-        <AuthContext.Provider value={{ user, html }}>
+        <AuthContext.Provider value={{ user, html, loginSuccessful }}>
             { children }
         </AuthContext.Provider>
     )

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\HouseController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisitController;
 use App\Http\Middleware\EnsureAdmin;
@@ -26,16 +27,14 @@ Route::controller(VisitController::class)->group(function () {
     Route::post('/visit/{house}', 'create')->name('visit');
 });
 
-
-Route::post('/login', [UserController::class, 'index'])->middleware('web')->name('login');
+Route::post('/login', [LoginController::class, 'login'])->middleware('web')->name('login');
+Route::post('/logout', [LoginController::class, 'logout'])->middleware('web')->name('logout');
 
 Route::controller(UserController::class)->group(function () {
-    
-    Route::get('/users/alls', 'showAll')->name('users.all');
-
-
-
-    Route::post('/logout', 'logout')->name('logout');
+    Route::get('/users', 'index')->name('users');
+    Route::post('/users/create', 'create')->name('users.create');
+    Route::post('/users/update/{id}', 'update')->name('users.update');
+    Route::delete('/users/delete/{id}', 'delete')->name('users.delete');
 
 })->middleware(['web', 'auth', EnsureAdmin::class]);
 

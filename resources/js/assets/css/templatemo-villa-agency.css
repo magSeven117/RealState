@@ -1248,6 +1248,8 @@ button:active .button_top {
   opacity: 0;
 }
 
+
+
 .checkmark {
   width: 30px !important;
   height: 30px;
@@ -1259,6 +1261,12 @@ button:active .button_top {
   box-shadow: 2.5px 3px 0 #000;
   background-color: #fff;
   transition: all 0.3s;
+}
+
+.checkmark_feature{
+  width: 20px !important;
+  height: 20px;
+  margin-right: 10px;
 }
 
 .container-checkbox input:checked ~ .checkmark {
@@ -1276,6 +1284,12 @@ button:active .button_top {
   border: solid var(--bg-color);
   border-width: 0 2.5px 2.5px 0;
   transform: rotate(45deg);
+}
+
+.checkmark_feature:after{
+  top: 2px !important;
+  left: 4px !important;
+  height: 11px !important;
 }
 
 .container-checkbox input:checked ~ .checkmark:after {
@@ -1696,7 +1710,8 @@ Properties Style
   --font-color: #323232;
   --font-color-sub: #666;
   --main-color: black;
-  height: 400px;
+  height: 100%;
+  
   width: 350px;
   padding: 20px;
   background: #ffff;
@@ -1730,7 +1745,7 @@ Properties Style
 
 .button-confirm {
   margin: 20px auto 0 auto;
-  width: 120px;
+  width: 130px;
   height: 40px;
   border-radius: 5px;
   border: 2px solid var(--main-color);

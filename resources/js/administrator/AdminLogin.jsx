@@ -39,7 +39,7 @@ export function LoginAdministrator(params) {
 
         const config = {
             method: method,
-            headers: headers, // Cambiado de 'header' a 'headers'
+            headers: headers,
             mode: "cors",
             cache: 'no-cache',
             body: data,
@@ -72,43 +72,46 @@ export function LoginAdministrator(params) {
 
     return (
         <>
-            <Link to={'/'} style={{ color: "#000" }}>
-                <CancelButton style={{ top: "20px", left: "20px", width: "30px", cursor: "pointer" }} />
+            <Link to={'/'} style={{ position:"absolute", top: "5px", left: "5px", cursor: "pointer", color: "#000" }}>
+                <CancelButton  style={{ width:"30px" }}/>
             </Link>
             <div style={{ width: "100%", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <form method="post" action="/api/login" className="form" id="form" onSubmit={handleLogin}>
-                    <div className="title">
-                        Welcome,
-                        <br />
-                        <span>
-                            sign up to continue
-                        </span>
-                    </div>
-                    <input
-                        style={{ fontWeight: "600", fontFamily: "Arial" }}
-                        className="input-visit"
-                        name="email"
-                        placeholder="Email"
-                        type="email"
-                        required
-                    />
-                    <input
-                        style={{ fontWeight: "600", fontFamily: "Arial" }}
-                        className="input-visit"
-                        name="password"
-                        placeholder="Password"
-                        type="password"
-                        required
-                    />
-                    <div style={{ width: '100%', textAlign: 'center', }}>
-                        <span style={{ textAlign: "center", fontSize: "13px", color: "red", fontWeight: "600", width: "100%" }}>
-                            {error}
-                        </span>
-                    </div>
-                    <button className="button-confirm" type="submit" disabled={isSubmitting}>
-                        {isSubmitting ? 'Submitting...' : 'Let’s go →'}
-                    </button>
-                </form>
+                <div style={{ maxHeight:"400px" }}>
+                    <form method="post" action="/api/login" className="form" id="form" onSubmit={handleLogin}>
+                        <div className="title">
+                            Welcome,
+                            <br />
+                            <span>
+                                sign up to continue
+                            </span>
+                        </div>
+                        <input
+                            style={{ fontWeight: "600", fontFamily: "Arial" }}
+                            className="input-visit"
+                            name="email"
+                            placeholder="Email"
+                            type="email"
+                            required
+                        />
+                        <input
+                            style={{ fontWeight: "600", fontFamily: "Arial" }}
+                            className="input-visit"
+                            name="password"
+                            placeholder="Password"
+                            type="password"
+                            required
+                        />
+                        <div style={{ width: '100%', textAlign: 'center', }}>
+                            <span style={{ textAlign: "center", fontSize: "13px", color: "red", fontWeight: "600", width: "100%" }}>
+                                {error}
+                            </span>
+                        </div>
+                        <button className="button-confirm" type="submit" disabled={isSubmitting}>
+                            {isSubmitting ? 'Submitting...' : 'Let’s go →'}
+                        </button>
+                    </form>
+                </div>
+                
             </div>
         </>
     );

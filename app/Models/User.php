@@ -20,6 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -44,4 +45,35 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+    public function scopeRole($query, $role)
+    {
+        if(!is_null($role)){
+            return $query->where('role', $role);
+        }
+
+        return $query;
+    }
+
+    public function scopeName($query, $name)
+    {
+        if(!is_null($name))
+        {
+            return $query->where('name', 'LIKE', `%$name&`);
+        }
+
+        return $query;
+    }
+
+    public function scopeEmail($query, $email)
+    {
+        if(!is_null($email))
+        {
+            return $query->where('email', 'LIKE', `%$email%`);
+        }
+
+        return $query;
+    }
 }
+
