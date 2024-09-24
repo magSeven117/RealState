@@ -17,6 +17,7 @@ Route::get('/user', function (Request $request) {
 
 Route::controller(HouseController::class)->group(function () {
     Route::get('/houses', 'index')->name('houses');
+    Route::post('/houses/create', 'create')->name('houses.create');
     Route::post('/houses/update/{house}', 'update')->name('houses.update');
 
 });

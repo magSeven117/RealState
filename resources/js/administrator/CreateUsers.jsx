@@ -74,7 +74,8 @@ export function CreateUsers() {  // Función principal del componente
             <HeaderAdministrator />  {/* Muestra el encabezado del administrador */}
             <div style={{ width: "100%", padding: "100px 0", display: "flex", justifyContent: "center", alignItems: "center" }}>
                 <form method="post" action="/api/users/create" className="form" id="form" onSubmit={handleSubmit}>
-                    <div className="title">
+                    {/* Titulo de Create */}
+                    <div className="title"  style={{ margin:"0" }}>
                         User Creation,
                         <br />
                         <span>

@@ -89,7 +89,7 @@ export function ModifyProperties() {
 
         // Agrega imágenes antiguas al FormData
         images.forEach(item => {
-            data.append('images_old[]', item.replace("http://localhost/storage/", "")); // Agrega cada imagen al FormData
+            data.append('images_old[]', item.replace("http://192.168.1.117:8000//storage/", "")); // Agrega cada imagen al FormData
         });
 
         const action = form.getAttribute('action'); // Obtiene la acción del formulario
@@ -116,7 +116,7 @@ export function ModifyProperties() {
                 if (res.status === 422) { // Manejo de errores de validación
                     setError(res.error ? Object.values(res.error).flat()[0] : 'Validation failed.');
                 }
-                console.log(res); // Muestra la respuesta en consola
+                setError(""); // Vacia el error en caso que haya
                 setIsSubmitting(false); // Cambia el estado de envío a falso
             });
     };
@@ -137,7 +137,8 @@ export function ModifyProperties() {
                             style={{ maxWidth: "600px", width: "100%" }}  // Estilos del formulario
                             onSubmit={handleSubmit}  // Función que maneja el envío del formulario
                         >
-                            <div className="title">
+                            {/* Titulo de Modify */}
+                            <div className="title" style={{ margin:"0" }}>
                                 Modify Use,
                                 <br />
                                 <span>
@@ -335,7 +336,7 @@ export function ModifyProperties() {
                                                 value={item.id} 
                                                 style={{ textTransform:"capitalize" }}  // Estilo para capitalizar el texto
                                                 >
-                                                    {item.type_house}  // Nombre del tipo de casa
+                                                    {item.type_house}
                                                 </option>
                                             )
                                         })
@@ -366,7 +367,7 @@ export function ModifyProperties() {
                                                         <div className="checkmark checkmark_feature"></div>  {/* Estilo para el checkbox */}
                                                     </label>
                                                     <span style={{ textTransform:"capitalize", marginTop:"3px" }}>
-                                                        {item.name}  // Nombre de la característica
+                                                        {item.name}
                                                     </span>
                                                 </div>
                                             )
@@ -393,7 +394,7 @@ export function ModifyProperties() {
                                         <div className="checkmark checkmark_feature"></div>  {/* Estilo para el checkbox */}
                                     </label>
                                     <span style={{ textTransform:"capitalize", marginTop:"3px" }}>
-                                        Published  // Texto para el checkbox
+                                        Published 
                                     </span>
                                 </div>
                             </div>
@@ -408,11 +409,11 @@ export function ModifyProperties() {
                             {/* Botones de acción */}
                             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
                                 <span className="button-confirm" style={{ margin: "0", paddingTop: "5px", textAlign: "center", width:"180px" }} disabled={isSubmittingDelete}>
-                                    {isSubmittingDelete ? 'Submitting...' : 'Delete Propertie→'}  {/* Botón para eliminar la propiedad */}
+                                    {isSubmittingDelete ? 'Submitting...' : 'Delete Property→'}  {/* Botón para eliminar la propiedad */}
                                 </span>
     
                                 <button className="button-confirm" type="submit" style={{ margin: "0", width:"180px" }} disabled={isSubmitting}>
-                                    {isSubmitting ? 'Submitting...' : 'Modify Propertie→'}  {/* Botón para modificar la propiedad */}
+                                    {isSubmitting ? 'Submitting...' : 'Modify Property→'}  {/* Botón para modificar la propiedad */}
                                 </button>
                             </div>
                         </form>

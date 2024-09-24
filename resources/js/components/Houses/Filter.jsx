@@ -14,9 +14,8 @@ export function Filter() {
     // Efecto para actualizar la URL de la API cuando se cambia el query string
     useEffect(() => {
         const url = query.toString();
-
         if(url){
-            setUrlAPI("/api/houses/" + url + "&published=true");
+            setUrlAPI("/api/houses/?" + url + "&published=true");
         } else {
             setUrlAPI("/api/houses/?published=true");
         } 

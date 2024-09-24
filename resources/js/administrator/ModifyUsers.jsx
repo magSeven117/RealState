@@ -145,7 +145,8 @@ export function ModifyUsers() {
                 ? (
                     // Formulario para modificar la información del usuario
                     <form method="post" action={"/api/users/update/"+id} className="form" id="form" onSubmit={handleSubmit}>
-                        <div className="title">
+                        {/* Titulo de Modify */}
+                        <div className="title" style={{ margin:"0" }}>
                             Modify User,
                             <br />
                             <span>
