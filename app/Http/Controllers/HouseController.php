@@ -6,6 +6,7 @@ use App\Models\House;
 use App\Services\FilterErrorService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class HouseController extends Controller
 {
@@ -59,6 +60,8 @@ class HouseController extends Controller
         // Aplica el límite si está presente
         if($request->has('limit')) $query->limit($request->limit);
         
+        if($request->published) $query->where('published', true);
+
         if($request->has('id')) $query->find($request->id);
         
         // Se llama a la consulta una vez todos los filtros aplicados
@@ -108,7 +111,92 @@ class HouseController extends Controller
      */
     public function update(Request $request, House $house)
     {
-        return $house;
+        $validator = Validator::make($request->all(),[
+            'address' => 'required|string|max:255',
+            'description' => 'required|string|max:100000',
+            'bathroom' => 'required|integer|min:1',
+            'date_construction' => 'required|date|before:today',
+            'feature' => 'required|array|min:1',
+            'floor' => 'required|integer|min:0',
+            'images_old' => 'array|min:1',
+            'images.*' => 'image|max:2048',
+            'price' => 'required|numeric|min:0',
+            'quarters' => 'required|integer|min:1',
+            'type_house' => 'required|string'
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                'message' => 'Operation failed',
+                'error' => $validator->errors(),
+                'status' => 422
+            ], 422);
+        }
+
+        if(!$house){
+            return response()->json([
+                'message' => 'Operation failed',
+                'error' => ['Property Not Found.'],
+                'status' => 422
+            ], 422);
+        }
+
+        $house->address = $request->input('address');
+        $house->description = $request->input('description');
+        $house->bathroom = $request->input('bathroom');
+        $house->quarters = $request->input('quarters');
+        $house->date_construction = $request->input('date_construction');
+        $house->price = $request->input('price');
+        $house->size = $request->input('size');
+        $house->published = $request->input('published') ? "1" : "0";
+        $house->features()->sync($request->input('feature'));
+        $house->typeHouse()->associate($request->input('type_house'));
+
+        $type_house = ['Mansion', 'Apartment', 'Penthouse', 'Townhouse'];
+        if($request->has('floor') && in_array($request->input('type_house'), $type_house)){
+            $house->floor = $request->input('floor');
+        }
+
+        $image_model = json_decode($house->images, true);
+        $imagePaths = [];
+        $control_image_old = false;
+        
+        foreach ($image_model as $value) {
+            if (!in_array($value, $request->images_old)) {
+                $control_image_old = true; 
+                break;
+            }
+        }
+        
+        if ($request->has('images')) {
+            foreach ($request->file('images') as $image) {
+                if($image->isValid()){
+                    $fileName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                    $path = $image->storeAs('images', $fileName, 'public');
+                    array_push($imagePaths, $path);
+                } else {
+                    return response()->json([
+                        'message' => 'The image is invalid.',
+                        'error' => ['The image is invalid.'],
+                        'status' => 422
+                    ], 422);
+                }
+                
+            }
+            
+            $house->images = json_encode(array_merge($request->input('images_old'), $imagePaths));
+            
+        } else if($control_image_old){
+            $house->images = json_encode($request->input('images_old'));
+        }
+
+        $house->save();
+
+        return response()->json([
+            'message' => 'Operation succeful.',
+            'data' => $house,
+            'status' => 200
+        ], 200);
     }
 
     /**
@@ -116,7 +204,7 @@ class HouseController extends Controller
      *
      * @param  App\Models\House  $house Se necesita el ID para la busqueda en la tabla houses
      */
-    public function destroy(House $house)
+    public function delete(House $house)
     {
         return $house;
     }

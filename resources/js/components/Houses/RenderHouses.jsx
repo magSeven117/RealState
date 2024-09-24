@@ -16,7 +16,7 @@ export function RenderHouses({ currentItems }) {
                         <div className="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 adv" key={item.id}>
                             <div className="item">
                                 {/* Enlace a los detalles de la propiedad */}
-                                <Link to={`/propertie-details/${item.id}`}>
+                                <Link to={`/property-details/${item.id}`}>
                                     <img src={item.images[0]} alt={item.id} style={{ height:"235px", objectFit:"cover" }}/>
                                 </Link>
                                 {/* Categoría de la propiedad */}
@@ -29,7 +29,7 @@ export function RenderHouses({ currentItems }) {
                                 </h6>
                                 {/* Dirección de la propiedad */}
                                 <h4 style={{height:"75px"}}>
-                                    <Link to={`/propertie-details/${item.id}`}>
+                                    <Link to={`/property-details/${item.id}`}>
                                         {item.address}
                                     </Link>
                                 </h4>

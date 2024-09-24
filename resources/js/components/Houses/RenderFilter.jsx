@@ -6,55 +6,60 @@ import { useNavigate } from "react-router-dom";
 
 export function RenderFilter({ handleChangeFilter, handleClearFilter, query }) {
     // Estado para controlar la visibilidad del menú de filtros
-    const [showFilter, getShowFilter] = useState(true);
-    const [searchValue, setSearchValue] = useState('');
-    // Obtiene las características y tipos de casas del contexto
+    const [showFilter, getShowFilter] = useState(true); // `showFilter` indica si el menú de filtros está visible; `getShowFilter` es la función para actualizar este estado.
+
+    const [searchValue, setSearchValue] = useState(''); // `searchValue` almacena el valor de búsqueda ingresado por el usuario; `setSearchValue` es la función para actualizar este valor.
+
+    // Obtiene las características y tipos de casas del contexto utilizando el contexto `HouseContext`
     const { feature, typeHouse } = useContext(HouseContext);
-    
-    let debounceTimeout;
-    const navigate = useNavigate();
+
+    let debounceTimeout; // Variable para almacenar el temporizador para la búsqueda con debounce
+    const navigate = useNavigate(); // Hook para navegar a diferentes rutas
 
     // Función para alternar la visibilidad del menú de filtros
     const handleFilter = () => {
-        getShowFilter(!showFilter);
+        getShowFilter(!showFilter); // Cambia el estado de `showFilter` al valor opuesto
     };
 
+    // Obtiene las características seleccionadas desde los parámetros de consulta
     let featuresChecked = query.get('features') 
-        ? query.get('features').split(",") 
-        : [];
+        ? query.get('features').split(",") // Si hay características en la consulta, las divide en un array
+        : []; // Si no hay características, se inicializa como un array vacío
 
     const handleSearch = (e) => {
-        
-        const regex = /^[a-zA-Z0-9 ]+$/;
-
-        if(!regex.test(searchValue)) return;
-
-        clearTimeout(debounceTimeout);
-
-        if (searchValue.length > 3) {
-            debounceTimeout = setTimeout(() => {
-                navigate("?search=" + encodeURIComponent(searchValue));
-            }, 600);
+        const regex = /^[a-zA-Z0-9 ]+$/; // Expresión regular para permitir solo letras, números y espacios
+    
+        if(!regex.test(searchValue)) return; // Si el valor de búsqueda no coincide con la expresión regular, sale de la función
+    
+        clearTimeout(debounceTimeout); // Limpia el temporizador de debounce anterior
+    
+        if (searchValue.length > 3) { // Solo realiza la búsqueda si el valor tiene más de 3 caracteres
+            debounceTimeout = setTimeout(() => { // Establece un nuevo temporizador para la búsqueda
+                navigate("?search=" + encodeURIComponent(searchValue)); // Navega a la ruta de búsqueda con el valor codificado
+            }, 600); // Espera 600 ms antes de realizar la navegación
         }
     };
-
+    
+    // Hook que se ejecuta al cargar el componente
     useEffect(()=>{
-        if(query.get('search')){
-            setSearchValue(query.get('search'));
+        if(query.get('search')){ // Verifica si hay un parámetro de búsqueda en la URL
+            setSearchValue(query.get('search')); // Si existe, establece el valor de búsqueda
         } else {
-            setSearchValue("")
+            setSearchValue("") // Si no existe, inicializa el valor de búsqueda como vacío
         }
-    }, []);
-
+    }, []); // Se ejecuta solo una vez al montar el componente
+    
+    // Hook que se ejecuta cuando cambia el valor de búsqueda
     useEffect(()=>{
-        if(searchValue.length === 0){
+        if(searchValue.length === 0){ // Si el valor de búsqueda está vacío
             setTimeout(() => {
-                const searchParams = new URLSearchParams(window.location.search);
+                const searchParams = new URLSearchParams(window.location.search); // Obtiene los parámetros de búsqueda de la URL
                 searchParams.delete('search'); // Elimina solo el parámetro 'search'
-                navigate("?" + searchParams.toString());
-            }, 500);
+                navigate("?" + searchParams.toString()); // Navega a la URL actual sin el parámetro de búsqueda
+            }, 500); // Espera 500 ms antes de realizar la navegación
         }
-    }, [searchValue]); 
+    }, [searchValue]); // Se ejecuta cada vez que cambia `searchValue`
+    
 
     return(
         <>

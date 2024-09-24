@@ -1296,6 +1296,10 @@ button:active .button_top {
   display: block;
 }
 
+.swiper-button-prev,
+.swiper-button-next {
+  color: #000; 
+}
 
 .fun-facts {
   text-align: center;

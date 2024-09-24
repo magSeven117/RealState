@@ -17,11 +17,11 @@ return new class extends Migration
             $table->string('address');
             $table->string('images');
             $table->decimal('price');
-            $table->string('description');
+            $table->longText('description');
             $table->decimal('size');
             $table->integer('bathroom');
             $table->integer('quarters');
-            $table->integer('floor');
+            $table->integer('floor')->nullable();
             $table->boolean('published')->default(false);
 
             $table->string('date_construction');

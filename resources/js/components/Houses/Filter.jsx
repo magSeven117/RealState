@@ -16,9 +16,9 @@ export function Filter() {
         const url = query.toString();
 
         if(url){
-            setUrlAPI("/api/houses/?" + url);
+            setUrlAPI("/api/houses/" + url + "&published=true");
         } else {
-            setUrlAPI("/api/houses");
+            setUrlAPI("/api/houses/?published=true");
         } 
     }, [query]);
 

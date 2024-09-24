@@ -10,14 +10,14 @@ import { ContentVideo } from "./components/Home/ContentVideo";
 import { ContenFeature } from "./components/Home/ContentFeature";
 import React from 'react';
 
-
 export function Home() {
-    // Obtiene el contexto de las casas
+    // Obtiene el contexto de las casas desde HouseContext
     const { houses, setUrlAPI } = useContext(HouseContext);
 
-    useEffect(()=>{
+    // Se actualiza la URL de la API cuando el componente se monta
+    useEffect(() => {
         setUrlAPI("/api/houses");
-    }, [])
+    }, [setUrlAPI]);
 
     return (
         <>
@@ -53,10 +53,9 @@ export function Home() {
                         </div>
                     </div>
                     <div className="row">
-
                         {
                             houses.status === 200 
-                            ? <RenderHouses currentItems={houses.data.slice(0,6)} />
+                            ? <RenderHouses currentItems={houses.data.slice(0, 6)} /> // Muestra las primeras 6 casas
                             : <div>
                                 <h3 style={{textAlign:"center", color:"#ee5f4f"}}>
                                     Houses not available!
@@ -68,9 +67,13 @@ export function Home() {
             </div>
             {/* ***** Properties Section End ***** */}
 
+            {/* ***** Contact Section Start ***** */}
             <RenderContact />
+            {/* ***** Contact Section End ***** */}
 
+            {/* ***** Footer Section Start ***** */}
             <Footer />
+            {/* ***** Footer Section End ***** */}
         </>
     );
 }

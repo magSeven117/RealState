@@ -1,40 +1,42 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from 'react-router-dom';
 import React from 'react';
 import { LinkVisit } from "./LinkVisit";
 
 export function Header () {
-    const [showMenu, getShowMenu] = useState(true);
-    const location = useLocation();
-    const { id } = useParams();
+    const [showMenu, getShowMenu] = useState(true); // Estado para controlar la visibilidad del menú
+    const location = useLocation(); // Obtiene la ubicación actual
+    const { id } = useParams(); // Obtiene el parámetro 'id' de la URL
     
     const handleScroll = () => {
         // Asegurarse de que el elemento existe antes de aplicar estilo
         const menuElement = document.getElementsByClassName("menu")[0];
         if (window.scrollY == 0) {
-            menuElement.style.top = "";
-            menuElement.style.position = "absolute";
+            menuElement.style.top = ""; // Restablecer posición si no se ha desplazado
+            menuElement.style.position = "absolute"; // Menú en posición absoluta
         } else {
-            menuElement.style.top = "0";
-            menuElement.style.position = "fixed";
+            menuElement.style.top = "0"; // Fijar menú en la parte superior
+            menuElement.style.position = "fixed"; // Menú en posición fija
         }
     }
 
     const handleClick = () => {
+        // Alternar la visibilidad del menú en pantallas pequeñas
         if(window.innerWidth <= 768) getShowMenu(!showMenu);
     }   
 
     useEffect(() => {
-        handleScroll()
+        handleScroll(); // Aplicar estilo inicial al menú
         
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", handleScroll); // Agregar evento de desplazamiento
 
+        // Configurar visibilidad del menú en función del tamaño de la pantalla
         if(window.innerWidth <= 765)
             getShowMenu(false);
         else 
             getShowMenu(true);
 
-        window.addEventListener('resize', ()=>{
+        window.addEventListener('resize', ()=>{ // Evento para manejar el cambio de tamaño
             if(window.innerWidth <= 765)
                 getShowMenu(false);
             else 
@@ -42,10 +44,9 @@ export function Header () {
         });
 
         return () => {
-            window.removeEventListener("scroll", handleScroll);
+            window.removeEventListener("scroll", handleScroll); // Limpiar evento al desmontar
         };
     }, []);
-
 
     return (
         <>
@@ -93,7 +94,7 @@ export function Header () {
                                     </li>
                                     <li>
                                         {
-                                            id ? <LinkVisit id={id} /> : ""
+                                            id ? <LinkVisit id={id} /> : "" // Muestra el enlace a la visita si hay un ID
                                         }
                                     </li>
                                 </ul>
@@ -107,5 +108,5 @@ export function Header () {
                 </div>
             </header>
         </>
-    )
+    );
 }

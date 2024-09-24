@@ -79,7 +79,7 @@ class UserController extends Controller
         if($validator->fails()){
             return response()->json([
                 'message' => 'Validation failed. Confirm the fields.',
-                'errors' => $validator->errors(),
+                'error' => $validator->errors(),
                 'status' => 422
             ],422);
         }
@@ -122,7 +122,7 @@ class UserController extends Controller
         if(!$user){
             return response()->json([
                 'message' => 'User not found.',
-                'errors' => 'User not found.',
+                'error' => 'User not found.',
                 'status' => 500
             ], 500);
         }
@@ -151,7 +151,7 @@ class UserController extends Controller
         if($validator->fails()){
             return response()->json([
                 'message' => 'Validation failed. Confirm the fields.',
-                'errors' => $validator->errors(),
+                'error' => $validator->errors(),
                 'status' => 422
             ], 422);
         }

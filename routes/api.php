@@ -17,6 +17,8 @@ Route::get('/user', function (Request $request) {
 
 Route::controller(HouseController::class)->group(function () {
     Route::get('/houses', 'index')->name('houses');
+    Route::post('/houses/update/{house}', 'update')->name('houses.update');
+
 });
 
 Route::controller(FeatureController::class)->group(function () {
@@ -35,7 +37,6 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/users/create', 'create')->name('users.create');
     Route::post('/users/update/{id}', 'update')->name('users.update');
     Route::delete('/users/delete/{id}', 'delete')->name('users.delete');
-
 })->middleware(['web', 'auth', EnsureAdmin::class]);
 
 Route::middleware('web')->get('/csrf-token', function () {
