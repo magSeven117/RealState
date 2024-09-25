@@ -19,7 +19,7 @@ Route::controller(HouseController::class)->group(function () {
     Route::get('/houses', 'index')->name('houses');
     Route::post('/houses/create', 'create')->name('houses.create');
     Route::post('/houses/update/{house}', 'update')->name('houses.update');
-
+    Route::delete('/houses/delete/{house_id}', 'delete')->name('houses.delete');
 });
 
 Route::controller(FeatureController::class)->group(function () {

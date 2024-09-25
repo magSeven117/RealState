@@ -219,7 +219,7 @@ export function ModifyUsers() {
                                 disabled={isSubmittingDelete} 
                                 onClick={() => setConfirmDelete(true)}
                             >
-                                {isSubmittingDelete ? 'Submitting...' :'Delete User→'}
+                                {isSubmittingDelete ? 'Deleting...' :'Delete User→'}
                             </span>
                             {/* Botón para enviar el formulario y modificar el usuario */}
                             <button 

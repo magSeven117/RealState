@@ -10,12 +10,14 @@ import { Swiper, SwiperSlide } from 'swiper/react'; // Componentes de Swiper par
 import 'swiper/css'; // Estilos de Swiper
 import 'swiper/css/pagination'; // Estilos de paginación de Swiper
 import { Pagination, Navigation } from 'swiper/modules'; // Módulos de Swiper
+import { ModalConfirmAlert } from "../components/Administrator/ModalConfirmAlert";
 
 export function ModifyProperties() {
     const { id } = useParams(); // Obtener el ID de la propiedad desde la URL
     const [data, setData] = useState(); // Estado para almacenar datos de la propiedad
     const [isSubmitting, setIsSubmitting] = useState(false); // Estado para controlar el envío del formulario
     const [isSubmittingDelete, setIsSubmittingDelete] = useState(false); // Estado para controlar la eliminación
+    const [ confirmDelete, setConfirmDelete] = useState(false); // Visaluzar la alarma de confirmacion de eliminacion
     const [error, setError] = useState(); // Estado para almacenar mensajes de error
     const [description, setDescription] = useState(''); // Estado para la descripción de la propiedad
     const editorRef = useRef(null); // Referencia al editor de texto
@@ -121,6 +123,33 @@ export function ModifyProperties() {
             });
     };
 
+    const handleSubmitDelete = () => {
+        setIsSubmittingDelete(true); // Indicar que se está enviando la solicitud de eliminación
+        setConfirmDelete(false); // Cerrar la confirmación de eliminación
+
+        // Configura los encabezados para la solicitud
+        const headers = new Headers();
+        headers.append('X-CSRF-TOKEN', token); // Agrega el token CSRF
+        headers.append('Accept', 'application/json'); // Indica que espera respuesta en JSON
+
+        const config = {
+            method: 'DELETE', // Método de la solicitud
+            headers: headers, // Encabezados configurados
+            mode: "cors", // Modo de la solicitud
+            cache: 'no-cache', // Sin caché
+        };
+
+        fetch("/api/houses/delete/" + id, config)
+            .then(res=>res.json())
+            .then(res=>{
+                setIsSubmittingDelete(false); // Indicar que se ha completado el envío
+                window.location.href = '/dashboard/properties';
+            })
+            .catch(e => {
+                setIsSubmittingDelete(false); // Indicar que se ha completado el envío
+                setError('An unexpected error occurred.'); // Manejo de errores inesperados
+            });
+    };
 
     return (
         <>
@@ -408,8 +437,13 @@ export function ModifyProperties() {
                             
                             {/* Botones de acción */}
                             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-                                <span className="button-confirm" style={{ margin: "0", paddingTop: "5px", textAlign: "center", width:"180px" }} disabled={isSubmittingDelete}>
-                                    {isSubmittingDelete ? 'Submitting...' : 'Delete Property→'}  {/* Botón para eliminar la propiedad */}
+                                <span 
+                                    className="button-confirm" 
+                                    style={{ margin: "0", paddingTop: "5px", textAlign: "center", width:"180px" }} 
+                                    disabled={isSubmittingDelete} 
+                                    onClick={()=>{setConfirmDelete(true)}}
+                                >
+                                    {isSubmittingDelete ? 'Deleting...' : 'Delete Property→'}  {/* Botón para eliminar la propiedad */}
                                 </span>
     
                                 <button className="button-confirm" type="submit" style={{ margin: "0", width:"180px" }} disabled={isSubmitting}>
@@ -421,6 +455,21 @@ export function ModifyProperties() {
                         : <Spinner animation="border" />  // Muestra un spinner si no hay datos disponibles
                 }
             </div>
+
+            {/* Modal que se muestra al confirmar la eliminación del usuario */}
+            {
+                confirmDelete && (
+                    <ModalConfirmAlert 
+                        title={'Delete Preperty'}
+                        subtitle={'You are about to delete this property, do you want to continue?.'}
+                        button={'Delete'}
+                        typeButton={'danger'}
+                        functionButton={() => {
+                            handleSubmitDelete(); // Llama a la función para eliminar al usuario
+                        }} 
+                    />
+                )
+            }
         </>
     );
     

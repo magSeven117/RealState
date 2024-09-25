@@ -3,6 +3,7 @@ namespace App\Services;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ImageService
@@ -61,6 +62,25 @@ class ImageService
 
         // Si no se encontraron cambios, retorna falso.
         return false;
+    }
+
+    /**
+     * Elimina las imágenes del almacenamiento.
+     * 
+     * @param array $images Array de rutas de las imágenes que deben eliminarse.
+     * 
+     * @return void
+     */
+    public function deleteImages(array $images)
+    {
+        // Recorre cada imagen en el array proporcionado.
+        foreach ($images as $image) {
+            // Verifica si el archivo existe antes de intentar eliminarlo.
+            if (Storage::disk('public')->exists($image)) {
+                // Elimina la imagen del almacenamiento público.
+                Storage::disk('public')->delete($image);
+            }
+        }
     }
 
 }

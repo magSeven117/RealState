@@ -246,12 +246,30 @@ class HouseController extends Controller
 
 
     /**
-     * Crea una nueva casa basada la informacion proporcionada.
+     * Crea una nueva casa basada en la información proporcionada.
      *
-     * @param  App\Models\House  $house Se necesita el ID para la busqueda en la tabla houses
+     * @param  App\Models\House  $house  Se necesita el ID para la búsqueda en la tabla houses.
+     * 
+     * @return \Illuminate\Http\JsonResponse  Retorna una respuesta JSON con el estado de la operación.
      */
-    public function delete(House $house)
-    {
-        return $house;
+    public function delete($house_id, ImageService $methodImage) : JsonResponse
+    {   
+        // Busca la casa por su ID o lanza una excepción 404 si no la encuentra.
+        $house = House::findOrFail($house_id);
+
+        // Decodifica las imágenes guardadas en el campo 'images'.
+        $images = json_decode($house->images, true);
+
+        // Elimina las imágenes del almacenamiento.
+        $methodImage->deleteImages($images);
+
+        // Elimina la casa de la base de datos.
+        $house->delete();
+
+        // Retorna una respuesta JSON indicando que la operación fue exitosa.
+        return response()->json([
+            'message' => 'Successful operation.',
+            'status' => 200
+        ], 200);
     }
 }
