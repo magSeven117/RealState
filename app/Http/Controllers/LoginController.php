@@ -64,12 +64,29 @@ class LoginController extends Controller
     }
 
     /**
-     * Funcion para hacer login.
+     * Funcion para hacer logout.
      * 
      * @return \Illuminate\Http\JsonResponse
+     * 
      */
     public function logout() : JsonResponse
     {
-        return response()->json();
+        if(Auth::check()){
+            Auth::logout();
+
+            Request()->session()->invalidate();
+
+            Request()->session()->regenerateToken();
+
+            return response()->json([
+                'message' => 'Successful operation.',
+                'status' => 200
+            ], 200);
+        }
+
+        return response()->json([
+            'message' => 'Invalid logout.',
+            'status' => 400
+        ], 400);
     }
 }

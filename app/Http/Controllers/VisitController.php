@@ -14,6 +14,31 @@ class VisitController extends Controller
     /**
      * Crea una nueva visita para una casa basada en la información proporcionada.
      *
+     * @param  \Illuminate\Http\Request  $request Contiene los datos de la solicitud.
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index(Request $request) : JsonResponse
+    {
+        $visit = Visit::search($request->search)
+            ->visited($request->input('visited'))
+            ->orderBy('date_visit', 'ASC')
+            ->get();
+
+        Visit::whereNull('visited_date')
+            ->where('date_visit', '<', Carbon::today())
+            ->delete();
+
+        return response()->json([
+            'message' => 'Successful operation.',
+            'data' => $visit,
+            'status' => 200
+        ]);
+    }
+
+    /**
+     * Crea una nueva visita para una casa basada en la información proporcionada.
+     *
      * @param  \Illuminate\Http\Request  $request Recibe toda la data del formulario.
      * @param  App\Models\House $house Recibe una instancia del modelo House.
      * 
@@ -61,5 +86,43 @@ class VisitController extends Controller
             'data' => $visit,
             'status' => 200
         ]);
+    }
+
+    /**
+     * Marca la columa visited_date como visitada con la fecha de hoy.
+     *
+     * @param  App\Models\Visit $visit Recibe una instancia del modelo visit.
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function markAsVisited(Visit $visit) : JsonResponse
+    {   
+        $visit->visited_date = Carbon::now();
+        $visit->save();
+
+        return response()->json([
+            'message' => 'Successful operation.',
+            'visit' => $visit,
+            'status' => 200
+        ], 200);
+    }
+
+    /**
+     * Eliminacion de una visita.
+     *
+     * @param  int $visit Recibe un ID para la eliminacion de una visita.
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function delete($visit_id) : JsonResponse
+    {   
+        $visit = Visit::findOrFail($visit_id);
+
+        $visit->delete();
+
+        return response()->json([
+            'message' => 'Successful operation.',
+            'status' => 200
+        ], 200);
     }
 }

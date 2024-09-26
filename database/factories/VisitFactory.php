@@ -16,8 +16,16 @@ class VisitFactory extends Factory
      */
     public function definition(): array
     {
+        $date = fake()->dateTimeBetween('tomorrow', '+3 months');
+
         return [
-            //
+            'name' => fake()->name(),
+            'lastname' => fake()->lastName(),
+            'email' => fake()->unique()->safeEmail(),
+            'phone' => fake()->phoneNumber(),
+            'date_visit' => $date,
+            'visited_date' => random_int(0, 1) ? $date : null,
+            'house_id' => random_int(1, 50),
         ];
     }
 }

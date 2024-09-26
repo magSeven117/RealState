@@ -2,7 +2,7 @@ import React from "react";
 import Button from 'react-bootstrap/Button'; // Importa el componente Button de Bootstrap
 import Modal from 'react-bootstrap/Modal'; // Importa el componente Modal de Bootstrap
 
-export function ModalConfirmAlert({ title, subtitle, button, typeButton, functionButton }) {
+export function ModalConfirmAlert({ title, subtitle, button, typeButton, functionButton, buttonCancel, functionButtonCancel }) {
     return (
         <div
             style={{
@@ -34,6 +34,16 @@ export function ModalConfirmAlert({ title, subtitle, button, typeButton, functio
                     </Modal.Body>
 
                     <Modal.Footer>
+                        {
+                            buttonCancel 
+                            && <Button 
+                                variant="secondary" // Tipo de botón
+                                onClick={functionButtonCancel} // Función a ejecutar al hacer clic en el botón
+                            >
+                                {buttonCancel} {/* Texto del botón */}
+                            </Button>
+                        }
+                        
                         <Button 
                             variant={typeButton} // Tipo de botón (ej. "primary", "secondary")
                             onClick={functionButton} // Función a ejecutar al hacer clic en el botón

@@ -27,11 +27,14 @@ Route::controller(FeatureController::class)->group(function () {
 });
 
 Route::controller(VisitController::class)->group(function () {
-    Route::post('/visit/{house}', 'create')->name('visit');
+    Route::get('/visit', 'index')->name('visit');
+    Route::put('/visit/visited/{visit}', 'markAsVisited')->name('visit.mark.visited');
+    Route::post('/visit/{house}', 'create')->name('visit.create');
+    Route::delete('/visit/delete/{visit_id}', 'delete')->name('visit.delete');
 });
 
 Route::post('/login', [LoginController::class, 'login'])->middleware('web')->name('login');
-Route::post('/logout', [LoginController::class, 'logout'])->middleware('web')->name('logout');
+Route::post('/logout', [LoginController::class, 'logout'])->middleware(['web', 'auth'])->name('logout');
 
 Route::controller(UserController::class)->group(function () {
     Route::get('/users', 'index')->name('users');

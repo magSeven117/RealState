@@ -9,14 +9,15 @@ import { LinkVisit } from "./components/General/LinkVisit";  // Importa el compo
 import { CarouselRenderHouses } from "./components/Houses/CarouselRenderHouses";  // Importa el componente CarouselRenderHouses para mostrar imágenes en carrusel
 import { Spinner } from "react-bootstrap"; // Importa el componente Loader para mostrar una animación de carga
 
-// Define la URL base de la API para obtener detalles de las propiedades
-const URL_API_HOUSE = '/api/houses/?published=true&id=';
 
 export function PropertiesDetails () {
     const { id } = useParams();  // Obtiene el parámetro "id" de la URL
     const [ house, setHouse ] = useState({});  // Estado para almacenar los detalles de la propiedad
     const [ response, setResponse ] = useState(false);  // Estado para controlar si la API ha respondido
     const [ activeCarousel , setActiveCarousel ] = useState(false);  // Estado para controlar si el carrusel de imágenes está activo
+    const query = new URLSearchParams(location.search);
+    
+    const URL_API_HOUSE = query.get('admin_view') ? '/api/houses/?&id='  : '/api/houses/?published=true&id='; // Define la URL base de la API para obtener detalles de las propiedades
 
     // useEffect para obtener los datos de la API cuando se carga el componente
     useEffect(() => {
@@ -141,7 +142,7 @@ export function PropertiesDetails () {
                         <div className="col-lg-4" style={{ padding: "0 35px" }}>
                             {/* Componente LinkVisit para agendar visitas */}
                             <div style={{ marginBottom: "20px" }}>
-                                <LinkVisit id={id} />
+                                {query.get('admin_view') ? "" : <LinkVisit id={id} />}
                             </div>
                             {/* Tabla con información adicional */}
                             <div className="info-table">

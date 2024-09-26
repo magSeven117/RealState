@@ -18,7 +18,6 @@ export function AuthProvider ({ children }) {
 
                 setUser(res.user);
                 setLoginSuccessful(true);
-                setHtml();  // Aquí podrías asignar algo de HTML si lo necesitas en algún punto
             })
             .catch(e => {
                 window.location.href = '/';  // Redirige si ocurre algún error, como si el usuario no está autorizado

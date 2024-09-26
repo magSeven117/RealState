@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\TypeHouse;
 use App\Models\User;
+use App\Models\Visit;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -22,8 +23,12 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin'
         ]);
 
+
         $this->call(TypeHouseSeeder::class);
 
         $this->call(HouseSeeder::class);
+
+        Visit::factory()->count(50)->create();
+
     }
 }

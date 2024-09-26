@@ -19,6 +19,7 @@ export function Header () {
             menuElement.style.position = "fixed"; // Menú en posición fija
         }
     }
+    const query = new URLSearchParams(location.search);
 
     const handleClick = () => {
         // Alternar la visibilidad del menú en pantallas pequeñas
@@ -93,9 +94,11 @@ export function Header () {
                                         <a href="/contact" className={`${location.pathname == '/contact' && 'active'}`}>Contact Us</a>
                                     </li>
                                     <li>
+                                        
                                         {
-                                            id ? <LinkVisit id={id} /> : "" // Muestra el enlace a la visita si hay un ID
-                                        }
+                                            query.get('admin_view') ? "" : id ? <LinkVisit id={id}  /> : "" // Muestra el enlace a la visita si hay un ID
+                                        } 
+                                        
                                     </li>
                                 </ul>
                                 <a onClick={handleClick} className={`menu-trigger ${showMenu ? 'active' : ''}`}>

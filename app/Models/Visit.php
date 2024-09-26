@@ -16,4 +16,20 @@ class Visit extends Model
     {
         return $this->belongsTo(House::class);
     }
+
+    public function scopeSearch($query, $value) {
+        if(!is_null($value)) {
+            return $query->where('name', 'LIKE', `%$value%`);
+        }
+
+        return $query;
+    }
+
+    public function scopeVisited($query, $value) {
+        if($value === 'yes') {
+            return $query->whereNotNull("visited_date");
+        } else {
+            return $query->whereNull('visited_date');
+        }
+    }
 }
