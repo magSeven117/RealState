@@ -13,7 +13,7 @@ use function Laravel\Prompts\error;
 class UserController extends Controller
 {
     /**
-     * Funcion para hacer login.
+     * Funcion de visualizacion base de datos de usuario
      *
      * @param  \Illuminate\Http\Request  $request Recibe toda la data del formulario.
      * 
@@ -22,18 +22,27 @@ class UserController extends Controller
     public function index(Request $request) : JsonResponse
     {   
         try {
-            $data = User::name($request->name)
-                    ->email($request->email)
-                    ->role($request->role)
-                    ->get();
-            
-            if($request->has('id')){
-                $data = User::find($request->input('id'));
+            if ($request->has('id')) {
+                $query = User::find($request->input('id'));
+                return response()->json([
+                    'message' => 'Successful operation.',
+                    'data' => $query,
+                    'status' => 200
+                ], 200);
             }
+
+            $query = User::name($request->input('name'))
+                    ->email($request->input('email'))
+                    ->role($request->input('role'));
+            
+            // Aplica el límite si está presente en la solicitud.
+            if($request->has('limit')) $query->limit($request->limit);
+
+            $query = $query->get();
 
             return response()->json([
                 'message' => 'Successful operation.',
-                'data' => $data,
+                'data' => $query,
                 'status' => 200
             ], 200);
 
@@ -47,7 +56,7 @@ class UserController extends Controller
     }
 
     /**
-     * Funcion para hacer login.
+     * Funcion de creacion de la base de datos de usuario
      * 
      * @param  \Illuminate\Http\Request  $request Recibe toda la data del formulario.
      * 
@@ -107,7 +116,7 @@ class UserController extends Controller
     }
 
     /**
-     * Funcion para hacer login.
+     * Funcion de actualizacion base de datos de usuario
      * 
      * @param  \Illuminate\Http\Request  $request Recibe toda la data del formulario.
      * 
@@ -182,7 +191,7 @@ class UserController extends Controller
 
 
     /**
-     * Funcion para hacer login.
+     * Funcion de eliminacion base de datos de usuario
      * 
      * @param int $id El ID del usuario a actualizar.
      * 

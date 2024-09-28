@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('quarters');
             $table->integer('floor')->nullable();
             $table->boolean('published')->default(false);
+            $table->integer('viewed')->nullable();
 
             $table->string('date_construction');
 

@@ -24,8 +24,10 @@ export function PropertiesDetails () {
         fetch(URL_API_HOUSE + id)  // Llama a la API concatenando el ID de la propiedad
             .then(res => res.json())  // Convierte la respuesta a formato JSON
             .then(res => {
-                setHouse(res.data[0]);  // Guarda la información de la propiedad en el estado
-                setResponse(true);  // Marca que la respuesta de la API ha sido exitosa
+                if(res.status === 200) {
+                    setHouse(res.data);
+                    setResponse(true);
+                }
             })
             .catch(e => {
                 setResponse(false);  // Si hay un error, marca la respuesta como fallida
@@ -76,6 +78,7 @@ export function PropertiesDetails () {
                                     </span>
                                 </div>
                             </div>
+                            
                             {/* Renderiza el carrusel de imágenes si está activo */}
                             { 
                                 activeCarousel && <CarouselRenderHouses house={house} handleActiveCarousel={handleActiveCarousel}/>
@@ -144,6 +147,7 @@ export function PropertiesDetails () {
                             <div style={{ marginBottom: "20px" }}>
                                 {query.get('admin_view') ? "" : <LinkVisit id={id} />}
                             </div>
+
                             {/* Tabla con información adicional */}
                             <div className="info-table">
                                 <ul style={{ paddingLeft: "0" }}>
@@ -179,7 +183,7 @@ export function PropertiesDetails () {
             </div>
 
             // Si la API aún no ha respondido o hay un error, se muestra el loader
-            : <div className="single-property section">
+            : <div className="single-property section" style={{ width:"100%", display:'flex', justifyContent:'center' }}>
                 <Spinner animation="border" /> {/* Componente Loader que muestra un spinner de carga */}
             </div>
         }

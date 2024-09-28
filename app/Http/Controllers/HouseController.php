@@ -32,6 +32,34 @@ class HouseController extends Controller
             ], 422);
         }
 
+        // Si se ha proporcionado un ID, busca la casa por su ID.
+        if ($request->has('id')) {
+            $query = House::with(['features', 'typeHouse']) // Carga las relaciones de características y tipo de casa.
+                ->find($request->input('id'));
+
+            $query->viewed = $query->viewed + 1;
+
+            $query->save();
+            // Asegúrate de que $query->images es un array.
+            if (is_string($query->images)) {
+                // Convierte la cadena de imágenes en un array.
+                $query->images = json_decode($query->images, true);
+            }
+
+            // Verifica si $query->images es un array antes de usar array_map.
+            if (is_array($query->images)) {
+                $query->images = array_map(function ($image) {
+                    return url('storage/' . $image); // Modifica la URL de cada imagen.
+                }, $query->images);
+            }
+
+            return response()->json([
+                'message' => 'Successful operation.',
+                'data' => $query,
+                'status' => 200
+            ], 200);
+        }
+
         // Construye la consulta para obtener las casas basadas en los filtros proporcionados.
         $query = House::with(['features', 'typeHouse']) // Carga las relaciones de características y tipo de casa.
             ->whereHas('features', function($query) use ($request){
@@ -61,13 +89,13 @@ class HouseController extends Controller
 
         // Aplica el límite si está presente en la solicitud.
         if($request->has('limit')) $query->limit($request->limit);
+
+        // Se solicita invertir el orden de la lista
+        if($request->has('orderBy')) $query->orderBy('id',$request->input('orderBy'));
         
         // Si se solicita, filtra solo las casas publicadas.
         if($request->published) $query->where('published', true);
 
-        // Si se ha proporcionado un ID, busca la casa por su ID.
-        if($request->has('id')) $query->find($request->id);
-        
         // Se llama a la consulta una vez que todos los filtros han sido aplicados.
         $houses = $query->get();
 

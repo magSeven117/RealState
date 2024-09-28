@@ -28,8 +28,19 @@ class Visit extends Model
     public function scopeVisited($query, $value) {
         if($value === 'yes') {
             return $query->whereNotNull("visited_date");
-        } else {
+        } 
+        if ($value === 'no') {
             return $query->whereNull('visited_date');
         }
+
+        return $query;
+    }
+
+    public function scopePending($query, $value){
+        if ($value) {
+            return $query->where('pending_visit', true);
+        }
+
+        return $query;
     }
 }

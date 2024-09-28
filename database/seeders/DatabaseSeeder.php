@@ -22,7 +22,30 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('cronos098'),
             'role' => 'admin'
         ]);
-
+        User::create([
+            'name' => 'Hayliv',
+            'email' => 'haylivcnb@gmail.com',
+            'password' => Hash::make('cronos098'),
+            'role' => 'employee'
+        ]);
+        User::create([
+            'name' => 'Diana',
+            'email' => 'diana@gmail.com',
+            'password' => Hash::make('cronos098'),
+            'role' => 'employee'
+        ]);
+        User::create([
+            'name' => 'Valentina',
+            'email' => 'valentina@gmail.com',
+            'password' => Hash::make('cronos098'),
+            'role' => 'employee'
+        ]);
+        User::create([
+            'name' => 'Ronald',
+            'email' => 'ronald@gmail.com',
+            'password' => Hash::make('cronos098'),
+            'role' => 'employee'
+        ]);
 
         $this->call(TypeHouseSeeder::class);
 

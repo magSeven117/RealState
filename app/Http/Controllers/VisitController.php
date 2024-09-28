@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 class VisitController extends Controller
 {
     /**
-     * Crea una nueva visita para una casa basada en la información proporcionada.
+     * Visualiza la informacion de la base de datos de visitas.
      *
      * @param  \Illuminate\Http\Request  $request Contiene los datos de la solicitud.
      * 
@@ -20,18 +20,23 @@ class VisitController extends Controller
      */
     public function index(Request $request) : JsonResponse
     {
-        $visit = Visit::search($request->search)
+        $query = Visit::search($request->search)
             ->visited($request->input('visited'))
             ->orderBy('date_visit', 'ASC')
-            ->get();
+            ->pending($request->input('pending_visit'));
+        
+        if($request->has('limit')) $query->limit($request->input('limit'));
 
         Visit::whereNull('visited_date')
             ->where('date_visit', '<', Carbon::today())
+            ->where('pending_visit', '!=', true)
             ->delete();
+
+        $query = $query->get();
 
         return response()->json([
             'message' => 'Successful operation.',
-            'data' => $visit,
+            'data' => $query,
             'status' => 200
         ]);
     }
@@ -72,7 +77,7 @@ class VisitController extends Controller
             ], 404);
         }
 
-        $visit = Visit::create([
+        $query = Visit::create([
             'name' => $request->input('name'),
             'lastname' => $request->input('lastname'),
             'email' => $request->input('email'),
@@ -83,7 +88,7 @@ class VisitController extends Controller
 
         return response()->json([
             'message' => 'Successful operation.',
-            'data' => $visit,
+            'data' => $query,
             'status' => 200
         ]);
     }
@@ -110,7 +115,7 @@ class VisitController extends Controller
     /**
      * Eliminacion de una visita.
      *
-     * @param  int $visit Recibe un ID para la eliminacion de una visita.
+     * @param  int $visit_id Recibe un ID para la eliminacion de una visita.
      * 
      * @return \Illuminate\Http\JsonResponse
      */

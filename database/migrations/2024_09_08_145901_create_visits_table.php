@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('lastname');
             $table->string('email');
             $table->string('phone');
+            $table->boolean('pending_visit')->default(false);
             $table->datetime('date_visit');
             $table->datetime('visited_date')->nullable();
 

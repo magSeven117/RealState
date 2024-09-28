@@ -169,11 +169,11 @@ export function PropertiesAdministrator() {
                                     {currentItems && currentItems.map((item) => (
                                         <tr key={item.id}>
                                             <td style={{ textAlign: "center", width: "10px" }}>{item.id}</td>
-                                            <td style={{ width: "50px" }}>
+                                            <td style={{ width: "50px", height:"70px" }}>
                                                 <img src={item.images[0]} alt={"house" + item.id} style={{ width: "70px" }} />
                                             </td>
                                             <td>{item.address}</td>
-                                            <td><span>Public</span></td>
+                                            <td><span style={item.published ? {color:"green"} : {color:"red"} }>{item.published ? 'Published' : 'Unpublished'}</span></td>
                                             <td style={{ width: '50px' }}>
                                                 <Link to={'/dashboard/properties/modify/' + item.id} style={{ width: "min-content" }}>
                                                     <Button variant="warning">Modify</Button>
