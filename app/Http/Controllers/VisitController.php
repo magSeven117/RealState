@@ -7,6 +7,7 @@ use App\Models\Visit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class VisitController extends Controller
@@ -20,17 +21,35 @@ class VisitController extends Controller
      */
     public function index(Request $request) : JsonResponse
     {
+        if($request->has('graphic')){
+            $query = Visit::select('house_id', DB::raw('COUNT(*) as visit_count')) 
+                ->groupBy('house_id')
+                ->orderBy('visit_count', 'DESC');
+
+            if ($request->has('limit')) $query->limit($request->input('limit'));
+
+            $query = $query->get();
+
+            return response()->json([
+                'message' => 'Successful operation.',
+                'data' => $query,
+                'status' => 200
+            ]);
+        }
+
+
         $query = Visit::search($request->search)
             ->visited($request->input('visited'))
             ->orderBy('date_visit', 'ASC')
+            ->where('date_visit', '>=', Carbon::today())
             ->pending($request->input('pending_visit'));
         
         if($request->has('limit')) $query->limit($request->input('limit'));
 
-        Visit::whereNull('visited_date')
-            ->where('date_visit', '<', Carbon::today())
-            ->where('pending_visit', '!=', true)
-            ->delete();
+        // Visit::whereNull('visited_date')
+        //     ->where('date_visit', '<', Carbon::today())
+        //     ->where('pending_visit', '!=', true)
+        //     ->delete();
 
         $query = $query->get();
 

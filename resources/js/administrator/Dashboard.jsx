@@ -11,7 +11,6 @@ import { ModalGraphic } from "../components/Administrator/ModalGraphic";
 export function Dashboard({  }) {
     const {user, loginSuccessful} = useContext(AuthContext);
 
-    console.log(user)
     return (
         <>
             {

@@ -92,6 +92,9 @@ class HouseController extends Controller
 
         // Se solicita invertir el orden de la lista
         if($request->has('orderBy')) $query->orderBy('id',$request->input('orderBy'));
+
+        // Se solicita invertir el orden de la lista de viewed
+        if($request->has('orderByViewed')) $query->orderBy('viewed',$request->input('orderByViewed'));
         
         // Si se solicita, filtra solo las casas publicadas.
         if($request->published) $query->where('published', true);
