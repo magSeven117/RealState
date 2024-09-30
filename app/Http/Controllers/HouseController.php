@@ -285,22 +285,32 @@ class HouseController extends Controller
      */
     public function delete($house_id, ImageService $methodImage) : JsonResponse
     {   
-        // Busca la casa por su ID o lanza una excepción 404 si no la encuentra.
-        $house = House::findOrFail($house_id);
+        try {
+            // Busca la casa por su ID o lanza una excepción 404 si no la encuentra.
+            $house = House::findOrFail($house_id);
 
-        // Decodifica las imágenes guardadas en el campo 'images'.
-        $images = json_decode($house->images, true);
+            // Decodifica las imágenes guardadas en el campo 'images'.
+            $images = json_decode($house->images, true);
 
-        // Elimina las imágenes del almacenamiento.
-        $methodImage->deleteImages($images);
+            // Elimina las imágenes del almacenamiento.
+            $methodImage->deleteImages($images);
 
-        // Elimina la casa de la base de datos.
-        $house->delete();
+            // Elimina la casa de la base de datos.
+            $house->delete();
 
-        // Retorna una respuesta JSON indicando que la operación fue exitosa.
-        return response()->json([
-            'message' => 'Successful operation.',
-            'status' => 200
-        ], 200);
+            // Retorna una respuesta JSON indicando que la operación fue exitosa.
+            return response()->json([
+                'message' => 'Successful operation.',
+                'status' => 200
+            ], 200);
+            
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => 'An error occurred while creating the user.',
+                'error' => $e->getMessage(),
+                'status' => 500
+            ], 500);
+        }
+        
     }
 }

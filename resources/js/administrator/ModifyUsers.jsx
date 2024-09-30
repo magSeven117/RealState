@@ -121,7 +121,6 @@ export function ModifyUsers() {
         fetch('/api/csrf-token') // Obtener el token CSRF
             .then(res => res.json())
             .then(res => {
-                console.log(res);
                 setToken(res.csrf_token); // Almacenar el token en el estado
             });
 

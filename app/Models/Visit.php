@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Visit extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'house_id', 'name', 'lastname', 'email', 'phone', 'date_visit', 'visited_date',
     ];

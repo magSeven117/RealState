@@ -12,6 +12,7 @@
     height: 100%;
     gap: 20px;
     padding: 10px;
+    position: relative;
 }
 .card-notify {
     width: 100%;

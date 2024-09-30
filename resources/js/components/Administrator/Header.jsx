@@ -58,7 +58,7 @@ export function HeaderAdministrator() {
                             <Nav.Link href="/dashboard" active={location.pathname === "/dashboard"}>Home</Nav.Link>
                             <Nav.Link href="/dashboard/users" active={location.pathname === "/dashboard/users"}>Users</Nav.Link>
                             <Nav.Link href="/dashboard/properties" active={location.pathname === "/dashboard/properties"}>Properties</Nav.Link>
-                            <Nav.Link href="/dashboard/visit" active={location.pathname === "/dashboard/visit"}>Show visit</Nav.Link>
+                            <Nav.Link href="/dashboard/visit" active={location.pathname === "/dashboard/visit"}>Schedules Visits</Nav.Link>
 
                             {/* Menú desplegable */}
                             {

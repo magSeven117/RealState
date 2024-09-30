@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\HouseController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisitController;
 use App\Http\Middleware\EnsureAdmin;
@@ -28,7 +29,7 @@ Route::controller(FeatureController::class)->group(function () {
 
 Route::controller(VisitController::class)->group(function () {
     Route::get('/visit', 'index')->name('visit');
-    Route::put('/visit/visited/{visit}', 'markAsVisited')->name('visit.mark.visited');
+    Route::put('/visit/visited/{visit}', 'markAsPending')->name('visit.mark.pending');
     Route::post('/visit/{house}', 'create')->name('visit.create');
     Route::delete('/visit/delete/{visit_id}', 'delete')->name('visit.delete');
 });
@@ -42,6 +43,12 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/users/update/{id}', 'update')->name('users.update');
     Route::delete('/users/delete/{id}', 'delete')->name('users.delete');
 })->middleware(['web', 'auth', EnsureAdmin::class]);
+
+Route::controller(NotificationController::class)->group(function () {
+    Route::get('/notifications', 'index')->name('notifications');
+    Route::post('/notifications/{notify}', 'markRead')->name('notifications.markAsRead');
+    
+});
 
 Route::middleware('web')->get('/csrf-token', function () {
     return response()->json(['csrf_token' => csrf_token()]);

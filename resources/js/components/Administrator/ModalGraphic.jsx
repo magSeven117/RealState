@@ -25,7 +25,6 @@ export function ModalGraphic(params) {
             .then(res=>res.json())
             .then(res=>{
                 if(res.status === 200){
-                    console.log(res)
                     const transformedData = res.data.map(item => ({
                         name: 'Property ' + item.id,
                         view: item.viewed

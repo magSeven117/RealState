@@ -25,7 +25,7 @@ export function MakeVisit() {
             .then(res => {
                 if(res.data.length != 0) {
                     setReady(true)
-                    setHouse(res.data[0]);  // Almacena los datos de la propiedad en el estado
+                    setHouse(res.data);  // Almacena los datos de la propiedad en el estado
                 } else {
                     window.location.href = "/properties";
                 }

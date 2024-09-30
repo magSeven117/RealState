@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\House;
 use App\Models\Visit;
+use App\Notifications\ScheduleVisit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -105,6 +106,8 @@ class VisitController extends Controller
             'house_id' => $house->id
         ]);
 
+        $house->notify(new ScheduleVisit($query));
+
         return response()->json([
             'message' => 'Successful operation.',
             'data' => $query,
@@ -119,16 +122,25 @@ class VisitController extends Controller
      * 
      * @return \Illuminate\Http\JsonResponse
      */
-    public function markAsVisited(Visit $visit) : JsonResponse
+    public function markAsPending(Visit $visit) : JsonResponse
     {   
-        $visit->visited_date = Carbon::now();
-        $visit->save();
+        try {
+            $visit->visited_date = Carbon::now();
+            $visit->save();
 
-        return response()->json([
-            'message' => 'Successful operation.',
-            'visit' => $visit,
-            'status' => 200
-        ], 200);
+            return response()->json([
+                'message' => 'Successful operation.',
+                'visit' => $visit,
+                'status' => 200
+            ], 200);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => 'An error occurred while creating the user.',
+                'error' => $e->getMessage(),
+                'status' => 500
+            ], 500);
+        }
+        
     }
 
     /**
@@ -140,13 +152,22 @@ class VisitController extends Controller
      */
     public function delete($visit_id) : JsonResponse
     {   
-        $visit = Visit::findOrFail($visit_id);
+        try {
+            $visit = Visit::findOrFail($visit_id);
 
-        $visit->delete();
+            $visit->delete();
 
-        return response()->json([
-            'message' => 'Successful operation.',
-            'status' => 200
-        ], 200);
+            return response()->json([
+                'message' => 'Successful operation.',
+                'status' => 200
+            ], 200);
+            
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => 'An error occurred while creating the user.',
+                'error' => $e->getMessage(),
+                'status' => 500
+            ], 500);
+        }
     }
 }

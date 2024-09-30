@@ -31,15 +31,16 @@ export function ModifyProperties() {
         fetch('/api/houses/?id=' + id) // Llamada a la API para obtener datos de la casa
             .then(res => res.json())
             .then(res => {
-                setData(res.data[0]); // Almacenar datos de la casa
+                console.log(res)
+                setData(res.data); // Almacenar datos de la casa
 
-                setImages(res.data[0].images); // Almacenar imágenes de la casa
+                setImages(res.data.images); // Almacenar imágenes de la casa
 
-                setDescription(res.data[0].description || ''); // Almacenar descripción o vacío
+                setDescription(res.data.description || ''); // Almacenar descripción o vacío
 
                 // Obtener características de la casa
-                featuresChecked = res.data[0].features 
-                    ? res.data[0].features 
+                featuresChecked = res.data.features 
+                    ? res.data.features 
                     : [];
             });
         
