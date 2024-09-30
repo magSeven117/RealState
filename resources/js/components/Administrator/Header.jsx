@@ -3,43 +3,57 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Container from 'react-bootstrap/Container';
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
 export function HeaderAdministrator() {
-    const location = useLocation(); // Obtiene la ubicación actual para manejar la navegación
-    const { user } = useContext(AuthContext);
-    const [ token, setToken] = useState();
-    
-    useEffect(()=>{
-        // Obtener el token CSRF
+    // Obtiene la ubicación actual para manejar la navegación en la aplicación
+    const location = useLocation(); 
+    const navigate = useNavigate();
+
+    // Extrae el objeto user del contexto de autenticación
+    const { user } = useContext(AuthContext); 
+
+    // Inicializa un estado para el token CSRF, utilizado para la seguridad en las solicitudes
+    const [token, setToken] = useState(); 
+
+    // useEffect se ejecuta una vez al montar el componente
+    useEffect(() => {
+        // Obtener el token CSRF desde la API
         fetch('/api/csrf-token')
-            .then(res => res.json())
+            .then(res => res.json()) // Convierte la respuesta a JSON
             .then(res => {
-                setToken(res.csrf_token); // Almacenar token CSRF
+                // Almacena el token CSRF en el estado
+                setToken(res.csrf_token); 
             });
-    }, [])
+    }, []); // Dependencias vacías para que se ejecute solo una vez
 
-    const handleLogout = ()=>{
-        const headers = new Headers();
-        headers.append('X-CSRF-TOKEN', token); // Agrega el token CSRF
-        headers.append('Accept', 'application/json'); // Indica que espera respuesta en JSON
+    // Función para manejar el cierre de sesión del usuario
+    const handleLogout = () => {
+        const headers = new Headers(); // Crea un objeto Headers para personalizar los encabezados
+        headers.append('X-CSRF-TOKEN', token); // Agrega el token CSRF al encabezado
+        headers.append('Accept', 'application/json'); // Indica que espera respuesta en formato JSON
 
+        // Configuración de la solicitud
         const config = {
-            method: 'GET', // Método de la solicitud
-            headers: headers, // Encabezados configurados
-            mode: "cors", // Modo de la solicitud
-            cache: 'no-cache', // Sin caché
+            method: 'POST', // Método de la solicitud HTTP
+            headers: headers, // Encabezados configurados anteriormente
+            mode: "cors", // Habilita CORS para la solicitud
+            cache: 'no-cache', // Desactiva la caché
         };
+
+        // Realiza la solicitud de cierre de sesión a la API
         fetch('/api/logout', config)
-            .then(res=>res.json())
-            .then(res=>{ 
-                console.log(res)
-                if(res.status === 200){
-                    window.location.href = '/'
+            .then(res => res.json()) // Convierte la respuesta a JSON
+            .then(res => {
+                // Verifica si la respuesta fue exitosa
+                if (res.status === 200) {
+                    // Redirige al usuario a la página de inicio
+                    navigate('/');
                 }
-            })
-    }
+            });
+    };
+    
     return (
         <>
             {/* Barra de navegación principal */}

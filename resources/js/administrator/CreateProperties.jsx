@@ -54,10 +54,6 @@ export function CreateProperties() {
 
         const data = new FormData(form); // Crea un nuevo objeto FormData con los datos del formulario
 
-        for (const [key, value] of data.entries()) {
-            console.log(`${key}:`, value);
-        }
-        
         const action = form.getAttribute('action'); // Obtiene la acción del formulario
         const method = form.getAttribute('method'); // Obtiene el método del formulario
         

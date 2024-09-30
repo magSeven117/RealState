@@ -1,7 +1,7 @@
 import { Footer } from "./components/General/Footer";  // Importa el componente Footer
 import { Header } from "./components/General/Nav";  // Importa el componente Header
 import { Heading } from "./components/General/Heading";  // Importa el componente Heading
-import { useParams } from "react-router-dom";  // Importa useParams para obtener los parámetros de la URL
+import { useNavigate, useParams } from "react-router-dom";  // Importa useParams para obtener los parámetros de la URL
 import { useEffect, useState } from "react";  // Importa useEffect y useState para manejar efectos secundarios y el estado del componente
 import { bathroom, room, sizeIcon } from "./components/ImageAssets";  // Importa imágenes de assets
 import React from 'react';  // Importa React
@@ -16,7 +16,8 @@ export function PropertiesDetails () {
     const [ response, setResponse ] = useState(false);  // Estado para controlar si la API ha respondido
     const [ activeCarousel , setActiveCarousel ] = useState(false);  // Estado para controlar si el carrusel de imágenes está activo
     const query = new URLSearchParams(location.search);
-    
+    const navigate = useNavigate();
+
     const URL_API_HOUSE = query.get('admin_view') ? '/api/houses/?&id='  : '/api/houses/?published=true&id='; // Define la URL base de la API para obtener detalles de las propiedades
 
     // useEffect para obtener los datos de la API cuando se carga el componente
@@ -27,6 +28,9 @@ export function PropertiesDetails () {
                 if(res.status === 200) {
                     setHouse(res.data);
                     setResponse(true);
+                }
+                if(res.status === 422){
+                    navigate('/properties')
                 }
             })
             .catch(e => {

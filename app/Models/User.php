@@ -46,35 +46,52 @@ class User extends Authenticatable
         ];
     }
 
+    // Define la relación con el modelo Visit
+    public function visits()
+    {
+        // Indica que un usuario puede tener muchas visitas
+        return $this->hasMany(Visit::class);
+    }
 
+    // Alcance para filtrar por rol
     public function scopeRole($query, $role)
     {
-        if(!is_null($role)){
+        // Verifica si el rol no es nulo
+        if (!is_null($role)) {
+            // Filtra los usuarios por el rol especificado
             return $query->where('role', $role);
         }
 
+        // Si el rol es nulo, retorna la consulta sin cambios
         return $query;
     }
 
+    // Alcance para filtrar por nombre
     public function scopeName($query, $name)
     {
-        if(!is_null($name))
-        {
-            return $query->where('name', 'LIKE', `%$name&`);
+        // Verifica si el nombre no es nulo
+        if (!is_null($name)) {
+            // Filtra los usuarios cuyo nombre coincida con el valor proporcionado
+            return $query->where('name', 'LIKE', "%$name%"); // Corrige el uso de '%' para que se interprete correctamente
         }
 
+        // Si el nombre es nulo, retorna la consulta sin cambios
         return $query;
     }
 
+    // Alcance para filtrar por correo electrónico
     public function scopeEmail($query, $email)
     {
-        if(!is_null($email))
-        {
-            return $query->where('email', 'LIKE', `%$email%`);
+        // Verifica si el correo electrónico no es nulo
+        if (!is_null($email)) {
+            // Filtra los usuarios cuyo correo electrónico coincida con el valor proporcionado
+            return $query->where('email', 'LIKE', "%$email%"); // Corrige el uso de '%' para que se interprete correctamente
         }
 
+        // Si el correo electrónico es nulo, retorna la consulta sin cambios
         return $query;
     }
+
 
 }
 

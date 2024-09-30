@@ -50,7 +50,6 @@ export function FormVisit({ house }) {
         fetch(action, config)
             .then(res => res.json()) // Convierte la respuesta a JSON
             .then(res => {
-                console.log(res); // Imprime la respuesta en consola
                 if(res.status == 422) { // Manejo de errores de validación
                     Object.keys(res.errors).forEach(item => {
                         setError(res.errors[item][0]); // Establece el primer error encontrado
@@ -67,7 +66,6 @@ export function FormVisit({ house }) {
                 setSchedule(res.data.date_visit); // Almacena la fecha de la cita
                 setShowMessage(true); // Muestra el mensaje de éxito
             })
-            .catch(e => console.log(e)); // Manejo de errores de la solicitud
     };
 
     return(

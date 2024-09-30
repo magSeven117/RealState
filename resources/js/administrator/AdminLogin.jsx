@@ -15,7 +15,6 @@ export function LoginAdministrator() {
             .then(res => {
                 setToken(res.csrf_token); // Guardamos el token CSRF en el estado
             })
-            .catch(err => console.log(err)); // Manejo de errores al obtener el token
     }, []);
 
     // Función para manejar el inicio de sesión
@@ -75,7 +74,6 @@ export function LoginAdministrator() {
             .catch(err => {
                 setIsSubmitting(false); // En caso de error, terminamos el estado de envío
                 setError("An unexpected error occurred."); // Establecemos un mensaje de error
-                console.log(err); // Mostramos el error en la consola
             });
     };
 

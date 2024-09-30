@@ -87,6 +87,8 @@ class NotificationController extends Controller
 
             // Marca la notificación como leída
             $query->markAsRead();
+            Cache::forget('notifications');
+
 
             // Borra la entrada de notificaciones del cache, ya que se ha actualizado
             Cache::forget('notifications');

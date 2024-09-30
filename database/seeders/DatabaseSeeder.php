@@ -17,34 +17,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'Nestor',
-            'email' => 'nd10salom@gmail.com',
-            'password' => Hash::make('cronos098'),
+            'name' => 'realstate',
+            'email' => 'realstate@gmail.com',
+            'password' => Hash::make('realstate'),
             'role' => 'admin'
-        ]);
-        User::create([
-            'name' => 'Hayliv',
-            'email' => 'haylivcnb@gmail.com',
-            'password' => Hash::make('cronos098'),
-            'role' => 'employee'
-        ]);
-        User::create([
-            'name' => 'Diana',
-            'email' => 'diana@gmail.com',
-            'password' => Hash::make('cronos098'),
-            'role' => 'employee'
-        ]);
-        User::create([
-            'name' => 'Valentina',
-            'email' => 'valentina@gmail.com',
-            'password' => Hash::make('cronos098'),
-            'role' => 'employee'
-        ]);
-        User::create([
-            'name' => 'Ronald',
-            'email' => 'ronald@gmail.com',
-            'password' => Hash::make('cronos098'),
-            'role' => 'employee'
         ]);
 
         $this->call(TypeHouseSeeder::class);

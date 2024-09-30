@@ -20,8 +20,7 @@ export function UsersAdministrator() {
                 if (res.status === 200) {
                     setData(res.data);
                 }
-            })
-            .catch(err => console.log(err)); // Manejo de errores en la solicitud
+            }) 
     }, []);
 
     return (

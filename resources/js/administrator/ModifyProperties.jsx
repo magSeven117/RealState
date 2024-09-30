@@ -31,7 +31,6 @@ export function ModifyProperties() {
         fetch('/api/houses/?id=' + id) // Llamada a la API para obtener datos de la casa
             .then(res => res.json())
             .then(res => {
-                console.log(res)
                 setData(res.data); // Almacenar datos de la casa
 
                 setImages(res.data.images); // Almacenar imágenes de la casa

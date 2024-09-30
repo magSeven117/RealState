@@ -29,7 +29,8 @@ Route::controller(FeatureController::class)->group(function () {
 
 Route::controller(VisitController::class)->group(function () {
     Route::get('/visit', 'index')->name('visit');
-    Route::put('/visit/visited/{visit}', 'markAsPending')->name('visit.mark.pending');
+    Route::put('/visit/pending/{visit}', 'markAsPending')->name('visit.mark.pending');
+    Route::put('/visit/visited/{visit}', 'markAsVisited')->name('visit.mark.pending');
     Route::post('/visit/{house}', 'create')->name('visit.create');
     Route::delete('/visit/delete/{visit_id}', 'delete')->name('visit.delete');
 });
@@ -48,7 +49,7 @@ Route::controller(NotificationController::class)->group(function () {
     Route::get('/notifications', 'index')->name('notifications');
     Route::post('/notifications/{notify}', 'markRead')->name('notifications.markAsRead');
     
-});
+})->middleware(['web', 'auth', EnsureAdmin::class]);
 
 Route::middleware('web')->get('/csrf-token', function () {
     return response()->json(['csrf_token' => csrf_token()]);

@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from 'react-bootstrap/Button'; // Importa el componente Button de Bootstrap
 import Modal from 'react-bootstrap/Modal'; // Importa el componente Modal de Bootstrap
 
-export function ModalConfirmAlert({ title, subtitle, button, typeButton, functionButton, buttonCancel, functionButtonCancel }) {
+export function ModalConfirmAlert({ title, subtitle, button, typeButton, functionButton, buttonCancel, functionButtonCancel, selection, stateChangeSelection }) {
+    const [ data, setData ] = useState();
+    const [ active, setActive ] = useState(false);
+
+    useEffect(()=>{
+        // Se realiza una solicitud para obtener los datos de usuarios
+        fetch('/api/users/')
+            .then(res => res.json()) // Se convierte la respuesta a formato JSON
+            .then(res => {
+                // Si la respuesta es exitosa (status 200), se actualiza el estado de usuarios
+                if (res.status === 200) {
+                    setData(res.data);
+                }
+            });
+    }, [])
+
     return (
         <div
             style={{
@@ -31,6 +46,35 @@ export function ModalConfirmAlert({ title, subtitle, button, typeButton, functio
 
                     <Modal.Body>
                         <p>{subtitle}</p> {/* Muestra el subtítulo o contenido del modal */}
+                        {
+                            (selection && data) 
+                            && <div>
+                                <label htmlFor="employee" style={{ marginRight:"5px" }}>Select an employee: </label>
+                                <select 
+                                    name="employee" 
+                                    id="employee" 
+                                    defaultValue={""} 
+                                    onChange={(e) => {// Verificar si se ha seleccionado un empleado
+                                        const selectedValue = e.target.value; // Obtener el valor seleccionado
+                                        if (selectedValue) { // Si el valor no es vacío
+                                            setActive(true); // Cambiar el estado a activo
+                                            stateChangeSelection(selectedValue)
+                                        } else {
+                                            setActive(false); // Si no hay selección, mantenerlo inactivo
+                                        }
+                                    }} 
+                                > 
+                                    <option value="" disabled>Select an employee</option>
+                                    {
+                                        data.map(item=>{
+                                            return(
+                                                <option key={item.name+item.id} value={item.id}>{item.name}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+                            </div>
+                        }
                     </Modal.Body>
 
                     <Modal.Footer>
@@ -47,6 +91,7 @@ export function ModalConfirmAlert({ title, subtitle, button, typeButton, functio
                         <Button 
                             variant={typeButton} // Tipo de botón (ej. "primary", "secondary")
                             onClick={functionButton} // Función a ejecutar al hacer clic en el botón
+                            disabled={selection ? !active : false}
                         >
                             {button} {/* Texto del botón */}
                         </Button>
