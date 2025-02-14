@@ -10,7 +10,6 @@ import { Footer } from '@/Components/Footer';
 import { RenderHouses } from '@/Components/RenderHouses';
 
 export default function Welcome({ data }) {
-
     return (
         <>
             <Head title='Home'/>
@@ -47,13 +46,7 @@ export default function Welcome({ data }) {
                     </div>
                     <div className="row">
                         {
-                            data.status === 200 
-                            ? <RenderHouses currentItems={data.data.slice(0, 6)} /> // Muestra las primeras 6 casas
-                            : <div>
-                                <h3 style={{textAlign:"center", color:"#ee5f4f"}}>
-                                    Houses not available!
-                                </h3>
-                            </div>
+                            <RenderHouses currentItems={data} /> // Muestra las primeras 6 casas
                         }
                     </div>
                 </div>

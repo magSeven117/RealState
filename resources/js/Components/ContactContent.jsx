@@ -1,6 +1,7 @@
 import React from 'react';
 import { InfoContact } from './InfoContact';
 import { Form } from './Form';
+import { Map } from './Map';
 
 export function RenderContact() {
     return (

@@ -1,6 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 export function ContentVideo() {
+    const [number, setNumber] = useState([0, 0, 0]);
+
+    useEffect(() => {
+        const array = [50, 12, 24]; // Números objetivo
+        const intervalTime = 50;    // Velocidad de actualización en ms
+
+        array.forEach((target, index) => {
+            let current = 0;
+            const interval = setInterval(() => {
+                current++;
+                setNumber((prev) => {
+                    const newNumbers = [...prev];
+                    newNumbers[index] = current;
+                    return newNumbers;
+                });
+                if (current >= target) {
+                    clearInterval(interval);
+                }
+            }, intervalTime);
+        });
+    }, []);
+
+
     return (
         <>
             {/* ***** Video Section Start ***** */}
@@ -44,7 +67,7 @@ export function ContentVideo() {
                                     <div className="col-lg-4">
                                         <div className="counter">
                                             <h2 className="timer count-title count-number" style={{ fontWeight: "700" }}>
-                                                50
+                                                { number[0] }
                                             </h2>
                                             <p className="count-text">Buildings<br />Finished Now</p>
                                         </div>
@@ -52,7 +75,7 @@ export function ContentVideo() {
                                     <div className="col-lg-4">
                                         <div className="counter">
                                             <h2 className="timer count-title count-number" style={{ fontWeight: "700" }}>
-                                                12
+                                                { number[1] }
                                             </h2>
                                             <p className="count-text">Years<br />Experience</p>
                                         </div>
@@ -60,7 +83,7 @@ export function ContentVideo() {
                                     <div className="col-lg-4">
                                         <div className="counter">
                                             <h2 className="timer count-title count-number" style={{ fontWeight: "700" }}>
-                                                24
+                                                { number[2] }
                                             </h2>
                                             <p className="count-text">Awards<br />Won 2023</p>
                                         </div>

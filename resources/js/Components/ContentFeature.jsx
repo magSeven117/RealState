@@ -20,6 +20,7 @@ export function ContenFeature() {
                                     src='/images/featured-icon.png' 
                                     alt="Featured Icon"
                                     style={{ maxWidth: '60px', padding: '0px' }}
+                                    className="max-w-[60px] p-0 absolute top-[24%] left-[28%]"
                                 />
                             </a>
                         </div>
@@ -33,11 +34,11 @@ export function ContenFeature() {
                             {/* Primer ítem del acordeón */}
                             <div className="accordion-item">
                                 <h2 className="accordion-header" id="headingOne" onClick={() => { handleChangeFeatures(0); }}>
-                                    <button className="accordion-button">
+                                    <button className={`accordion-button ${showFeature === 0 ? '' : 'collapsed'}`}>
                                         Best useful links ?
                                     </button>
                                 </h2>
-                                <div id="collapseOne" className={`accordion-collapse collapse ${showFeature === 0 && 'show'}`}>
+                                <div id="collapseOne" className={`accordion-collapse ${showFeature === 0 ? 'show' : 'collapse'}`}>
                                     <div className="accordion-body">
                                         Get <strong>the best villa</strong> website template in HTML CSS and Bootstrap for your business. TemplateMo provides you the{' '}
                                         <a href="https://www.google.com/search?q=best+free+css+templates" target="_blank" rel="noopener noreferrer">
@@ -50,18 +51,11 @@ export function ContenFeature() {
                             {/* Segundo ítem del acordeón */}
                             <div className="accordion-item">
                                 <h2 className="accordion-header" id="headingTwo" onClick={() => { handleChangeFeatures(1); }}>
-                                    <button
-                                        className="accordion-button collapsed"
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#collapseTwo"
-                                        aria-expanded="false"
-                                        aria-controls="collapseTwo"
-                                    >
+                                    <button className={`accordion-button ${showFeature === 1 ? '' : 'collapsed'}`}>
                                         How does this work ?
                                     </button>
                                 </h2>
-                                <div id="collapseTwo" className={`accordion-collapse collapse ${showFeature === 1 && 'show'}`}>
+                                <div id="collapseTwo" className={`accordion-collapse ${showFeature === 1 ? 'show' : 'collapse'}`}>
                                     <div className="accordion-body">
                                         Dolor <strong>almesit amet</strong>, consectetur adipiscing elit, sed does not eiusmod tempor incididunt ut labore consectetur <code>adipiscing</code> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                     </div>
@@ -70,11 +64,11 @@ export function ContenFeature() {
                             {/* Tercer ítem del acordeón */}
                             <div className="accordion-item">
                                 <h2 className="accordion-header" id="headingThree" onClick={() => { handleChangeFeatures(2); }}>
-                                    <button className="accordion-button collapsed">
+                                    <button className={`accordion-button ${showFeature === 2 ? '' : 'collapsed'}`}>
                                         Why is Villa Agency the best ?
                                     </button>
                                 </h2>
-                                <div id="collapseThree" className={`accordion-collapse collapse ${showFeature === 2 && 'show'}`}>
+                                <div id="collapseThree" className={`accordion-collapse ${showFeature === 2 ? 'show' : 'collapse'}`}>
                                     <div className="accordion-body">
                                         Dolor <strong>almesit amet</strong>, consectetur adipiscing elit, sed does not eiusmod tempor incididunt ut labore consectetur <code>adipiscing</code> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                     </div>

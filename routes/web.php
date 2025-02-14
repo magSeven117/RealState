@@ -2,11 +2,34 @@
 
 use App\Http\Controllers\HouseController;
 use App\Http\Controllers\ProfileController;
+use App\Models\House;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
-Route::get('/', [HouseController::class, 'index'])->name("home");
+Route::get('/', function ()  {
+    $data = House::with(['features', 'typeHouse'])->limit(6)->get();
+
+    $data->transform(function ($item) {
+        // Asegúrate de que $item->images es un array.
+        if (is_string($item->images)) {
+            // Convierte la cadena de imágenes en un array.
+            $item->images = json_decode($item->images, true);
+        }
+
+        // Verifica si $item->images es un array antes de usar array_map.
+        if (is_array($item->images)) {
+            $item->images = array_map(function ($image) {
+                return url('storage/' . $image); // Modifica la URL de cada imagen.
+            }, $item->images);
+        }
+
+        return $item; // Retorna el objeto de casa modificado.
+    });
+
+    return Inertia::render('Home', ['data' => $data]);
+})->name("home");
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

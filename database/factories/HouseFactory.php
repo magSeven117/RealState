@@ -17,56 +17,13 @@ class HouseFactory extends Factory
     public function definition(): array
     {
         $images = $this->faker->randomElement([
-            ['images/casa1-1.jpg',
-            'images/casa1-2.jpg',
-            'images/casa1-3.jpg',
-            'images/casa1-4.jpg',
-            'images/casa1-5.jpg'],
+            ['images/casa-1-1.jpg',
+            'images/casa-1-2.jpg',
+            'images/casa-1-3.jpg'],
 
-            ['images/casa2-1.jpg',
-            'images/casa2-2.jpg',
-            'images/casa2-3.jpg',
-            'images/casa2-4.jpg',
-            'images/casa2-5.jpg',
-            'images/casa2-6.jpg',
-            'images/casa2-7.jpg'],
-
-            ['images/casa3-1.jpg',
-            'images/casa3-2.jpg',
-            'images/casa3-3.jpg',
-            'images/casa3-4.jpg',
-            'images/casa3-5.jpg'],
-
-            ['images/casa4-1.jpg',
-            'images/casa4-2.jpg',
-            'images/casa4-3.jpg'],
-
-            ['images/casa5-1.jpg',
-            'images/casa5-2.jpg',
-            'images/casa5-3.jpg'],
-
-            ['images/casa6-1.jpg',
-            'images/casa6-2.jpg',
-            'images/casa6-3.jpg',
-            'images/casa6-4.jpg',
-            'images/casa6-5.jpg'],
-
-            ['images/casa7-1.jpg',
-            'images/casa7-2.jpg',
-            'images/casa7-3.jpg'],
-
-            ['images/casa8-1.jpg',
-            'images/casa8-2.jpg',
-            'images/casa8-3.jpg',
-            'images/casa8-4.jpg',
-            'images/casa8-5.jpg'],
-
-            ['images/casa9-1.jpg',
-            'images/casa9-2.jpg'],
-            
-            ['images/casa10-1.jpg',
-            'images/casa10-2.jpg',
-            'images/casa10-3.jpg']
+            ['images/casa-2-1.jpg',
+            'images/casa-2-2.jpg',
+            'images/casa-2-3.jpg',],
         ]);
 
         return [

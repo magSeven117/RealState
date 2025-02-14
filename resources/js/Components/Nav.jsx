@@ -79,28 +79,28 @@ export function Header () {
                         <div className="col-12">
                             <nav className="main-nav">
                                 {/* ***** Logo Start ***** */}
-                                <Link to='/' className="logo">
+                                <Link href='/' className="logo">
                                     <h1>Villa</h1>
                                 </Link>
                                 {/* ***** Logo End ***** */}
                                 {/* ***** Menu Start ***** */}
                                 <ul className={`nav ${showMenu ? 'show-nav' : 'no-show-nav'}`}>
                                     <li>
-                                        <Link to="/" className={`${location.pathname == '/' && 'active'}`}>Home</Link>
+                                        <Link href="/" className={`${location.url == '/' && 'active'}`}>Home</Link>
                                     </li>
                                     <li>
-                                        <Link to="/properties" className={`${location.pathname == '/properties' && 'active'}`}>Properties</Link>
+                                        <Link href="/properties" className={`${location.url == '/properties' && 'active'}`}>Properties</Link>
                                     </li>
                                     <li>
-                                        <a href="/contact" className={`${location.pathname == '/contact' && 'active'}`}>Contact Us</a>
+                                        <a href="/contact" className={`${location.url == '/contact' && 'active'}`}>Contact Us</a>
                                     </li>
-                                    {/* <li>
+                                    <li>
                                         
                                         {
-                                            query.get('admin_view') ? "" : id ? <LinkVisit id={id}  /> : "" // Muestra el enlace a la visita si hay un ID
+                                            <LinkVisit   />// Muestra el enlace a la visita si hay un ID
                                         } 
                                         
-                                    </li> */}
+                                    </li>
                                 </ul>
                                 <a onClick={handleClick} className={`menu-trigger ${showMenu ? 'active' : ''}`}>
                                     <span>Menu</span>

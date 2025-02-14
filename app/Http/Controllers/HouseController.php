@@ -127,7 +127,7 @@ class HouseController extends Controller
 
 
         // Retorna una respuesta JSON con los datos de las casas y un mensaje de éxito.
-        return Inertia::render('Welcome',[
+        return Inertia::render('Home',[
             'data' => $houses
         ]);
     }

@@ -14,7 +14,7 @@ export function HeadingCarrusel () {
                         alt="Toronto, Canada" // Texto alternativo para la imagen
                     />
                     {/* Contenedor para el texto superpuesto */}
-                    <div className="top-0 left-0 z-20 position-absolute w-100 h-100 text-home" style={{ padding: '8% 20%'}}>
+                    <div className="top-0 left-0 z-0 position-absolute w-100 h-100 text-home" style={{ padding: '8% 20%'}}>
                         <p 
                             className="bg-white" // Clase de fondo blanco
                             style={{
@@ -54,7 +54,7 @@ export function HeadingCarrusel () {
                         src='/images/banner-02.jpg' // Imagen a mostrar
                         alt="Melbourne, Australia" // Texto alternativo para la imagen
                     />
-                    <div className="top-0 left-0 z-20 position-absolute w-100 h-100 text-home" style={{ padding: '8% 20%'}}>
+                    <div className="top-0 left-0 z-0 position-absolute w-100 h-100 text-home" style={{ padding: '8% 20%'}}>
                         <p 
                             className="bg-white"
                             style={{
@@ -94,7 +94,7 @@ export function HeadingCarrusel () {
                         src='/images/banner-03.jpg' // Imagen a mostrar
                         alt="Miami, South Florida" // Texto alternativo para la imagen
                     />
-                    <div className="top-0 left-0 z-20 position-absolute w-100 h-100 text-home" style={{ padding: '8% 20%'}}>
+                    <div className="top-0 left-0 z-0 position-absolute w-100 h-100 text-home" style={{ padding: '8% 20%'}}>
                         <p 
                             className="bg-white"
                             style={{
