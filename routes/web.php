@@ -31,6 +31,17 @@ Route::get('/', function ()  {
     return Inertia::render('Home', ['data' => $data]);
 })->name("home");
 
+
+Route::controller(HouseController::class)->group(function () {
+    Route::get('/properties', 'index')->name('houses');
+
+
+    
+    Route::post('/houses/create', 'create')->name('houses.create');
+    Route::post('/houses/update/{house}', 'update')->name('houses.update');
+    Route::delete('/houses/delete/{house_id}', 'delete')->name('houses.delete');
+})->name('properties');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

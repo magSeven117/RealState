@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Feature;
 use App\Models\House;
+use App\Models\TypeHouse;
 use App\Services\FilterErrorService;
 use App\Services\ImageService;
 use Illuminate\Http\JsonResponse;
@@ -21,8 +23,6 @@ class HouseController extends Controller
      */
     public function index(Request $request)
     {
-        
-
         // Si se ha proporcionado un ID, busca la casa por su ID.
         if ($request->has('id')) { 
             // Carga la casa con sus características y tipo, y filtra por el estado de publicación.
@@ -105,7 +105,7 @@ class HouseController extends Controller
         
 
         // Se llama a la consulta una vez que todos los filtros han sido aplicados.
-        $houses = $query->get();
+        $houses = $query->paginate(12);
 
         // Modifica las URLs de las imágenes en cada casa.
         $houses->transform(function ($house) {
@@ -125,10 +125,16 @@ class HouseController extends Controller
             return $house; // Retorna el objeto de casa modificado.
         });
 
+        $houses->withQueryString();
+
+        $type_house = TypeHouse::all();
+        $features = Feature::all();
 
         // Retorna una respuesta JSON con los datos de las casas y un mensaje de éxito.
-        return Inertia::render('Home',[
-            'data' => $houses
+        return Inertia::render('Properties',[
+            'data' => $houses,
+            'typeHouse' => $type_house, 
+            'features' => $features
         ]);
     }
 

@@ -1,8 +1,9 @@
 import { Link } from '@inertiajs/react'
-import React from 'react';
+import React, { useState } from 'react';
 
 // Componente para mostrar las casas
 export function RenderHouses({ currentItems }) {
+    
     return (
         <>
             {
