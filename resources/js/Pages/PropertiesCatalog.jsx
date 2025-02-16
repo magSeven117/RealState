@@ -1,11 +1,10 @@
-import { Houses } from '@/Components/ControlHouses';
-import { Footer } from '@/Components/Footer';
-import { Heading } from '@/Components/Heading';
-import { Header } from '@/Components/Nav';
+import { Houses } from '@/Components/house/ControlHouses';
+import { Footer } from '@/Components/layout/Footer';
+import { Heading } from '@/Components/layout/Heading';
+import { Header } from '@/Components/layout/Nav';
 import { Head } from '@inertiajs/react';
 
 export default function Dashboard({data, features, typeHouse}) {
-    console.log(data)
     return (
         <>
             <Head title='Properties' />

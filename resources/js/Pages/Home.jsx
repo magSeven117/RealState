@@ -1,13 +1,13 @@
 import { Head, Link } from '@inertiajs/react';
 import { useContext, useEffect } from 'react';
-import { Header } from '@/Components/Nav';
-import { HeadingCarrusel } from '@/Components/HeadingCarrusel';
-import { ContenFeature } from '@/Components/ContentFeature';
-import { ContentVideo } from '@/Components/ContentVideo';
+import { Header } from '@/Components/layout/Nav';
+import { HeadingCarrusel } from '@/Components/layout/Carousel';
+import { ContenFeature } from '@/Components/features/ContentFeature';
+import { ContentVideo } from '@/Components/features/ContentVideo';
 import { BestDeal } from '@/Components/BestDeal';
-import { RenderContact } from '@/Components/ContactContent';
-import { Footer } from '@/Components/Footer';
-import { RenderHouses } from '@/Components/RenderHouses';
+import { RenderContact } from '@/Components/misc/ContactContent';
+import { Footer } from '@/Components/layout/Footer';
+import { RenderHouses } from '@/Components/house/RenderHouses';
 
 export default function Welcome({ data }) {
     return (

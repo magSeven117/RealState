@@ -23,49 +23,6 @@ class HouseController extends Controller
      */
     public function index(Request $request)
     {
-        // Si se ha proporcionado un ID, busca la casa por su ID.
-        if ($request->has('id')) { 
-            // Carga la casa con sus características y tipo, y filtra por el estado de publicación.
-            $query = House::with(['features', 'typeHouse'])
-                ->published($request->published) // Aplica el filtro de publicación.
-                ->find($request->input('id')); // Busca la casa por su ID.
-        
-            // Verifica si se encontró la casa.
-            if (!$query) {
-                return response()->json([ // Retorna una respuesta JSON en caso de que no se encuentre.
-                    'message' => 'Failed operation', // Mensaje de error.
-                    'error' => ['Not found.'], // Detalles del error.
-                    'status' => 422 // Código de estado HTTP.
-                ], 422);
-            }
-        
-            // Incrementa el contador de vistas de la casa.
-            $query->viewed = $query->viewed + 1;
-        
-            $query->save(); // Guarda los cambios en la base de datos.
-        
-            // Asegúrate de que $query->images es un array.
-            if (is_string($query->images)) {
-                // Convierte la cadena de imágenes en un array.
-                $query->images = json_decode($query->images, true);
-            }
-        
-            // Verifica si $query->images es un array antes de usar array_map.
-            if (is_array($query->images)) {
-                // Modifica la URL de cada imagen y almacena el resultado en $query->images.
-                $query->images = array_map(function ($image) {
-                    return url('storage/' . $image); // Modifica la URL de cada imagen.
-                }, $query->images);
-            }
-        
-            // Retorna la respuesta JSON con los datos de la casa.
-            return response()->json([
-                'message' => 'Successful operation.', // Mensaje de éxito.
-                'data' => $query, // Datos de la casa.
-                'status' => 200 // Código de estado HTTP.
-            ], 200);
-        }
-
         // Construye la consulta para obtener las casas basadas en los filtros proporcionados.
         $query = House::with(['features', 'typeHouse']) // Carga las relaciones de características y tipo de casa.
             ->whereHas('features', function($query) use ($request){
@@ -131,11 +88,61 @@ class HouseController extends Controller
         $features = Feature::all();
 
         // Retorna una respuesta JSON con los datos de las casas y un mensaje de éxito.
-        return Inertia::render('Properties',[
+        return Inertia::render('PropertiesCatalog',[
             'data' => $houses,
             'typeHouse' => $type_house, 
             'features' => $features
         ]);
+    }
+
+    /**
+     * Muestra una lista de casas basadas en los filtros proporcionados.
+     *
+     * @param  \Illuminate\Http\Request  $request  Contiene los datos de la solicitud.
+     * @param  \App\Services\FilterErrorService  $errors  Este servicio se utiliza para el filtrado de errores en el método GET.
+     * @return Inertia\Inertia  Retorna una respuesta JSON con la lista de casas filtradas.
+     */
+    public function show(Request $request){
+        // Carga la casa con sus características y tipo, y filtra por el estado de publicación.
+        $query = House::with(['features', 'typeHouse'])
+            ->published($request->published) // Aplica el filtro de publicación.
+            ->find($request->input('id')); // Busca la casa por su ID.
+    
+        // Verifica si se encontró la casa.
+        if (!$query) {
+            return response()->json([ // Retorna una respuesta JSON en caso de que no se encuentre.
+                'message' => 'Failed operation', // Mensaje de error.
+                'error' => ['Not found.'], // Detalles del error.
+                'status' => 422 // Código de estado HTTP.
+            ], 422);
+        }
+    
+        // Incrementa el contador de vistas de la casa.
+        $query->viewed = $query->viewed + 1;
+    
+        $query->save(); // Guarda los cambios en la base de datos.
+    
+        // Asegúrate de que $query->images es un array.
+        if (is_string($query->images)) {
+            // Convierte la cadena de imágenes en un array.
+            $query->images = json_decode($query->images, true);
+        }
+    
+        // Verifica si $query->images es un array antes de usar array_map.
+        if (is_array($query->images)) {
+            // Modifica la URL de cada imagen y almacena el resultado en $query->images.
+            $query->images = array_map(function ($image) {
+                return url('storage/' . $image); // Modifica la URL de cada imagen.
+            }, $query->images);
+        }
+    
+        // Retorna la respuesta JSON con los datos de la casa.
+        return response()->json([
+            'message' => 'Successful operation.', // Mensaje de éxito.
+            'data' => $query, // Datos de la casa.
+            'status' => 200 // Código de estado HTTP.
+        ], 200);
+        
     }
 
     /**

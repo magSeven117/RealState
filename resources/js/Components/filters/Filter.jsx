@@ -1,5 +1,5 @@
 import React, { use, useEffect, useState } from 'react';
-import { CancelButton, FilterButton, TrashIcon } from "./Icon";
+import { CancelButton, FilterButton, TrashIcon } from "../ui/Icon";
 import { usePage } from '@inertiajs/react';
 
 export function Filter({features, typeHouse}) {

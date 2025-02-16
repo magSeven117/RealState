@@ -1,6 +1,6 @@
 import React from "react";
-import { Filter } from "@/Components/Filter";
-import { RenderHouses } from "@/Components/RenderHouses";
+import { Filter } from "@/Components/filters/Filter";
+import { RenderHouses } from "@/Components/house/RenderHouses";
 import { Link } from "@inertiajs/react";
 
 export function Houses({house, features, typeHouse}) {
@@ -30,7 +30,7 @@ export function Houses({house, features, typeHouse}) {
                         <Link
                             key={index}
                             href={link.url || "#"}
-                            className={`px-3 py-1 mx-1 border ${link.active ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+                            className={`px-3 py-1 mx-1 border font-medium border-2 ${link.active ? "bg-[#1e1e1e] text-white" : "bg-[#fafafa] border-[#1e1e1e] text-[#1e1e1e] hover:bg-[#f35525] transition-all duration-300"}`}
                             dangerouslySetInnerHTML={{ __html: link.label }}
                         />
                     ))}

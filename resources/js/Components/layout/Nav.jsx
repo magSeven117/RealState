@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 // import { useLocation, useParams } from 'react-router-dom';
 import { Link, usePage } from '@inertiajs/react';
 import React from 'react';
-import { LinkVisit } from "./LinkVisit";
+import { LinkVisit } from "@/Components/features/LinkVisit";
 
 export function Header () {
     const [showMenu, getShowMenu] = useState(true); // Estado para controlar la visibilidad del menú
