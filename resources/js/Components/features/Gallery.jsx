@@ -1,7 +1,7 @@
 import React from "react";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
-import { CancelButton } from "../ImageAssets";
+import { CancelButton } from "../ui/Icon";
 
 export function Gallery({ house, handleActiveCarousel }) {
     const images = house.images.map((img) => ({

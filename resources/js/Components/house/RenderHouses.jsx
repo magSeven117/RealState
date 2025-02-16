@@ -16,7 +16,7 @@ export function RenderHouses({ currentItems }) {
                         <div className="col-lg-4 col-md-6 align-self-center mb-30 properties-items adv" key={item.id}>
                             <div className="item">
                                 {/* Enlace a los detalles de la propiedad */}
-                                <Link href={'/property-details/'} data={{ 'id' : item.id }}> 
+                                <Link href={`/propertie/${item.id}`}> 
                                     <img src={item.images[0]} alt={item.id} style={{ height:"235px", objectFit:"cover" }}/>
                                 </Link>
                                 {/* Categoría de la propiedad */}
@@ -29,7 +29,7 @@ export function RenderHouses({ currentItems }) {
                                 </h6>
                                 {/* Dirección de la propiedad */}
                                 <h4 style={{height:"75px"}}>
-                                    <Link href={'/property-details/'} data={{ 'id' : item.id }}>
+                                    <Link href={`/propertie/${item.id}`}>
                                         {item.address}
                                     </Link>
                                 </h4>
@@ -58,7 +58,7 @@ export function RenderHouses({ currentItems }) {
                                 </ul>
                                 {/* Botón para programar una visita */}
                                 <div className="main-button">
-                                    <Link href={'/property-details/'} data={{ 'id' : item.id }}>Schedule a visit</Link>
+                                    <Link href={`/propertie/${item.id}`}>Schedule a visit</Link>
                                 </div>
                             </div>
                         </div>

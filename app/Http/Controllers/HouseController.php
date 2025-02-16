@@ -102,19 +102,15 @@ class HouseController extends Controller
      * @param  \App\Services\FilterErrorService  $errors  Este servicio se utiliza para el filtrado de errores en el método GET.
      * @return Inertia\Inertia  Retorna una respuesta JSON con la lista de casas filtradas.
      */
-    public function show(Request $request){
+    public function show($id, Request $request){
         // Carga la casa con sus características y tipo, y filtra por el estado de publicación.
         $query = House::with(['features', 'typeHouse'])
             ->published($request->published) // Aplica el filtro de publicación.
-            ->find($request->input('id')); // Busca la casa por su ID.
+            ->find($id); // Busca la casa por su ID.
     
         // Verifica si se encontró la casa.
         if (!$query) {
-            return response()->json([ // Retorna una respuesta JSON en caso de que no se encuentre.
-                'message' => 'Failed operation', // Mensaje de error.
-                'error' => ['Not found.'], // Detalles del error.
-                'status' => 422 // Código de estado HTTP.
-            ], 422);
+            return redirect()->back();
         }
     
         // Incrementa el contador de vistas de la casa.
@@ -137,11 +133,9 @@ class HouseController extends Controller
         }
     
         // Retorna la respuesta JSON con los datos de la casa.
-        return response()->json([
-            'message' => 'Successful operation.', // Mensaje de éxito.
+        return Inertia::render('Propertie', [
             'data' => $query, // Datos de la casa.
-            'status' => 200 // Código de estado HTTP.
-        ], 200);
+        ]);
         
     }
 

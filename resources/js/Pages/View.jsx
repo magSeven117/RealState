@@ -82,7 +82,7 @@ export default function Propertie({ data }) {
                                             Features
                                         </button>
                                     </h2>
-                                    <div className="accordion-collapse">
+                                    <div className="accordion-collapse collapse show">
                                         <div className="accordion-body">
                                             {/* Muestra las características de la propiedad */}
                                             {
@@ -115,14 +115,14 @@ export default function Propertie({ data }) {
                         <div className="col-lg-4" style={{ padding: "0 35px" }}>
                             {/* Componente LinkVisit para agendar visitas */}
                             <div style={{ marginBottom: "20px" }}>
-                                <LinkVisit id={data.id}/>
+                                {query.get('admin_view') ? "" : <LinkVisit id={data.id} />}
                             </div>
 
                             {/* Tabla con información adicional */}
                             <div className="info-table">
                                 <ul style={{ paddingLeft: "0" }}>
                                     <li>
-                                        <img src='/images/info-icon-01.png' alt="" style={{ width: "50px" }} />
+                                        <img src='/public/images/info-icon-01.png' alt="" style={{ width: "50px" }} />
                                         <h4>
                                             {Math.floor(data.size)}m²
                                             <br />
@@ -130,7 +130,7 @@ export default function Propertie({ data }) {
                                         </h4>
                                     </li>
                                     <li>
-                                        <img src='/images/room.png' alt="" style={{ width: "50px" }} />
+                                        <img src='/public/images/room.png' alt="" style={{ width: "50px" }} />
                                         <h4>
                                             {data.quarters}
                                             <br />
@@ -138,7 +138,7 @@ export default function Propertie({ data }) {
                                         </h4>
                                     </li>
                                     <li>
-                                        <img src='/images/bathroom.png' alt="" style={{ width: "50px" }} />
+                                        <img src='/public/images/bathroom.png' alt="" style={{ width: "50px" }} />
                                         <h4>
                                             {data.bathroom}
                                             <br />
