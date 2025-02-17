@@ -9,7 +9,7 @@ import { RenderContact } from '@/Components/misc/ContactContent';
 import { Footer } from '@/Components/layout/Footer';
 import { RenderHouses } from '@/Components/house/RenderHouses';
 
-export default function Welcome({ data }) {
+export default function Home({ data }) {
     return (
         <>
             <Head title='Home'/>

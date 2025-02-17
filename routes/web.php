@@ -32,17 +32,17 @@ Route::get('/', function ()  {
 })->name("home");
 
 Route::controller(HouseController::class)->group(function () {
-    Route::get('/properties', 'index')->name('houses');
+    Route::get('/properties', 'index');
     Route::get('/propertie/{id}', 'show');
 
-    Route::post('/houses/create', 'create')->name('houses.create');
-    Route::post('/houses/update/{house}', 'update')->name('houses.update');
-    Route::delete('/houses/delete/{house_id}', 'delete')->name('houses.delete');
-})->name('properties');
+    Route::post('/houses/create', 'create');
+    Route::post('/houses/update/{house}', 'update');
+    Route::delete('/houses/delete/{house_id}', 'delete');
+});
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/contact', function () {
+    return Inertia::render('Contact');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
