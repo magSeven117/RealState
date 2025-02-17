@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HouseController;
 use App\Http\Controllers\ProfileController;
 use App\Models\House;
@@ -42,6 +43,10 @@ Route::controller(HouseController::class)->group(function () {
 
 Route::get('/contact', function () {
     return Inertia::render('Contact');
+});
+
+Route::controller(AdminController::class)->group(function () {
+    Route::get('/dashboard', 'index');
 });
 
 Route::middleware('auth')->group(function () {
