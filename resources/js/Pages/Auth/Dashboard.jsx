@@ -6,7 +6,7 @@ import { ModalGraphicEmployeeVisit } from "@/Components/admin/ModalGraphicEmploy
 import { ModalTablePropertiesCreated } from "@/Components/admin/ModalTablePropertiesCreated";
 import { ModalGraphic } from "@/Components/admin/ModalGraphic";
 
-export default function Dashboard({ visit, house, user }) {
+export default function Dashboard({ visit, house, user, users, pending }) {
 
     return (
         <>
@@ -25,7 +25,7 @@ export default function Dashboard({ visit, house, user }) {
                     <ModalTablePropertiesCreated house={house}/>
 
                     {/* Tablas de empleados y visitas urgentes */}
-                    <ModalGraphicEmployeeVisit />
+                    <ModalGraphicEmployeeVisit users={users} pending={pending} />
                 </div>
             </div>
         </>

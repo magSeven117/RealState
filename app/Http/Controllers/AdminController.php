@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\House;
+use App\Models\User;
 use App\Models\Visit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,13 +42,19 @@ class AdminController extends Controller
             return $item; // Retorna el objeto de casa modificado.
         });
 
+        $users = User::where('active', true)->limit(4)->get();
+
+        $pending = Visit::where('pending_visit', true)->limit(4)->get();
+
         return Inertia::render('Auth/Dashboard', [
             'visit' => $visit,
             'house' => $house,
             'user' => [
                 'id' => 1,
                 'name' => 'Nestor'
-            ]
+            ], 
+            'users' => $users,
+            'pending' => $pending ,
         ]);
     }
 

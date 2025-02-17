@@ -4,7 +4,7 @@ import { Link } from "@inertiajs/react";
 
 
 export function ModalGraphicEmployeeVisit({ users, pending }) {
-
+    console.log(pending)
     return (
         <div className="content-graphic">
             {/* Sección para mostrar las visitas urgentes */}
@@ -32,7 +32,7 @@ export function ModalGraphicEmployeeVisit({ users, pending }) {
                                     <td>{item.phone}</td>   {/* Muestra el teléfono del visitante */}
                                     <td>
                                         <Link>
-                                            <Button variant="secondary" style={{ width: "100%", padding: "0px 0" }}>View</Button>
+                                            <Button variant="secondary" style={{ width: "100%", padding: "0px 0", backgroundColor:"#FFCF50", color:"#1e1e1e", fontWeight: "600" }}>View</Button>
                                         </Link>
                                     </td>
                                 </tr>
@@ -48,7 +48,7 @@ export function ModalGraphicEmployeeVisit({ users, pending }) {
             {/* Sección para mostrar los empleados */}
             <div style={{ height: "280px", width: "100%", padding: "0 10px" }}>
                 <h5 style={{ width: "100%", textAlign: "center" }}>
-                    Scheduled Visits Needing Immediate Attention
+                    Active employees
                 </h5>
                 
                 <Table striped bordered hover>
@@ -70,7 +70,7 @@ export function ModalGraphicEmployeeVisit({ users, pending }) {
                                 </tr>
                             ))
                             : <tr>
-                                <td colSpan={3} style={{ textAlign: "center" }}>No employees.</td> {/* Mensaje si no hay empleados */}
+                                <td colSpan={3} style={{ textAlign: "center" }}>No active employees.</td> {/* Mensaje si no hay empleados */}
                             </tr>
                         }
                     </tbody>
