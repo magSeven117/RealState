@@ -9,6 +9,7 @@ use App\Services\FilterErrorService;
 use App\Services\ImageService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
@@ -49,23 +50,11 @@ class HouseController extends Controller
             ->Bath($request->bathroom) // Aplica el filtro de baños.
             ->Search($request->search) // Aplica el filtro de búsqueda.
             ->TypeHouse($request->type_house) // Aplica el filtro de tipo de casa.
-            ->published($request->published); // Si se solicita, filtra solo las casas publicadas.
-
-        // Aplica el límite si está presente en la solicitud.
-        if($request->has('limit')) $query->limit($request->limit);
-
-        // Se solicita invertir el orden de la lista
-        if($request->has('orderBy')) $query->orderBy('id',$request->input('orderBy'));
-
-        // Se solicita invertir el orden de la lista de viewed
-        if($request->has('orderByViewed')) $query->orderBy('viewed',$request->input('orderByViewed'));
-        
-
-        // Se llama a la consulta una vez que todos los filtros han sido aplicados.
-        $houses = $query->paginate(12);
+            ->published($request->published) // Si se solicita, filtra solo las casas publicadas.
+            ->paginate(12); 
 
         // Modifica las URLs de las imágenes en cada casa.
-        $houses->transform(function ($house) {
+        $query->transform(function ($house) {
             // Asegúrate de que $house->images es un array.
             if (is_string($house->images)) {
                 // Convierte la cadena de imágenes en un array.
@@ -82,14 +71,14 @@ class HouseController extends Controller
             return $house; // Retorna el objeto de casa modificado.
         });
 
-        $houses->withQueryString();
+        $query->withQueryString();
 
         $type_house = TypeHouse::all();
         $features = Feature::all();
 
         // Retorna una respuesta JSON con los datos de las casas y un mensaje de éxito.
         return Inertia::render('PropertiesCatalog',[
-            'data' => $houses,
+            'data' => $query,
             'typeHouse' => $type_house, 
             'features' => $features
         ]);
@@ -102,34 +91,43 @@ class HouseController extends Controller
      * @param  \App\Services\FilterErrorService  $errors  Este servicio se utiliza para el filtrado de errores en el método GET.
      * @return Inertia\Inertia  Retorna una respuesta JSON con la lista de casas filtradas.
      */
-    public function show($id, Request $request){
-        // Carga la casa con sus características y tipo, y filtra por el estado de publicación.
-        $query = House::with(['features', 'typeHouse'])
-            ->published($request->published) // Aplica el filtro de publicación.
-            ->find($id); // Busca la casa por su ID.
-    
-        // Verifica si se encontró la casa.
-        if (!$query) {
-            return redirect()->back();
-        }
-    
-        // Incrementa el contador de vistas de la casa.
-        $query->viewed = $query->viewed + 1;
-    
-        $query->save(); // Guarda los cambios en la base de datos.
-    
-        // Asegúrate de que $query->images es un array.
-        if (is_string($query->images)) {
-            // Convierte la cadena de imágenes en un array.
-            $query->images = json_decode($query->images, true);
-        }
-    
-        // Verifica si $query->images es un array antes de usar array_map.
-        if (is_array($query->images)) {
-            // Modifica la URL de cada imagen y almacena el resultado en $query->images.
-            $query->images = array_map(function ($image) {
-                return url('storage/' . $image); // Modifica la URL de cada imagen.
-            }, $query->images);
+    public function show($id, Request $request)
+    {
+        $Cache_Name = 'propertie_' . $id;
+
+        if(Cache::has($Cache_Name)){
+            $query = Cache::get($Cache_Name);
+        } else {
+            // Carga la casa con sus características y tipo, y filtra por el estado de publicación.
+            $query = House::with(['features', 'typeHouse'])
+                ->published($request->published) // Aplica el filtro de publicación.
+                ->find($id); // Busca la casa por su ID.
+
+            // Verifica si se encontró la casa.
+            if (!$query) {
+                return redirect()->back();
+            }
+
+            // Incrementa el contador de vistas de la casa.
+            $query->viewed = $query->viewed + 1;
+
+            $query->save(); // Guarda los cambios en la base de datos.
+
+            // Asegúrate de que $query->images es un array.
+            if (is_string($query->images)) {
+                // Convierte la cadena de imágenes en un array.
+                $query->images = json_decode($query->images, true);
+            }
+
+            // Verifica si $query->images es un array antes de usar array_map.
+            if (is_array($query->images)) {
+                // Modifica la URL de cada imagen y almacena el resultado en $query->images.
+                $query->images = array_map(function ($image) {
+                    return url('storage/' . $image); // Modifica la URL de cada imagen.
+                }, $query->images);
+            }
+
+            Cache::put($Cache_Name, $query, now()->addHours(2));
         }
     
         // Retorna la respuesta JSON con los datos de la casa.

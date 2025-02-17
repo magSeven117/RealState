@@ -4,11 +4,13 @@ import { Heading } from '@/Components/layout/Heading';  // Importa el componente
 import { useState, React } from "react";  // Importa useState para manejar el estado del componente
 import { LinkVisit } from '@/Components/features/LinkVisit';  // Importa el componente LinkVisit para mostrar un botón de visita
 import { Gallery } from '@/Components/features/Gallery';  // Importa el componente Gallery para mostrar imágenes en carrusel
+import { Head } from '@inertiajs/react';
 
 export default function Propertie({ data }) {
     console.log(data);  // Para verificar la estructura de los datos
     
     const [activeCarousel, setActiveCarousel] = useState(false);  // Estado para controlar si el carrusel de imágenes está activo
+    const price = Number(Math.floor(data.price)).toLocaleString("de-DE");
 
     // Función para activar o desactivar el carrusel de imágenes
     const handleActiveCarousel = (value) => {
@@ -26,6 +28,11 @@ export default function Propertie({ data }) {
 
     return (
         <>
+            <Head>
+                <title>Propertie</title>
+                <meta name="description" content={`Property located in ${data.address} with excellent features and an excellent price for $${price} come see them and make the schedule`}/>
+            </Head>
+
             {/* ***** Header Area Start ***** */}
             <Header />
             {/* ***** Header Area End ***** */}
@@ -65,7 +72,7 @@ export default function Propertie({ data }) {
                                     <span className="category">
                                         {data.type_house.type_house}  {/* Tipo de casa */}
                                     </span>
-                                    <p className="price">${Number(Math.floor(data.price)).toLocaleString("de-DE")}</p>  {/* Precio de la propiedad */}
+                                    <p className="price">${price}</p>  {/* Precio de la propiedad */}
                                 </div>
 
                                 <h4>{data.address}</h4>  {/* Dirección de la propiedad */}

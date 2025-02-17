@@ -178,7 +178,7 @@ class House extends Model
             return $query->where('published', $isPublished);
         }
 
-        return $query; // Si el $value es nulo, retorna el query sin modificaciones.
+        return $query->where('published', true); // Si el $value es nulo, retorna el query sin modificaciones.
     }
 
 }
