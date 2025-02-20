@@ -3,10 +3,9 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HouseController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use App\Models\House;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 Route::get('/', function ()  {
@@ -45,9 +44,20 @@ Route::get('/contact', function () {
     return Inertia::render('Contact');
 });
 
-Route::controller(AdminController::class)->group(function () {
-    Route::get('/dashboard', 'index');
+Route::get('/dashboard', [AdminController::class, 'index']);
+
+
+Route::controller(UserController::class)->group(function () {
+    Route::get('/dashboard/users', 'index')->name("users");
+    Route::get('/dashboard/users/create', 'create');
+    Route::post('/dashboard/users/create', 'store');
+    
+    Route::get('/dashboard/users/update/{id}', 'edit');
+    Route::post('/dashboard/users/update/{id}', 'update');
+    Route::delete('/dashboard/users/delete/{id}', 'destroy');
 });
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
