@@ -24,6 +24,7 @@
         "bootstrap": "^5.3.3",
         "react-bootstrap": "^2.10.9",
         "react-image-gallery": "^1.4.0",
-        "recharts": "^2.15.1"
+        "recharts": "^2.15.1",
+        "suneditor": "^2.47.5"
     }
 }

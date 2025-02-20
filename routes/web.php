@@ -42,7 +42,6 @@ Route::get('/contact', function () {
 
 Route::get('/dashboard', [AdminController::class, 'index']);
 
-
 Route::middleware("auth")->controller(UserController::class)->group(function () {
     Route::get('/dashboard/users', 'index')->name("users");
     Route::get('/dashboard/users/create', 'create');
@@ -54,12 +53,13 @@ Route::middleware("auth")->controller(UserController::class)->group(function () 
 });
 
 Route::controller(HouseController::class)->group(function () {
-    Route::get('/dashboard/properties', 'index_Administer');
+    Route::get('/dashboard/properties', 'index_administer')->name("properties");
     Route::get('/dashboard/propertie/create', 'create');
     Route::post('/dashboard/propertie/create', 'store');
 
-    Route::post('/dashboard/propertie/update/{id}', 'edit');
+    Route::get('/dashboard/propertie/update/{id}', 'edit');
     Route::post('/dashboard/propertie/update/{id}', 'update');
+
     Route::delete('/dashboard/propertie/delete/{id}', 'destroy');
 });
 

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Feature;
 use App\Models\House;
 use App\Models\TypeHouse;
-use App\Services\FilterErrorService;
 use App\Services\ImageService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -20,7 +19,7 @@ class HouseController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request  Contiene los datos de la solicitud.
      * @param  \App\Services\FilterErrorService  $errors  Este servicio se utiliza para el filtrado de errores en el método GET.
-     * @return \Illuminate\Http\JsonResponse  Retorna una respuesta JSON con la lista de casas filtradas.
+     * @return Inertia\Inertia  Retorna un renderizado con Inertia.
      */
     public function index(Request $request)
     {
@@ -85,11 +84,11 @@ class HouseController extends Controller
     }
 
     /**
-     * Muestra una lista de casas basadas en los filtros proporcionados.
+     * Muestra una casa basada en el ID.
      *
      * @param  \Illuminate\Http\Request  $request  Contiene los datos de la solicitud.
      * @param  \App\Services\FilterErrorService  $errors  Este servicio se utiliza para el filtrado de errores en el método GET.
-     * @return Inertia\Inertia  Retorna una respuesta JSON con la lista de casas filtradas.
+     * @return Inertia\Inertia  Retorna un renderizado con Inertia.
      */
     public function show($id, Request $request)
     {
@@ -138,8 +137,14 @@ class HouseController extends Controller
     }
 
 
-
-    public function index_Administer(Request $request)
+    /**
+     * Muestra una lista de casas para el administrador.
+     *
+     * @param  \Illuminate\Http\Request  $request  Contiene los datos enviados en la solicitud.
+     *                                                  guardar, dar nombres y chequear existencias de imágenes antiguas.
+     * @return Inertia\Inertia  Retorna un renderizado con Inertia.
+     */
+    public function index_administer(Request $request)
     {
         $Cache_Name = 'properties_' . $request->page;
         
@@ -183,22 +188,43 @@ class HouseController extends Controller
         
     }
 
-
-
-
-
     /**
-     * Crea una nueva casa basada en la información proporcionada.
+     * Muestra el area de creacion de casas para el administrador.
      *
      * @param  \Illuminate\Http\Request  $request  Contiene los datos enviados en la solicitud.
      * @param  App\Services\ImageService  $methodImage  Servicio para el control de imágenes, 
      *                                                  guardar, dar nombres y chequear existencias de imágenes antiguas.
-     * @return \Illuminate\Http\JsonResponse  Retorna una respuesta JSON con el estado de la operación.
+     * @return Inertia\Inertia  Retorna un renderizado con Inertia.
      */
-    public function create(Request $request, ImageService $methodImage) : JsonResponse
+    public function create()
+    {
+        $typeHouse = TypeHouse::all();
+        $feature = Feature::all();
+
+
+        // Retorna una respuesta JSON indicando que la operación fue exitosa junto con los datos de la casa.
+        return Inertia::render('Auth/CreatePropertie',[
+            'auth' => [
+                'name' => 'nestor',
+                'id' => 1
+            ],
+            'typeHouse' => $typeHouse,
+            'feature' => $feature
+        ]);
+    }
+
+    /**
+     * Crea una nueva casa basada en la información proporcionada por el administrador.
+     *
+     * @param  \Illuminate\Http\Request  $request  Contiene los datos enviados en la solicitud.
+     * @param  App\Services\ImageService  $methodImage  Servicio para el control de imágenes, 
+     *                                                  guardar, dar nombres y chequear existencias de imágenes antiguas.
+     * @return Redirect  Retorna una redirect hacia la vista index_Administer.
+     */
+    public function store(Request $request, ImageService $methodImage)
     {
         // Valida la información recibida en la solicitud.
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'address' => 'required|string|max:255',              // Dirección es requerida, debe ser una cadena y no exceder 255 caracteres.
             'description' => 'required|string|max:100000',       // Descripción es requerida, debe ser una cadena y no exceder 100000 caracteres.
             'bathroom' => 'required|integer|min:1',              // El número de baños es requerido, debe ser un entero y al menos 1.
@@ -210,15 +236,6 @@ class HouseController extends Controller
             'quarters' => 'required|integer|min:1',               // El número de habitaciones es requerido, debe ser un entero y al menos 1.
             'type_house' => 'required|string'                      // El tipo de casa es requerido, debe ser una cadena.
         ]);
-
-        // Si la validación falla, devuelve un error en formato JSON.
-        if($validator->fails()){
-            return response()->json([
-                'message' => 'Failed operation.',
-                'error' => $validator->errors(),
-                'status' => 422
-            ], 422);
-        }
 
         // Guarda las imágenes utilizando el servicio de imágenes y obtiene sus rutas.
         $imagePaths = $methodImage->SaveImage($request->file('images'));
@@ -240,13 +257,38 @@ class HouseController extends Controller
 
         // Sincroniza las características con la casa creada.
         $house->features()->sync($request->input('feature'));
+
+        Cache::flush();
         
         // Retorna una respuesta JSON indicando que la operación fue exitosa junto con los datos de la casa.
-        return response()->json([
-            'message' => 'Successful operation.',
-            'data' => $house,
-            'status' => 200
-        ], 200);
+        return redirect(route("properties"));
+    }
+
+
+    /**
+     * Muestra el area de creacion de casas para el administrador.
+     *
+     * @param  \Illuminate\Http\Request  $request  Contiene los datos enviados en la solicitud.
+     * @param  App\Services\ImageService  $methodImage  Servicio para el control de imágenes, 
+     *                                                  guardar, dar nombres y chequear existencias de imágenes antiguas.
+     * @return Inertia\Inertia  Retorna un renderizado con Inertia.
+     */
+    public function edit($id)
+    {
+        $query = House::find($id);
+
+        if (!$query) {
+            return redirect(route("properties"));
+        }
+
+        // Retorna una respuesta JSON indicando que la operación fue exitosa junto con los datos de la casa.
+        return Inertia::render('Auth/UpdatePropertie',[
+            'auth' => [
+                'name' => 'nestor',
+                'id' => 1
+            ],
+            'data' => $query,
+        ]);
     }
 
     /**
@@ -256,7 +298,7 @@ class HouseController extends Controller
      * @param  App\Models\House  $house  Se necesita el ID para la búsqueda en la tabla houses.
      * @param  App\Services\ImageService  $methodImage  Servicio para el control de imágenes, 
      *                                                    guardar, dar nombres y chequear existencias de imágenes antiguas.
-     * @return \Illuminate\Http\JsonResponse  Retorna una respuesta JSON con el estado de la operación.
+     * @return Inertia\Inertia  Retorna un renderizado con Inertia.
      */
     public function update(Request $request, House $house, ImageService $methodImage) : JsonResponse
     {
@@ -326,6 +368,8 @@ class HouseController extends Controller
         // Guarda los cambios en el modelo de casa.
         $house->save();
 
+        Cache::flush();
+
         // Retorna una respuesta JSON indicando que la operación fue exitosa junto con los datos de la casa.
         return response()->json([
             'message' => 'Successful operation.',
@@ -340,11 +384,13 @@ class HouseController extends Controller
      *
      * @param  App\Models\House  $house  Se necesita el ID para la búsqueda en la tabla houses.
      * 
-     * @return \Illuminate\Http\JsonResponse  Retorna una respuesta JSON con el estado de la operación.
+     * @return Inertia\Inertia  Retorna un renderizado con Inertia.
      */
     public function delete($house_id, ImageService $methodImage) : JsonResponse
     {   
         try {
+            Cache::flush();
+
             // Busca la casa por su ID o lanza una excepción 404 si no la encuentra.
             $house = House::findOrFail($house_id);
 
