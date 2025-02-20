@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function ()  {
-    $data = House::with(['features', 'typeHouse'])->limit(6)->get();
+    $data = House::with(['features', 'typeHouse'])->limit(6)->published(true)->get();
 
     $data->transform(function ($item) {
         // Asegúrate de que $item->images es un array.
@@ -34,10 +34,6 @@ Route::get('/', function ()  {
 Route::controller(HouseController::class)->group(function () {
     Route::get('/properties', 'index');
     Route::get('/propertie/{id}', 'show');
-
-    Route::post('/houses/create', 'create');
-    Route::post('/houses/update/{house}', 'update');
-    Route::delete('/houses/delete/{house_id}', 'delete');
 });
 
 Route::get('/contact', function () {
@@ -47,7 +43,7 @@ Route::get('/contact', function () {
 Route::get('/dashboard', [AdminController::class, 'index']);
 
 
-Route::controller(UserController::class)->group(function () {
+Route::middleware("auth")->controller(UserController::class)->group(function () {
     Route::get('/dashboard/users', 'index')->name("users");
     Route::get('/dashboard/users/create', 'create');
     Route::post('/dashboard/users/create', 'store');
@@ -57,6 +53,15 @@ Route::controller(UserController::class)->group(function () {
     Route::delete('/dashboard/users/delete/{id}', 'destroy');
 });
 
+Route::controller(HouseController::class)->group(function () {
+    Route::get('/dashboard/properties', 'index_Administer');
+    Route::get('/dashboard/propertie/create', 'create');
+    Route::post('/dashboard/propertie/create', 'store');
+
+    Route::post('/dashboard/propertie/update/{id}', 'edit');
+    Route::post('/dashboard/propertie/update/{id}', 'update');
+    Route::delete('/dashboard/propertie/delete/{id}', 'destroy');
+});
 
 
 Route::middleware('auth')->group(function () {

@@ -137,6 +137,56 @@ class HouseController extends Controller
         
     }
 
+
+
+    public function index_Administer(Request $request)
+    {
+        $Cache_Name = 'properties_' . $request->page;
+        
+        if(Cache::has($Cache_Name) && !$request->has('address')){
+            $query = Cache::get($Cache_Name);
+        } else {
+            // Carga la casa con sus características y tipo, y filtra por el estado de publicación.
+            $query = House::search($request->address)->paginate(9); // Busca la casa por su ID.
+
+            // Modifica las URLs de las imágenes en cada casa.
+            $query->transform(function ($house) {
+                // Asegúrate de que $house->images es un array.
+                if (is_string($house->images)) {
+                    // Convierte la cadena de imágenes en un array.
+                    $house->images = json_decode($house->images, true);
+                }
+
+                // Verifica si $house->images es un array antes de usar array_map.
+                if (is_array($house->images)) {
+                    $house->images = array_map(function ($image) {
+                        return url('storage/' . $image); // Modifica la URL de cada imagen.
+                    }, $house->images);
+                }
+
+                return $house; // Retorna el objeto de casa modificado.
+            });
+
+            if(!$request->has('address')){
+                Cache::put($Cache_Name, $query, now()->addHours(2));
+            }
+        }
+    
+        // Retorna la respuesta JSON con los datos de la casa.
+        return Inertia::render('Auth/Properties', [
+            'auth' => [
+                'name' => "Nestor",
+                'id' => 1
+            ],
+            'house' => $query, // Datos de la casa.
+        ]);
+        
+    }
+
+
+
+
+
     /**
      * Crea una nueva casa basada en la información proporcionada.
      *
