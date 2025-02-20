@@ -32,18 +32,19 @@ export default function UpdateUser({ auth, user }) {  // Función principal del 
     } 
 
     const setConfirmDelete = () => {
+        setIsSubmittingDelete(true)
         if (confirm("Do you want to continue?")) {
 
             router.delete('/dashboard/users/delete/'+user.id, {
                 onSuccess : () => {
-                    setIsSubmit(false);
+                    setIsSubmittingDelete(false);
                     window.location.href = '/dashboard/users';
                 },
                 onError : () =>{    
-                    setIsSubmit(false);
+                    setIsSubmittingDelete(false);
                 },
                 onFinish : () =>{    
-                    setIsSubmit(false);
+                    setIsSubmittingDelete(false);
                 },
             });
         }
