@@ -6,7 +6,7 @@ import { ModalGraphicEmployeeVisit } from "@/Components/admin/ModalGraphicEmploy
 import { ModalTablePropertiesCreated } from "@/Components/admin/ModalTablePropertiesCreated";
 import { ModalGraphic } from "@/Components/admin/ModalGraphic";
 
-export default function Dashboard({ visit, house, user, users, pending }) {
+export default function Dashboard({ visit, house, user, users, pending, notification }) {
 
     return (
         <>
@@ -16,7 +16,7 @@ export default function Dashboard({ visit, house, user, users, pending }) {
 
             <HeaderAdministrator user={user}/>
             <div className="container-all">
-                <ModalNotify />
+                <ModalNotify notification={notification}/>
                 <div className="container-right">
                     {/* Graficas de visitas y visualizaciones */}
                     <ModalGraphic visit={visit} house={house}/>

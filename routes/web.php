@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HouseController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisitController;
@@ -78,6 +79,7 @@ Route::controller(VisitController::class)->group(function () {
     Route::post('/dashboard/visit/delete/{id}', 'destroy')->middleware("auth");
 });
 
+Route::post('/notification/{id}', [NotificationController::class, 'markRead'])->middleware('auth');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

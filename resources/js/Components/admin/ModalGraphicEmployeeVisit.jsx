@@ -4,7 +4,6 @@ import { Link } from "@inertiajs/react";
 
 
 export function ModalGraphicEmployeeVisit({ users, pending }) {
-    console.log(pending)
     return (
         <div className="content-graphic">
             {/* Sección para mostrar las visitas urgentes */}

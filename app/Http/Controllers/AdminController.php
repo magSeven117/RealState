@@ -6,6 +6,7 @@ use App\Models\House;
 use App\Models\User;
 use App\Models\Visit;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -47,12 +48,15 @@ class AdminController extends Controller
 
         $pending = Visit::where('pending_visit', true)->limit(4)->get();
 
+        $notification = DatabaseNotification::whereNull('read_at')->orderBy('created_at', 'DESC')->get();
+
         return Inertia::render('Auth/Dashboard', [
             'visit' => $visit,
             'house' => $house,
             'user' => Auth::user(), 
             'users' => $users,
-            'pending' => $pending ,
+            'pending' => $pending,
+            'notification' => $notification
         ]);
     }
 }
