@@ -41,7 +41,13 @@ Route::get('/contact', function () {
     return Inertia::render('Contact');
 });
 
-Route::get('/dashboard', [AdminController::class, 'index']);
+Route::controller(AdminController::class)->group(function () {
+    Route::get('/dashboard', 'index')->name("dashboard")->middleware("auth");
+
+    Route::get('/login', 'show_login')->name("login");
+    Route::post('/login', 'login')->name("dashboard");
+    Route::post('/logout', 'logout')->name("dashboard");    
+});
 
 Route::middleware("auth")->controller(UserController::class)->group(function () {
     Route::get('/dashboard/users', 'index')->name("users");

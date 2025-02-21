@@ -6,6 +6,7 @@ use App\Models\House;
 use App\Models\User;
 use App\Models\Visit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -63,7 +64,7 @@ class AdminController extends Controller
      */
     public function show_login()
     {
-        //
+        return Inertia::render('Auth/Login');
     }
 
     /**
@@ -71,6 +72,29 @@ class AdminController extends Controller
      */
     public function login(Request $request)
     {
-        //
+        $credentials = $request->validate([
+            'email' => 'email|required|exist:users,email',
+            'password' => 'string|required'
+        ]);
+
+        if(Auth::attempt($credentials) ){
+            $request->session()->regenerate();
+
+            return redirect(route("dashboard"));
+        }
+
+        return redirect(route("login"));
+    }
+
+
+    public function logout(Request $request) 
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect(route("home"));
     }
 }

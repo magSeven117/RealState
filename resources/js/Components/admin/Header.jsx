@@ -28,7 +28,7 @@ export function HeaderAdministrator({ user }) {
 
                             
                             <NavDropdown title={user.name} id="basic-nav-dropdown" className="justify-content-end">
-                                <NavDropdown.Item href={'/dashboard/user/update/'+user.id}>Edit User</NavDropdown.Item>
+                                <NavDropdown.Item href={'/dashboard/users/update/'+user.id}>Edit User</NavDropdown.Item>
                                 <NavDropdown.Item href="/logout">Logout</NavDropdown.Item>
                             </NavDropdown> 
                         </Nav>
