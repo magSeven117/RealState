@@ -2,21 +2,8 @@ import React, { useEffect, useState } from "react";
 import Button from 'react-bootstrap/Button'; // Importa el componente Button de Bootstrap
 import Modal from 'react-bootstrap/Modal'; // Importa el componente Modal de Bootstrap
 
-export function ModalConfirmAlert({ title, subtitle, button, typeButton, functionButton, buttonCancel, functionButtonCancel, selection, stateChangeSelection }) {
-    const [ data, setData ] = useState();
+export function ModalConfirmAlert({ title, subtitle, button, typeButton, functionButton, buttonCancel, functionButtonCancel, selection, data, setEmployee }) {
     const [ active, setActive ] = useState(false);
-
-    useEffect(()=>{
-        // Se realiza una solicitud para obtener los datos de usuarios
-        fetch('/api/users/')
-            .then(res => res.json()) // Se convierte la respuesta a formato JSON
-            .then(res => {
-                // Si la respuesta es exitosa (status 200), se actualiza el estado de usuarios
-                if (res.status === 200) {
-                    setData(res.data);
-                }
-            });
-    }, [])
 
     return (
         <div
@@ -58,7 +45,7 @@ export function ModalConfirmAlert({ title, subtitle, button, typeButton, functio
                                         const selectedValue = e.target.value; // Obtener el valor seleccionado
                                         if (selectedValue) { // Si el valor no es vacío
                                             setActive(true); // Cambiar el estado a activo
-                                            stateChangeSelection(selectedValue)
+                                            setEmployee(selectedValue)
                                         } else {
                                             setActive(false); // Si no hay selección, mantenerlo inactivo
                                         }

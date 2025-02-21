@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HouseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VisitController;
 use App\Models\House;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -52,7 +53,7 @@ Route::middleware("auth")->controller(UserController::class)->group(function () 
     Route::delete('/dashboard/users/delete/{id}', 'destroy');
 });
 
-Route::controller(HouseController::class)->group(function () {
+Route::middleware("auth")->controller(HouseController::class)->group(function () {
     Route::get('/dashboard/properties', 'index_administer')->name("properties");
     Route::get('/dashboard/propertie/create', 'create');
     Route::post('/dashboard/propertie/create', 'store');
@@ -61,6 +62,17 @@ Route::controller(HouseController::class)->group(function () {
     Route::post('/dashboard/propertie/update/{id}', 'update');
 
     Route::delete('/dashboard/propertie/delete/{id}', 'destroy');
+});
+
+Route::controller(VisitController::class)->group(function () {
+    Route::get('/dashboard/visit', 'index')->name("visit")->middleware("auth");
+    
+    Route::post('/dashboard/visit/create', 'store');
+
+    Route::post('/dashboard/visit/pending/{id}/{id_employee}', 'markAsPending')->middleware("auth");
+    Route::post('/dashboard/visit/visited/{id}', 'markAsVisited')->middleware("auth");
+
+    Route::post('/dashboard/visit/delete/{id}', 'destroy')->middleware("auth");
 });
 
 
