@@ -1,10 +1,13 @@
 import React from "react";
-import { Link } from '@inertiajs/react' // Importa Link para la navegación
+import { Link, usePage } from '@inertiajs/react' // Importa Link para la navegación
 
-export function LinkVisit({ id }) {
+export function LinkVisit() {
+    const location = usePage();
+    const id = location.props.data.id;
+
     return (
         // Crea un enlace que redirige a la página de programación de visitas
-        <Link to={`/visit/${id}`} className="visit">
+        <Link href={`/visit/${id}`} className="visit">
             <i className="fa fa-calendar"></i> {/* Icono de calendario */}
             Schedule a visit {/* Texto del enlace */}
         </Link>

@@ -43,10 +43,6 @@ Route::get('/contact', function () {
 
 Route::controller(AdminController::class)->group(function () {
     Route::get('/dashboard', 'index')->name("dashboard")->middleware("auth");
-
-    Route::get('/login', 'show_login')->name("login");
-    Route::post('/login', 'login')->name("dashboard");
-    Route::post('/logout', 'logout')->name("dashboard");    
 });
 
 Route::middleware("auth")->controller(UserController::class)->group(function () {
@@ -73,7 +69,8 @@ Route::middleware("auth")->controller(HouseController::class)->group(function ()
 Route::controller(VisitController::class)->group(function () {
     Route::get('/dashboard/visit', 'index')->name("visit")->middleware("auth");
     
-    Route::post('/dashboard/visit/create', 'store');
+    Route::get('/visit/{id}', 'show');
+    Route::post('/visit/{id}', 'create');
 
     Route::post('/dashboard/visit/pending/{id}/{id_employee}', 'markAsPending')->middleware("auth");
     Route::post('/dashboard/visit/visited/{id}', 'markAsVisited')->middleware("auth");

@@ -9,6 +9,7 @@ use App\Notifications\ScheduleVisit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -21,7 +22,7 @@ class VisitController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request Contiene los datos de la solicitud.
      * 
-     * @return \Inertia\Inertia renderiza la visa Auth/Visit
+     * @return \Inertia\Inertia renderiza la visita Auth/Visit
      */
     public function index(Request $request)
     {
@@ -36,10 +37,7 @@ class VisitController extends Controller
 
         // Renderiza inertia
         return Inertia::render('Auth/Visit' ,[
-            'auth' => [
-                'name' => 'Nestor',
-                'id' => 1
-            ], 
+            'auth' => Auth::user(),
             'visit' => $query, // Datos de la consulta
             'users' => User::all(),
         ]);
@@ -47,51 +45,40 @@ class VisitController extends Controller
 
     /**
      * Visualiza la informacion de la base de datos de visitas.
-     *
-     * @param  \Illuminate\Http\Request  $request Contiene los datos de la solicitud.
      * 
-     * @return \Illuminate\Http\JsonResponse
+     * @param  int $id Recibe una instancia del modelo House.
+     * 
+     * @return \Inertia\Inertia renderiza el area para crear visita Visit
      */
-    public function graphic(Request $request) : JsonResponse
+    public function show($id)
     {
-        // Crea una consulta para obtener el conteo de visitas por 'house_id'
-        $query = Visit::select('house_id', DB::raw('COUNT(*) as visit_count')) 
-            ->groupBy('house_id') // Agrupa los resultados por 'house_id'
-            ->orderBy('visit_count', 'DESC'); // Ordena los resultados de manera descendente por el conteo de visitas
+        $query = House::with('typeHouse')->findOrFail($id);
 
-        // Si la solicitud tiene un límite, aplica el límite a la consulta
-        if ($request->has('limit')) $query->limit($request->input('limit'));
+        $query->images = json_decode($query->images);
 
-        // Ejecuta la consulta y obtiene los resultados
-        $query = $query->get();
-
-        // Retorna la respuesta en formato JSON
-        return response()->json([
-            'message' => 'Successful operation.', // Mensaje de éxito
-            'data' => $query, // Datos de la consulta
-            'status' => 200 // Código de estado HTTP
+        return Inertia::render('Visit', [
+            'data' => $query
         ]);
-        
     }
 
     
     /**
      * Crea una nueva visita para una casa basada en la información proporcionada.
      *
+     * @param  int $id Recibe una instancia del modelo House.
      * @param  \Illuminate\Http\Request  $request Recibe toda la del request.
-     * @param  App\Models\House $house Recibe una instancia del modelo House.
      * 
-     * @return \Illuminate\Http\JsonResponse
+     * @return Redirect Redirige a la casa a la cual se hizo la visita
      */
-    public function create($id, Request $request) : JsonResponse
+    public function create($id, Request $request)
     {
         // Validación de los datos del request
         $request->validate([
             'name' => 'required|string|alpha|max:20', // El nombre es obligatorio, debe ser una cadena de texto, solo letras, y máximo 20 caracteres
-            'lastname' => 'required|string|alpha|max:20', // El apellido es obligatorio, debe ser una cadena de texto, solo letras, y máximo 20 caracteres
+            'last_name' => 'required|string|alpha|max:20', // El apellido es obligatorio, debe ser una cadena de texto, solo letras, y máximo 20 caracteres
             'email' => 'required|email', // El correo electrónico es obligatorio y debe tener un formato válido
             'phone' => 'required|digits_between:7,15', // El teléfono es obligatorio y debe tener entre 7 y 15 dígitos
-            'terms' => 'accepted', // Los términos deben ser aceptados
+            'term' => 'accepted', // Los términos deben ser aceptados
             'calendar' => 'required|date|after_or_equal:tomorrow|before_or_equal:' . now()->addDays(120)->toDateString(), // La fecha debe ser obligatoria, una fecha válida, después de mañana y antes de 120 días a partir de hoy
         ]);
 
@@ -105,7 +92,7 @@ class VisitController extends Controller
         // Crea una nueva visita utilizando los datos proporcionados en la solicitud
         $query = Visit::create([
             'name' => $request->input('name'), // Nombre del visitante
-            'lastname' => $request->input('lastname'), // Apellido del visitante
+            'lastname' => $request->input('last_name'), // Apellido del visitante
             'email' => $request->input('email'), // Correo electrónico del visitante
             'phone' => $request->input('phone'), // Teléfono del visitante
             'date_visit' => $request->input('calendar'), // Fecha de la visita
@@ -116,13 +103,7 @@ class VisitController extends Controller
         $house->notify(new ScheduleVisit($query));
 
         Cache::flush();
-
-        // Retorna una respuesta en formato JSON con un mensaje de éxito y los datos de la visita creada
-        return response()->json([
-            'notify' => $query, // Datos de la visita creada
-        ]);
     }
-
 
     /**
      * Marca la columna visited_date como visitada con la fecha de hoy.

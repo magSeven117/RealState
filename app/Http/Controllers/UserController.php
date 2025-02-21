@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -27,10 +28,7 @@ class UserController extends Controller
         }
 
         return Inertia::render('Auth/Users', [
-            'auth' => [
-                'name'=>'Nestor',
-                'id' => 1,
-            ],
+            'auth' => Auth::user(),
             'users' => $users,
         ]);
     }
@@ -41,10 +39,7 @@ class UserController extends Controller
     public function create()
     {
         return Inertia::render('Auth/CreateUser',[
-            'auth' => [
-                'name' => "Nestor",
-                'id' => '1',
-            ]
+            'auth' => Auth::user(),
         ]);
     }
 
@@ -80,10 +75,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         return Inertia::render('Auth/UpdateUser', [
-            'auth' => [
-                'name' => 'Nestor',
-                'id' => 1
-            ],
+            'auth' => Auth::user(),
             'user' => $user
         ]);
     }

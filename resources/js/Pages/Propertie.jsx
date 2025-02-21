@@ -7,8 +7,6 @@ import { Gallery } from '@/Components/features/Gallery';  // Importa el componen
 import { Head } from '@inertiajs/react';
 
 export default function Propertie({ data }) {
-    console.log(data);  // Para verificar la estructura de los datos
-    
     const [activeCarousel, setActiveCarousel] = useState(false);  // Estado para controlar si el carrusel de imágenes está activo
     const price = Number(Math.floor(data.price)).toLocaleString("de-DE");
 

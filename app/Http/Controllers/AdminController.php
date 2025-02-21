@@ -50,51 +50,9 @@ class AdminController extends Controller
         return Inertia::render('Auth/Dashboard', [
             'visit' => $visit,
             'house' => $house,
-            'user' => [
-                'id' => 1,
-                'name' => 'Nestor'
-            ], 
+            'user' => Auth::user(), 
             'users' => $users,
             'pending' => $pending ,
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function show_login()
-    {
-        return Inertia::render('Auth/Login');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => 'email|required|exist:users,email',
-            'password' => 'string|required'
-        ]);
-
-        if(Auth::attempt($credentials) ){
-            $request->session()->regenerate();
-
-            return redirect(route("dashboard"));
-        }
-
-        return redirect(route("login"));
-    }
-
-
-    public function logout(Request $request) 
-    {
-        Auth::logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        return redirect(route("home"));
     }
 }

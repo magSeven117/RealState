@@ -7,7 +7,6 @@ import { LinkVisit } from "@/Components/features/LinkVisit";
 export function Header () {
     const [showMenu, getShowMenu] = useState(true); // Estado para controlar la visibilidad del menú
     const location = usePage(); // Obtiene la ubicación actual
-    // const { id } = useParams(); // Obtiene el parámetro 'id' de la URL
     
     const handleScroll = () => {
         // Asegurarse de que el elemento existe antes de aplicar estilo
@@ -20,7 +19,6 @@ export function Header () {
             menuElement.style.position = "fixed"; // Menú en posición fija
         }
     }
-    const query = new URLSearchParams(location.search);
 
     const handleClick = () => {
         // Alternar la visibilidad del menú en pantallas pequeñas
@@ -97,7 +95,9 @@ export function Header () {
                                     <li>
                                         
                                         {
-                                            <LinkVisit   />// Muestra el enlace a la visita si hay un ID
+                                            location.url.includes('/propertie/') 
+                                            ? <LinkVisit />// Muestra el enlace a la visita si hay un ID
+                                            : null
                                         } 
                                         
                                     </li>

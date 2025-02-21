@@ -7,6 +7,7 @@ use App\Models\House;
 use App\Models\TypeHouse;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 
@@ -177,10 +178,7 @@ class HouseController extends Controller
     
         // Retorna la respuesta JSON con los datos de la casa.
         return Inertia::render('Auth/Properties', [
-            'auth' => [
-                'name' => "Nestor",
-                'id' => 1
-            ],
+            'auth' => Auth::user(),
             'house' => $query, // Datos de la casa.
         ]);
         
@@ -198,10 +196,7 @@ class HouseController extends Controller
 
         // Retorna una respuesta JSON indicando que la operación fue exitosa junto con los datos de la casa.
         return Inertia::render('Auth/CreatePropertie',[
-            'auth' => [
-                'name' => 'nestor',
-                'id' => 1
-            ],
+            'auth' => Auth::user(),
             'typeHouse' => $typeHouse,
             'feature' => $feature,
         ]);
@@ -288,10 +283,7 @@ class HouseController extends Controller
 
         // Retorna una respuesta JSON indicando que la operación fue exitosa junto con los datos de la casa.
         return Inertia::render('Auth/UpdatePropertie',[
-            'auth' => [
-                'name' => 'nestor',
-                'id' => 1
-            ],
+            'auth' => Auth::user(),
             'house' => $query,
             'typeHouse' => $typeHouse,
             'feature' => $feature,
