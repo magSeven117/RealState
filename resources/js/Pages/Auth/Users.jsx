@@ -3,6 +3,7 @@ import { HeaderAdministrator } from "@/Components/admin/Header";
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import { Head, Link } from "@inertiajs/react";
+import { Online } from "@/Components/ui/Icon";
 
 export default function UsersAdministrator({ auth, users }) {
     
@@ -18,6 +19,7 @@ export default function UsersAdministrator({ auth, users }) {
                 <Table striped bordered hover>
                     <thead>
                         <tr>
+                            <th>Online</th>
                             <th>ID</th>
                             <th>Name</th>
                             <th>Email</th>
@@ -29,6 +31,9 @@ export default function UsersAdministrator({ auth, users }) {
                         {
                             users && users.data.map((item) => ( // Mapeamos los datos de los usuarios para mostrarlos en la tabla
                                 <tr key={item.id}>
+                                    <td style={{width:"50px"}}>
+                                        <Online color={item.active ? "#26d762" : "#f55151"}/>
+                                        </td>
                                     <td style={{ textAlign: "center", width: "10px" }}>{item.id}</td>
                                     <td>{item.name}</td>
                                     <td>{item.email}</td>

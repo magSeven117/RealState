@@ -13,16 +13,20 @@ use Inertia\Inertia;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Visualiza la informacion de la base de datos de usuarios.
+     *
+     * @param  \Illuminate\Http\Request  $request Contiene los datos de la solicitud.
+     * 
+     * @return \Inertia\Inertia renderiza la visita Auth/Users
      */
     public function index(Request $request)
     {
         $Cache_Name = "users_" . $request->page;
-
+        Cache::flush();
         if(Cache::has($Cache_Name)){
             $users = Cache::get($Cache_Name);
         } else {
-            $users = User::paginate(15);
+            $users = User::orderBy('active', 'DESC')->paginate(15);
 
             Cache::put($Cache_Name, $users, now()->addMinutes(60));
         }
@@ -34,7 +38,9 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Visualiza la tabla para crear un usuario.
+     *
+     * @return \Inertia\Inertia renderiza la visita Auth/CreateUsers
      */
     public function create()
     {
@@ -44,7 +50,11 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Crea un usuario nuevo.
+     *
+     * @param  \Illuminate\Http\Request  $request Contiene los datos de la solicitud.
+     * 
+     * @return \Inertia\Inertia renderiza la visita Auth/CreateUsers
      */
     public function store(Request $request)
     {
@@ -68,7 +78,11 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Visualiza la informacion para editar el usuario pasado por el ID.
+     * 
+     * @param  int $id Recibe una instancia del modelo User.
+     * 
+     * @return \Inertia\Inertia renderiza el area para crear visita Visit
      */
     public function edit(string $id)
     {
@@ -81,7 +95,12 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza un usuario pasado por el ID.
+     * 
+     * @param  \Illuminate\Http\Request  $request Contiene los datos de la solicitud.
+     * @param  int $id Recibe una instancia del modelo User.
+     * 
+     * @return \Inertia\Inertia renderiza el area para crear visita Visit
      */
     public function update(Request $request, string $id)
     {
@@ -111,7 +130,11 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina un usuario pasado por el ID.
+     * 
+     * @param  int $id Recibe una instancia del modelo User.
+     * 
+     * @return \Inertia\Inertia renderiza el area para crear visita Visit
      */
     public function destroy(string $id)
     {

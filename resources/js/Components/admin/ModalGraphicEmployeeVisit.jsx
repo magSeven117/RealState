@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Table } from "react-bootstrap";
 import { Link } from "@inertiajs/react";
+import { Online } from "../ui/Icon";
 
 
 export function ModalGraphicEmployeeVisit({ users, pending }) {
@@ -53,6 +54,7 @@ export function ModalGraphicEmployeeVisit({ users, pending }) {
                 <Table striped bordered hover>
                     <thead>
                         <tr>
+                            <th>Online</th>
                             <th>Name</th>    {/* Columna para el nombre del empleado */}
                             <th>Email</th>     {/* Columna para el email del empleado */}
                             <th>Role</th>     {/* Columna para el rol del empleado */}
@@ -63,6 +65,7 @@ export function ModalGraphicEmployeeVisit({ users, pending }) {
                         {(users && users.length !== 0)// Comprueba si hay empleados disponibles
                             ? users.map(item => ( // Mapea los empleados y crea filas en la tabla
                                 <tr key={item.name}> {/* Usa el nombre como clave única para la fila */}
+                                    <td style={{ display:"flex", justifyContent:"center" }}><Online color="#26d762"/></td>
                                     <td>{item.name}</td>    {/* Muestra el nombre del empleado */}
                                     <td>{item.email}</td>   {/* Muestra el email del empleado */}
                                     <td>{item.role}</td>    {/* Muestra el rol del empleado */}

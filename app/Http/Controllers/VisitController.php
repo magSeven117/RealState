@@ -44,7 +44,7 @@ class VisitController extends Controller
     }
 
     /**
-     * Visualiza la informacion de la base de datos de visitas.
+     * Visualiza el area para que los clientes prenoten una cita.
      * 
      * @param  int $id Recibe una instancia del modelo House.
      * 
@@ -189,8 +189,7 @@ class VisitController extends Controller
             Cache::flush();
 
             // Retorna a la pagina principal
-            return redirect(route("visit"));
-            
+            return redirect(route("visit"));         
         } catch (\Throwable $e) {
             // Retorna a la pagina principal
             return redirect(route("visit"));

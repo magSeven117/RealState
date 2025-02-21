@@ -140,7 +140,7 @@ class HouseController extends Controller
      * Muestra una lista de casas para el administrador.
      *
      * @param  \Illuminate\Http\Request  $request  Contiene los datos enviados en la solicitud.
-     *                                                  guardar, dar nombres y chequear existencias de imágenes antiguas.
+     * 
      * @return Inertia\Inertia  Retorna un renderizado con Inertia.
      */
     public function index_administer(Request $request)
@@ -257,7 +257,7 @@ class HouseController extends Controller
     /**
      * Muestra el area de creacion de casas para el administrador.
      *
-     * @param  {$id}  $id Contiene el id que se busca para editar por el administrador
+     * @param  int $id Se necesita el ID para la búsqueda en la tabla houses.
      *
      * @return Inertia\Inertia  Retorna un renderizado con Inertia.
      */
@@ -293,8 +293,8 @@ class HouseController extends Controller
     /**
      * Crea una nueva casa basada en la información proporcionada.
      *
+     * @param  int  $id Se necesita el ID para la búsqueda en la tabla houses.
      * @param  \Illuminate\Http\Request  $request  Contiene los datos enviados en la solicitud.
-     * @param  App\Models\House  $house  Se necesita el ID para la búsqueda en la tabla houses.
      * @param  App\Services\ImageService  $methodImage  Servicio para el control de imágenes, 
      *                                                    guardar, dar nombres y chequear existencias de imágenes antiguas.
      * @return Inertia\Inertia  Retorna un renderizado con Inertia.
@@ -364,18 +364,18 @@ class HouseController extends Controller
     /**
      * Crea una nueva casa basada en la información proporcionada.
      *
-     * @param  App\Models\House  $house  Se necesita el ID para la búsqueda en la tabla houses.
+     * @param  int  $id Se necesita el ID para la búsqueda en la tabla houses.
      * @param  App\Services\ImageService  $methodImage  Servicio para el control de imágenes, 
      *                                                    guardar, dar nombres y chequear existencias de imágenes antiguas.
      * @return Redirect  Retorna una redirect hacia la vista index_Administer.
      */
-    public function destroy($house_id, ImageService $methodImage)
+    public function destroy($id, ImageService $methodImage)
     {   
         try {
             Cache::flush();
 
             // Busca la casa por su ID o lanza una excepción 404 si no la encuentra.
-            $house = House::findOrFail($house_id);
+            $house = House::findOrFail($id);
 
             // Decodifica las imágenes guardadas en el campo 'images'.
             $images = json_decode($house->images, true);

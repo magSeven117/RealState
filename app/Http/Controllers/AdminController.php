@@ -15,7 +15,9 @@ use Inertia\Inertia;
 class AdminController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Visualiza la informacion del Dashboard para los usuarios.
+     * 
+     * @return \Inertia\Inertia renderiza la visita Auth/Users
      */
     public function index()
     {
