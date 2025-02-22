@@ -5,6 +5,7 @@ import { Header } from '@/Components/layout/Nav';
 import { Head } from '@inertiajs/react';
 
 export default function Dashboard({data, features, typeHouse}) {
+    
     return (
         <>
             <Head title='Properties' />

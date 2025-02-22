@@ -52,7 +52,7 @@ class VisitController extends Controller
      */
     public function show($id)
     {
-        $query = House::with('typeHouse')->findOrFail($id);
+        $query = House::with('typeHouse')->published(true)->findOrFail($id);
 
         $query->images = json_decode($query->images);
 
@@ -82,11 +82,15 @@ class VisitController extends Controller
             'calendar' => 'required|date|after_or_equal:tomorrow|before_or_equal:' . now()->addDays(120)->toDateString(), // La fecha debe ser obligatoria, una fecha válida, después de mañana y antes de 120 días a partir de hoy
         ]);
 
+        if (!$id) {
+            return redirect(route("visit"))->with('error', 'ID no válido');
+        }
+
         $house = House::findOrFail($id);
 
         // Verifica si la casa existe
         if (!$house) {
-            return redirect(route("visit"));
+            return redirect(route("home"));
         }
 
         // Crea una nueva visita utilizando los datos proporcionados en la solicitud
@@ -103,6 +107,8 @@ class VisitController extends Controller
         $house->notify(new ScheduleVisit($query));
 
         Cache::flush();
+
+        return redirect('/visit/'.$house->id);
     }
 
     /**
@@ -116,7 +122,11 @@ class VisitController extends Controller
     public function markAsPending($id, $id_employee)
     {   
         try {
-            $visit = Visit::findOrFail($id);
+            if (!$id || !$id_employee) {
+                return redirect(route("visit"))->with('error', 'ID no válido');
+            }
+
+            $visit = Visit::find($id);
 
             // Establece el estado de la visita como pendiente
             $visit->pending_visit = true; // Marca la visita como pendiente
@@ -148,6 +158,10 @@ class VisitController extends Controller
     public function markAsVisited($id)
     {   
         try {
+            if (!$id) {
+                return redirect(route("visit"))->with('error', 'ID no válido');
+            }
+
             $visit = Visit::findOrFail($id);
 
             // Establece la fecha de visita como la fecha actual
@@ -180,6 +194,10 @@ class VisitController extends Controller
     public function destroy($id)
     {   
         try {
+            if (!$id) {
+                return redirect(route("visit"))->with('error', 'ID no válido');
+            }
+
             // Busca la visita por su ID y lanza una excepción si no se encuentra
             $visit = Visit::findOrFail($id); // Busca la visita con el ID proporcionado
 

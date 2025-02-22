@@ -253,7 +253,6 @@ class HouseController extends Controller
         return redirect(route("properties"));
     }
 
-
     /**
      * Muestra el area de creacion de casas para el administrador.
      *

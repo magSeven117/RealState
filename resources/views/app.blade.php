@@ -25,7 +25,6 @@
         <meta name="twitter:title" content="Real State - Find Your Dream Home Today">
         <meta name="twitter:description" content="Find your dream home with Real State. Buy, sell, or rent properties with expert guidance. The best real estate deals, tailored to your needs!">
         <meta name="twitter:image" content="/images/page.webp">
-        <meta name="twitter:site" content="@tuusuario">
 
         <!-- Security -->
         <meta name="referrer" content="no-referrer">
