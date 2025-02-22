@@ -50,13 +50,48 @@ npm install
 php artisan key:generate
 ```
 
-5. Ejecuta las migraciones de la base de datos:
+5. Configura la base de datos en el archivo `.env`:
+
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nombre_de_tu_base_de_datos
+DB_USERNAME=tu_usuario
+DB_PASSWORD=tu_contraseña
+```
+
+6. Ejecuta las migraciones de la base de datos:
 
 ```bash
 php artisan migrate
 ```
 
-6. Inicia el servidor de desarrollo:
+7. (Opcional) Ejecutas los seeders de prueba para ver el funcionamiento de la pagina:
+
+```bash
+php artisan migrate --seed
+```
+
+8. (Opcional) Guarde en la carpeta storage/app/public/images algunas imagenes con estos nombres para mejor visualizacion:
+
+```
+casa-1-1.jpeg
+casa-1-2.jpeg
+casa-1-3.jpeg
+casa-2-1.jpeg
+casa-2-2.jpeg
+casa-2-3.jpeg
+```
+
+9. (Opcional) El usuario creado por el seeder para el test y visualizacion es:
+
+```
+Email: test@example.com
+Password: test
+```
+
+10. Inicia el servidor de desarrollo:
 
 ```bash
 php artisan serve
@@ -110,6 +145,16 @@ npm run dev
     "vite": "^6.1.0"
 }
 ```
+
+## Contribución
+
+¡Las contribuciones son bienvenidas! Para contribuir, por favor sigue estos pasos:
+
+1. Haz un fork del repositorio.
+2. Crea una nueva rama (`git checkout -b feature/nueva-caracteristica`).
+3. Realiza tus cambios y haz commits (`git commit -am 'Agrega nueva característica'`).
+4. Sube los cambios a tu fork (`git push origin feature/nueva-caracteristica`).
+5. Abre un Pull Request.
 
 ## Licencia
 
