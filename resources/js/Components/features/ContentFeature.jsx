@@ -14,7 +14,7 @@ export function ContenFeature() {
                 <div className="row">
                     <div className="col-lg-4">
                         <div className="left-image">
-                            <img src='/images/featured.jpg' alt="Featured" />
+                            <img src='/images/featured.webp' alt="Featured" />
                             <a href="property-details.html">
                                 <img
                                     src='/images/featured-icon.png' 

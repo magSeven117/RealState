@@ -78,7 +78,7 @@ export function Header () {
                             <nav className="main-nav">
                                 {/* ***** Logo Start ***** */}
                                 <Link href='/' className="logo">
-                                    <h1>Villa</h1>
+                                    <img src="/images/logo.png" alt="logo" style={{ width:"90px", padding:"5px" }} />
                                 </Link>
                                 {/* ***** Logo End ***** */}
                                 {/* ***** Menu Start ***** */}

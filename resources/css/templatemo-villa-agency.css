@@ -410,7 +410,9 @@ Header Style
   -moz-transition: all 0.3s ease 0s;
   -o-transition: all 0.3s ease 0s;
   transition: all 0.3s ease 0s;
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100px;
 }
 
@@ -863,15 +865,15 @@ Banner Style
 }
 
 .main-banner .item-1 {
-  background-image: url(../images/banner-01.jpg);
+  background-image: url(/images/banner-01.webp);
 }
 
 .main-banner .item-2 {
-  background-image: url(../images/banner-02.jpg);
+  background-image: url(/images/banner-02.webp);
 }
 
 .main-banner .item-3 {
-  background-image: url(../images/banner-03.jpg);
+  background-image: url(/images/banner-03.webp);
 }
 
 .main-banner .item span.category {
@@ -1076,7 +1078,7 @@ Video Style
 */
 
 .video {
-  background-image: url(/public/images/video-bg.jpg);
+  background-image: url(/public/images/video-bg.webp);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -1533,7 +1535,7 @@ Contact Style
 */
 
 .contact {
-  background-image: url(/public/images/contact-bg.jpg);
+  background-image: url(/public/images/contact-bg.webp);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -1689,7 +1691,7 @@ Page Header Style
 */
 
 .page-heading {
-  background-image: url(../images/page-heading-bg.jpg);
+  background-image: url(../images/page-heading-bg.webp);
   background-position: center bottom;
   background-repeat: no-repeat;
   background-size: cover;

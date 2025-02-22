@@ -98,7 +98,7 @@ export function BestDeal() {
                                             </div>
                                             </div>
                                             <div className="col-lg-6">
-                                            <img src='images/deal-01.jpg' alt="Appartment Deal" />
+                                            <img src='images/deal-01.webp' alt="Appartment Deal" />
                                             </div>
                                             <div className="col-lg-3">
                                             <h4>Extra Info About Property</h4>
@@ -134,7 +134,7 @@ export function BestDeal() {
                                         </div>
                                         </div>
                                         <div className="col-lg-6">
-                                        <img src='images/deal-02.jpg' alt="Villa Deal" />
+                                        <img src='images/deal-02.webp' alt="Villa Deal" />
                                         </div>
                                         <div className="col-lg-3">
                                         <h4>Detail Info About Villa</h4>
@@ -170,7 +170,7 @@ export function BestDeal() {
                                         </div>
                                         </div>
                                         <div className="col-lg-6">
-                                        <img src='images/deal-03.jpg' alt="Penthouse Deal" />
+                                        <img src='images/deal-03.webp' alt="Penthouse Deal" />
                                         </div>
                                         <div className="col-lg-3">
                                         <h4>Extra Info About Penthouse</h4>

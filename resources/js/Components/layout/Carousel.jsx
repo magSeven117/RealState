@@ -10,7 +10,7 @@ export function HeadingCarrusel () {
                 <div className="position-relative" style={{height: "100%"}}> {/* Contenedor para la imagen y el texto */}
                     <img
                         className="d-block w-100" // Clases de Bootstrap para imagen
-                        src='/images/banner-01.jpg' // Imagen a mostrar
+                        src='/images/banner-01.webp' // Imagen a mostrar
                         alt="Toronto, Canada" // Texto alternativo para la imagen
                     />
                     {/* Contenedor para el texto superpuesto */}
@@ -51,7 +51,7 @@ export function HeadingCarrusel () {
                 <div className="position-relative" style={{height: "100%"}}>
                     <img
                         className="d-block w-100"
-                        src='/images/banner-02.jpg' // Imagen a mostrar
+                        src='/images/banner-02.webp' // Imagen a mostrar
                         alt="Melbourne, Australia" // Texto alternativo para la imagen
                     />
                     <div className="top-0 left-0 z-0 position-absolute w-100 h-100 text-home" style={{ padding: '8% 20%'}}>
@@ -91,7 +91,7 @@ export function HeadingCarrusel () {
                 <div className="position-relative" style={{height: "100%"}}>
                     <img
                         className="d-block w-100"
-                        src='/images/banner-03.jpg' // Imagen a mostrar
+                        src='/images/banner-03.webp' // Imagen a mostrar
                         alt="Miami, South Florida" // Texto alternativo para la imagen
                     />
                     <div className="top-0 left-0 z-0 position-absolute w-100 h-100 text-home" style={{ padding: '8% 20%'}}>

@@ -3,7 +3,7 @@ import React from 'react';
 
 export function Heading ({title}) {
     return (
-        <div className="page-heading header-text" style={{backgroundImage: `url(/images/page-heading-bg.jpg)`, marginTop:"100px"}}> {/* Establece la imagen de fondo */}
+        <div className="page-heading header-text" style={{backgroundImage: `url(/images/page-heading-bg.webp)`, marginTop:"100px"}}> {/* Establece la imagen de fondo */}
             <div className="container">
                 <div className="row">
                 <div className="col-lg-12">

@@ -46,7 +46,7 @@ export function ContentVideo() {
                     <div className="row">
                         <div className="col-lg-10 offset-lg-1">
                             <div className="video-frame">
-                                <img src='/images/video-frame.jpg' alt="Video Frame" />
+                                <img src='/images/video-frame.webp' alt="Video Frame" />
                                 <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
                                     <i className="fa fa-play"></i> {/* Icono de reproducción */}
                                 </a>
