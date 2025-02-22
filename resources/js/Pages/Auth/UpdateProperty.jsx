@@ -98,7 +98,7 @@ export default function CreateProperties({ auth, house, typeHouse, feature }) {
         setIsSubmitting(true);
 
 
-        post("/dashboard/propertie/update/"+house.id, {
+        post("/dashboard/property/update/"+house.id, {
             onSuccess : ()=>{
                 setIsSubmitting(false);
             },
@@ -113,7 +113,7 @@ export default function CreateProperties({ auth, house, typeHouse, feature }) {
         if(confirm("Do you want to continue?")){
             setIsSubmittingDelete(true);
 
-            router.delete('/dashboard/propertie/delete/' + house.id, {
+            router.delete('/dashboard/property/delete/' + house.id, {
                 onSuccess : () => {
                     setIsSubmittingDelete(false);
                 },

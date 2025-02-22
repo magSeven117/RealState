@@ -35,7 +35,7 @@ Route::get('/', function ()  {
 
 Route::controller(HouseController::class)->group(function () {
     Route::get('/properties', 'index');
-    Route::get('/propertie/{id}', 'show');
+    Route::get('/property/{id}', 'show');
 });
 
 Route::get('/contact', function () {
@@ -58,13 +58,13 @@ Route::middleware("auth")->controller(UserController::class)->group(function () 
 
 Route::middleware("auth")->controller(HouseController::class)->group(function () {
     Route::get('/dashboard/properties', 'index_administer')->name("properties");
-    Route::get('/dashboard/propertie/create', 'create');
-    Route::post('/dashboard/propertie/create', 'store');
+    Route::get('/dashboard/property/create', 'create');
+    Route::post('/dashboard/property/create', 'store');
 
-    Route::get('/dashboard/propertie/update/{id}', 'edit');
-    Route::post('/dashboard/propertie/update/{id}', 'update');
+    Route::get('/dashboard/property/update/{id}', 'edit');
+    Route::post('/dashboard/property/update/{id}', 'update');
 
-    Route::delete('/dashboard/propertie/delete/{id}', 'destroy');
+    Route::delete('/dashboard/property/delete/{id}', 'destroy');
 });
 
 Route::controller(VisitController::class)->group(function () {

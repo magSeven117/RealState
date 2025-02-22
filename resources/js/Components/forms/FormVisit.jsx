@@ -191,7 +191,7 @@ export function FormVisit({ house }) {
                                         onClick={() => {
                                             setShowMessage(false); // Oculta el mensaje
                                             setTimeout(() => {
-                                                window.location.href = '/propertie/'+house.id; // Redirige a la página de propiedades
+                                                window.location.href = '/property/'+house.id; // Redirige a la página de propiedades
                                             }, 200);
                                         }}
                                     >

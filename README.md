@@ -9,9 +9,9 @@ Real State Villa es una aplicación web desarrollada con Laravel y React, donde 
 ## Tecnologías
 
 -   **Backend:** Laravel 11.9
+-   **Framework:** Inertia 2.0
 -   **Frontend:** React 18.2
--   **Base de datos:** MySQL
--   **Autenticación:** Laravel Sanctum
+-   **Base de datos:** MySQL o SQLite
 
 ## Requisitos
 
@@ -70,28 +70,24 @@ npm run dev
 ```json
 "require": {
     "php": "^8.2",
-    "laravel/framework": "^11.9",
+    "inertiajs/inertia-laravel": "^2.0",
+    "laravel/framework": "^11.31",
     "laravel/sanctum": "^4.0",
     "laravel/tinker": "^2.9",
-    "laravel/ui": "^4.5"
-}
+    "tightenco/ziggy": "^2.0"
+},
 ```
 
 ### Frontend
 
 ```json
 "dependencies": {
-    "flatpickr": "^4.6.13",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-bootstrap": "^2.10.4",
+    "bootstrap": "^5.3.3",
+    "react-bootstrap": "^2.10.9",
     "react-flatpickr": "^3.10.13",
-    "react-image-gallery": "^1.3.0",
-    "react-paginate": "^8.2.0",
-    "react-router-dom": "^6.26.1",
-    "recharts": "^2.12.7",
-    "suneditor": "^2.47.0",
-    "swiper": "^11.1.14"
+    "react-image-gallery": "^1.4.0",
+    "recharts": "^2.15.1",
+    "suneditor": "^2.47.5"
 }
 ```
 
@@ -99,131 +95,21 @@ npm run dev
 
 ```json
 "devDependencies": {
-    "@babel/core": "^7.25.2",
-    "@babel/plugin-transform-runtime": "^7.25.4",
-    "@babel/preset-env": "^7.25.4",
-    "@babel/preset-react": "^7.24.7",
-    "@popperjs/core": "^2.11.6",
-    "@testing-library/jest-dom": "^6.5.0",
-    "@testing-library/react": "^16.0.1",
-    "@vitejs/plugin-react": "^4.3.1",
+    "@headlessui/react": "^2.0.0",
+    "@inertiajs/react": "^2.0.0",
+    "@tailwindcss/forms": "^0.5.3",
+    "@vitejs/plugin-react": "^1.3.2",
+    "autoprefixer": "^10.4.12",
     "axios": "^1.7.4",
-    "bootstrap": "^5.3.3",
-    "eslint": "^9.10.0",
-    "eslint-plugin-react": "^7.35.2",
-    "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
-    "laravel-vite-plugin": "^1.0",
-    "sass": "^1.56.1",
-    "vite": "^5.4.3"
+    "concurrently": "^9.0.1",
+    "laravel-vite-plugin": "^1.2.0",
+    "postcss": "^8.4.31",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwindcss": "^3.2.1",
+    "vite": "^6.1.0"
 }
 ```
-
-## Vistas del Frontend
-
-La aplicación tiene las siguientes rutas accesibles:
-
-#### Rutas Públicas
-
--   **`/`**: Ruta principal (Componente: `Home`).
--   **`/properties`**: Lista de propiedades (Componente: `Properties`).
--   **`/contact`**: Página de contacto (Componente: `Contact`).
--   **`/property-details/:id`**: Detalles de una propiedad específica por su ID (Componente: `PropertiesDetails`).
--   **`/visit/:id`**: Página para agendar una visita con el ID de la propiedad (Componente: `MakeVisit`).
-
-#### Rutas del Administrador
-
--   **`/admin-login`**: Ruta para el login del administrador (Componente: `LoginAdministrator`).
--   **`/dashboard`**: Panel principal del administrador protegido con `AuthProvider` (Componente: `Dashboard`).
--   **`/dashboard/users`**: Gestión de usuarios por parte del administrador (Componente: `UsersAdministrator`).
--   **`/dashboard/users/modify/:id`**: Modificar usuario por su ID (Componente: `ModifyUsers`).
--   **`/dashboard/users/create`**: Crear un nuevo usuario (Componente: `CreateUsers`).
--   **`/dashboard/properties`**: Gestión de propiedades por parte del administrador (Componente: `PropertiesAdministrator`).
--   **`/dashboard/properties/modify/:id`**: Modificar una propiedad por su ID (Componente: `ModifyProperties`).
--   **`/dashboard/properties/create`**: Crear una nueva propiedad (Componente: `CreateProperties`).
--   **`/dashboard/visit`**: Gestión de visitas por parte del administrador (Componente: `VisitAdministrator`).
-
-## Rutas de la API
-
-### Autenticación
-
--   `POST /login`: Iniciar sesión.
--   `POST /logout`: Cerrar sesión.
-
-### Usuarios
-
--   `GET /users`: Obtener todos los usuarios.
--   `POST /users/create`: Crear un nuevo usuario.
--   `POST /users/update/{id}`: Actualizar un usuario existente.
--   `DELETE /users/delete/{id}`: Eliminar un usuario.
-
-### Casas
-
--   `GET /houses`: Obtener todas las casas.
--   `POST /houses/create`: Crear una nueva casa.
--   `POST /houses/update/{house}`: Actualizar una casa.
--   `DELETE /houses/delete/{house_id}`: Eliminar una casa.
-
-### Características
-
--   `GET /features`: Obtener todas las características.
-
-### Visitas
-
--   `GET /visit`: Obtener todas las visitas.
--   `PUT /visit/pending/{visit}`: Marcar visita como pendiente.
--   `PUT /visit/visited/{visit}`: Marcar visita como realizada.
--   `POST /visit/{house}`: Crear una visita.
--   `DELETE /visit/delete/{visit_id}`: Eliminar una visita.
-
-### Notificaciones
-
--   `GET /notifications`: Obtener todas las notificaciones.
--   `POST /notifications/{notify}`: Marcar notificación como leída.
-
-### CSRF Token
-
--   `GET /csrf-token`: Para obtener el token CSRF para formularios seguros.
-
-## Filtros de búsquedas
-
-#### La ruta `GET /houses` permite aplicar los siguientes filtros en las solicitudes:
-
--   **id:** Filtra por ID de la tabla houses.
--   **features:** Filtra por características específicas.
--   **maxPrice:** Precio máximo de la tabla houses.
--   **minPrice:** Precio mínimo de la tabla houses.
--   **minSize:** Tamaño mínimo de la tabla houses.
--   **maxSize:** Tamaño máximo de la tabla houses.
--   **quarter:** Filtra por número de cuartos.
--   **bathroom:** Filtra por número de baños.
--   **search:** Permite buscar por palabras clave.
--   **type_house:** Filtra por tipo de casa.
--   **published:** Filtra por casas publicadas.
--   **limit:** Limita la cantidad de resultados.
--   **orderBy:** Ordena los resultados por el campo `id`.
--   **orderByViewed:** Ordena los resultados por el campo `viewed`.
-
-#### La ruta `GET /notifications` permite aplicar los siguientes filtros en las solicitudes:
-
--   **limit:** Limita la cantidad de resultados.
-
-#### La ruta `GET /users` permite aplicar los siguientes filtros en las solicitudes:
-
--   **id:** Filtra por ID de la tabla users.
--   **email:** Filtra por email de la tabla users.
--   **name:** Filtra por name de la tabla users.
--   **role:** Filtra por role de la tabla users.
--   **limit:** Limita la cantidad de resultados.
-
-#### La ruta `GET /visit` permite aplicar los siguientes filtros en las solicitudes:
-
--   **id:** Filtra por ID de la tabla visits.
--   **graphic:** Solicitud especial para graficos al crear un conteo general de la tabla visits.
--   **search:** Filtra por name de la tabla visits.
--   **visited:** Filtra por los datos ya visitados de la tabla visits.
--   **pending:** Filtra por los datos ya pendiente a visitas de la tabla visits.
--   **limit:** Limita la cantidad de resultados.
 
 ## Licencia
 

@@ -1,5 +1,4 @@
 import { Head, Link } from '@inertiajs/react';
-import { useContext, useEffect } from 'react';
 import { Header } from '@/Components/layout/Nav';
 import { HeadingCarrusel } from '@/Components/layout/Carousel';
 import { ContenFeature } from '@/Components/features/ContentFeature';

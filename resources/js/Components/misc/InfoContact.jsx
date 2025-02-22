@@ -24,7 +24,7 @@ export function InfoContact ({ wrap = false }) {
                 <div className="item email">
                     <img src='/images/phone-icon.png' alt="Email Icon" style={{ maxWidth: '40px' }} /> {/* Icono de email */}
                     <h6>
-                        nd10salom@gmail.com
+                        trabajo.nestor.098@gmail.com
                         <br />
                         <span>Business Email</span> {/* Etiqueta del email */}
                     </h6>

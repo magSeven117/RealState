@@ -4,11 +4,13 @@ import { Heading } from "@/Components/layout/Heading"
 import { Header } from "@/Components/layout/Nav"
 import { InfoContact } from "@/Components/misc/InfoContact"
 import { Map } from "@/Components/misc/Map"
+import { Head } from "@inertiajs/react"
 import React from "react"
 
 export default function Contact() {
     return(
         <>
+            <Head title="Contact"/>
             {/* ***** Header Area Start ***** */}
             <Header />
             {/* ***** Header Area End ***** */}

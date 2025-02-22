@@ -105,10 +105,10 @@ export function BestDeal() {
                                             <p>
                                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, do eiusmod tempor pack incididunt ut labore et dolore magna aliqua quised ipsum suspendisse.
                                                 <br /><br />
-                                                When you need free CSS templates, you can simply type TemplateMo in any search engine website. In addition, you can type TemplateMo Portfolio, TemplateMo One Page Layouts, etc.
+                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, error?
                                             </p>
                                             <div className="icon-button">
-                                                <a href="property-details.html">
+                                                <a href="/properties">
                                                 <i className="fa fa-calendar"></i> Schedule a visit
                                                 </a>
                                             </div>
@@ -144,7 +144,7 @@ export function BestDeal() {
                                             Swag fanny pack lyft blog twee. JOMO ethical copper mug, succulents typewriter shaman DIY kitsch twee taiyaki fixie hella venmo after messenger poutine next level humblebrag swag franzen.
                                         </p>
                                         <div className="icon-button">
-                                            <a href="property-details.html">
+                                            <a href="/properties">
                                             <i className="fa fa-calendar"></i> Schedule a visit
                                             </a>
                                         </div>
@@ -180,7 +180,7 @@ export function BestDeal() {
                                             Swag fanny pack lyft blog twee. JOMO ethical copper mug, succulents typewriter shaman DIY kitsch twee taiyaki fixie hella venmo after messenger poutine next level humblebrag swag franzen.
                                         </p>
                                         <div className="icon-button">
-                                            <a href="property-details.html">
+                                            <a href="/properties">
                                             <i className="fa fa-calendar"></i> Schedule a visit
                                             </a>
                                         </div>

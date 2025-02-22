@@ -128,18 +128,25 @@ export default function VisitAdministrator({ auth, visit, users }) {
                             data && data.map((item) => ( // Mapea los datos de las visitas para mostrarlos en la tabla
                                 <tr key={item.id}>
                                     <td style={{ textAlign: "center", width: "10px" }}>{item.id}</td> {/* Muestra el ID de la visita */}
+                                    
                                     <td>{item.name + " " + item.lastname}</td> {/* Muestra el nombre completo */}
+                                    
                                     <td>{item.email}</td> {/* Muestra el email */}
+                                    
                                     <td>{item.phone}</td> {/* Muestra el teléfono */}
+                                    
                                     {
                                         (visited == 2 || visited == 3) && <td>{item.user?.name}</td> // Muestra los empleados de visited y pending
                                     }
+                                    
                                     <td style={visited == 1 ? { color: "green", fontWeight: "600" } : {}}>{item.date_visit}</td> {/* Muestra la fecha de visita, color verde si son visitas programadas */}
+                                    
                                     <td style={{ width: "128px" }}>
-                                        <Link href={'/propertie/' + item.id } target="_blank"> {/* Enlace para ver detalles de la casa */}
+                                        <Link href={'/property/' + item.id } target="_blank"> {/* Enlace para ver detalles de la casa */}
                                             <Button variant="success" style={{ whiteSpace:"nowrap" }}>View House</Button> {/* Botón para ver la casa */}
                                         </Link>
                                     </td>
+                                    
                                     {
                                         // Visitas Generales
                                         visited == 1 // Verifica si se están viendo visitas programadas.

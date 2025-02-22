@@ -195,7 +195,7 @@ class HouseController extends Controller
         $feature = Feature::all();
 
         // Retorna una respuesta JSON indicando que la operación fue exitosa junto con los datos de la casa.
-        return Inertia::render('Auth/CreatePropertie',[
+        return Inertia::render('Auth/CreateProperty',[
             'auth' => Auth::user(),
             'typeHouse' => $typeHouse,
             'feature' => $feature,
@@ -282,7 +282,7 @@ class HouseController extends Controller
         $feature = Feature::all();
 
         // Retorna una respuesta JSON indicando que la operación fue exitosa junto con los datos de la casa.
-        return Inertia::render('Auth/UpdatePropertie',[
+        return Inertia::render('Auth/UpdateProperty',[
             'auth' => Auth::user(),
             'house' => $query,
             'typeHouse' => $typeHouse,

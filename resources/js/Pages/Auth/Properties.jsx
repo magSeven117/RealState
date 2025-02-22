@@ -28,7 +28,7 @@ export default function PropertiesAdministrator({auth, house }) {
                 </div>
 
                 <div style={{ display: "flex", width: "100%", justifyContent: "space-around", margin: "20px 0", gap:"10px", alignItems:"center" }}>
-                    <Link href={'/dashboard/propertie/create'}>  
+                    <Link href={'/dashboard/property/create'}>  
                         <Button variant="primary" style={{ padding:"2px 5px" }}>Add Property</Button> {/* Botón para agregar una nueva propiedad */}
                     </Link>
 
@@ -93,7 +93,7 @@ export default function PropertiesAdministrator({auth, house }) {
                                 <td>{item.address}</td>
                                 <td><span style={item.published ? {color:"green"} : {color:"red"} }>{item.published ? 'Published' : 'Unpublished'}</span></td>
                                 <td style={{ width: '50px' }}>
-                                    <Link href={'/dashboard/propertie/update/' + item.id} style={{ width: "min-content" }}>
+                                    <Link href={'/dashboard/property/update/' + item.id} style={{ width: "min-content" }}>
                                         <Button variant="warning">Modify</Button>
                                     </Link>
                                 </td>

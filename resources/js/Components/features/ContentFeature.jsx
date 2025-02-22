@@ -40,11 +40,7 @@ export function ContenFeature() {
                                 </h2>
                                 <div id="collapseOne" className={`accordion-collapse ${showFeature === 0 ? 'show' : 'collapse'}`}>
                                     <div className="accordion-body">
-                                        Get <strong>the best villa</strong> website template in HTML CSS and Bootstrap for your business. TemplateMo provides you the{' '}
-                                        <a href="https://www.google.com/search?q=best+free+css+templates" target="_blank" rel="noopener noreferrer">
-                                            best free CSS templates
-                                        </a>{' '}
-                                        in the world. Please tell your friends about it.
+                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facere iusto aliquam possimus vero rerum! Vel provident itaque nisi praesentium id illum quas! Ipsa aliquid quod mollitia placeat velit fugit ipsam.
                                     </div>
                                 </div>
                             </div>
