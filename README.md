@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="https://github.com/Ndnestor098/RealState" target="_blank" sytle="padding-bottom: .3em; font-size: 2em;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));">
+    <a href="https://github.com/Ndnestor098/RealState" target="_blank" style="padding-bottom: .3em; font-size: 2em;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));    text-decoration: none;">
         Real State
     </a>
 </p>
