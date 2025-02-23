@@ -108,20 +108,16 @@ export default function CreateUser({ auth }) {  // Función principal del compon
                     </div>
 
                     {/* Selección de rol */}
-                    <div style={{ width: "100%" }}>
-                        <select
-                            style={{ fontWeight: "600", fontFamily: "Arial", width: "100%" }}
-                            className="input-visit"
-                            name="role"
-                            defaultValue=""
-                            value={data.role}
-                            onChange={e => setData('role', e.target.value)}
-                            required>
-                            <option value="" disabled>Select Role</option>
-                            <option value="admin">Administrator</option>
-                            <option value="employee">Employee</option>
-                        </select>
-                    </div>
+                    <input
+                        style={{ fontWeight: "600", fontFamily: "Arial" }}
+                        className="input-visit"
+                        name="role"
+                        placeholder="Role"
+                        type="text"
+                        value={data.role}
+                        onChange={e => setData('role', e.target.value)}
+                        required
+                    />
                     {/* Mensaje de error */}
                     <div style={{ width: '100%', textAlign: 'center', }}>
                         {

@@ -1,10 +1,10 @@
-<p align="center"><a href="https://github.com/Ndnestor098/RealState" target="_blank"><img src="https://ndnestor098.github.io/WebCV/assets/img/Villa.png" width="100%" alt="Real State Logo"></a></p>
+<p align="center"><a href="https://github.com/Ndnestor098/RealState" target="_blank"><img src="/public/images/logo.png" width="100%" alt="Real State Logo"></a></p>
 
-# Real State Villa
+# Real State
 
 ## Descripción
 
-Real State Villa es una aplicación web desarrollada con Laravel y React, donde Laravel actúa como la API backend y React como el frontend. Esta aplicación está diseñada para gestionar bienes raíces, incluyendo funcionalidades como la visualización de casas, características de las propiedades, visitas, y notificaciones.
+Real State es una aplicación web para la gestión de bienes raíces, desarrollada con Laravel, Inertia.js y React. Laravel actúa como el backend, manejando la lógica del servidor y la base de datos, mientras que Inertia.js facilita la renderización de las vistas sin necesidad de una API tradicional. React se encarga de la interfaz de usuario, proporcionando una experiencia dinámica y fluida. La aplicación permite visualizar propiedades, gestionar sus características, programar visitas y recibir notificaciones, todo en un entorno moderno y eficiente.
 
 ## Tecnologías
 
@@ -50,7 +50,7 @@ npm install
 php artisan key:generate
 ```
 
-5. Configura la base de datos en el archivo `.env`:
+5. Configura la base de datos en el archivo .env con las credenciales correspondientes:
 
 ```
 DB_CONNECTION=mysql
@@ -67,13 +67,13 @@ DB_PASSWORD=tu_contraseña
 php artisan migrate
 ```
 
-7. (Opcional) Ejecutas los seeders de prueba para ver el funcionamiento de la pagina:
+7. (Opcional) Si deseas poblar la base de datos con datos de prueba:
 
 ```bash
 php artisan migrate --seed
 ```
 
-8. (Opcional) Guarde en la carpeta storage/app/public/images algunas imagenes con estos nombres para mejor visualizacion:
+8. (Opcional) Guarda algunas imágenes en la carpeta storage/app/public/images para mejor visualización:
 
 ```
 casa-1-1.jpeg
@@ -84,11 +84,17 @@ casa-2-2.jpeg
 casa-2-3.jpeg
 ```
 
-9. (Opcional) El usuario creado por el seeder para el test y visualizacion es:
+9. (Opcional) El usuario creado por el seeder para pruebas en el Dashboard en la ruta "/dashboard":
 
 ```
 Email: test@example.com
 Password: test
+```
+
+10. (Opcional) Ejecuta los test para verificar que la aplicación esté funcionando correctamente:
+
+```bash
+php artisan test
 ```
 
 10. Inicia el servidor de desarrollo:
@@ -156,6 +162,8 @@ npm run dev
 4. Sube los cambios a tu fork (`git push origin feature/nueva-caracteristica`).
 5. Abre un Pull Request.
 
+Nota: Asegúrate de que tu código pase los tests y siga las guías de estilo del proyecto antes de hacer un Pull Request.
+
 ## Licencia
 
 Este proyecto está licenciado bajo la Apache License 2.0. Consulta el archivo [LICENSE](LICENSE) para más detalles.
@@ -166,4 +174,4 @@ Si tienes alguna pregunta o sugerencia, por favor contacta a [Nestor Daniel](mai
 
 ---
 
-¡Gracias por usar Real State Villa!
+¡Gracias por usar Real State!
