@@ -4,18 +4,18 @@ import { Link, router } from "@inertiajs/react";
 
 export function ModalNotify({ notification }) {
     
-    
     const handleMarkAsRead = (id) =>{
         router.post('/notification/'+id)
     }
-
+    console.log(notification);
+    
     return (
         <div className="content-notify"> 
             {/* Título de la sección de notificaciones */}
             <div>
                 <h5 style={{ width:"100%", textAlign:"center" }}>Notifications</h5>
             </div>
-            {   notification 
+            {   notification && notification.length > 0
                 ? notification.map(item => {
                     // Itera sobre cada notificación y renderiza un elemento para cada una
                     return (
@@ -38,7 +38,7 @@ export function ModalNotify({ notification }) {
                                     <div className="button-wrap-notify">
                                         {/* Botón para ver la casa asociada a la visita */}
                                         <button className="primary-cta-notify button-notify">
-                                            <Link href={'/propertie/' + item.data.visit.house_id} target="_blank">View house</Link>    
+                                            <Link href={'/property/' + item.data.visit.house_id} target="_blank">View house</Link>    
                                         </button>
                                         
                                         {/* Botón para marcar la notificación como leída */}

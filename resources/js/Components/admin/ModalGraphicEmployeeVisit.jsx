@@ -48,7 +48,7 @@ export function ModalGraphicEmployeeVisit({ users, pending }) {
             {/* Sección para mostrar los empleados */}
             <div style={{ height: "280px", width: "100%", padding: "0 10px" }}>
                 <h5 style={{ width: "100%", textAlign: "center" }}>
-                    Active employees
+                    Online employees
                 </h5>
                 
                 <Table striped bordered hover>

@@ -126,6 +126,7 @@ export default function VisitAdministrator({ auth, visit, users }) {
                     <tbody>
                         {
                             data && data.map((item) => ( // Mapea los datos de las visitas para mostrarlos en la tabla
+                                
                                 <tr key={item.id}>
                                     <td style={{ textAlign: "center", width: "10px" }}>{item.id}</td> {/* Muestra el ID de la visita */}
                                     
@@ -142,7 +143,7 @@ export default function VisitAdministrator({ auth, visit, users }) {
                                     <td style={visited == 1 ? { color: "green", fontWeight: "600" } : {}}>{item.date_visit}</td> {/* Muestra la fecha de visita, color verde si son visitas programadas */}
                                     
                                     <td style={{ width: "128px" }}>
-                                        <Link href={'/property/' + item.id } target="_blank"> {/* Enlace para ver detalles de la casa */}
+                                        <Link href={'/property/' + item.house_id } target="_blank"> {/* Enlace para ver detalles de la casa */}
                                             <Button variant="success" style={{ whiteSpace:"nowrap" }}>View House</Button> {/* Botón para ver la casa */}
                                         </Link>
                                     </td>
