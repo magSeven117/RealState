@@ -1,8 +1,8 @@
-<p align="center">
-    <a href="https://github.com/Ndnestor098/RealState" target="_blank" style="padding-bottom: .3em; font-size: 2em;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));    text-decoration: none;">
+<h1 align="center">
+    <a href="https://github.com/Ndnestor098/RealState" target="_blank">
         Real State
     </a>
-</p>
+</h1>
 
 <p align="center"><a href="https://github.com/Ndnestor098/RealState" target="_blank"><img src="/public/images/page.webp" width="100%" alt="Real State Logo"></a></p>
 
