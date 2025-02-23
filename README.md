@@ -1,6 +1,10 @@
-<p align="center"><a href="https://github.com/Ndnestor098/RealState" target="_blank"><img src="/public/images/page.webp" width="100%" alt="Real State Logo"></a></p>
+<p align="center">
+    <a href="https://github.com/Ndnestor098/RealState" target="_blank" sytle="padding-bottom: .3em; font-size: 2em;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));">
+        Real State
+    </a>
+</p>
 
-# Real State
+<p align="center"><a href="https://github.com/Ndnestor098/RealState" target="_blank"><img src="/public/images/page.webp" width="100%" alt="Real State Logo"></a></p>
 
 ## Descripción
 
