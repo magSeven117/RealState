@@ -1,7 +1,5 @@
 <h1 align="center">
-    <a href="https://github.com/Ndnestor098/RealState" target="_blank">
-        Real State
-    </a>
+    Real State
 </h1>
 
 <p align="center"><a href="https://github.com/Ndnestor098/RealState" target="_blank"><img src="/public/images/page.webp" width="100%" alt="Real State Logo"></a></p>
