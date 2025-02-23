@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { Link } from '@inertiajs/react';
 
 export function HeaderAdministrator({ user }) {
 
@@ -12,7 +13,7 @@ export function HeaderAdministrator({ user }) {
             <Navbar expand="lg" className="bg-body-tertiary">
                 <Container >
                     {/* Nombre del área de administración */}
-                    <Navbar.Brand href="/dashboard">Administer</Navbar.Brand>
+                    <Navbar.Brand as={Link} href="/dashboard">Administer</Navbar.Brand>
 
                     {/* Botón para alternar la visualización del menú en dispositivos móviles */}
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -21,14 +22,14 @@ export function HeaderAdministrator({ user }) {
                     <Navbar.Collapse id="basic-navbar-nav" style={{ visibility:"visible" }}>
                         <Nav className="me-auto">
                             {/* Enlaces de navegación */}
-                            <Nav.Link href="/dashboard" active={location.pathname === "/dashboard"}>Home</Nav.Link>
-                            <Nav.Link href="/dashboard/users" active={location.pathname === "/dashboard/users"}>Users</Nav.Link>
-                            <Nav.Link href="/dashboard/properties" active={location.pathname === "/dashboard/properties"}>Properties</Nav.Link>
-                            <Nav.Link href="/dashboard/visit" active={location.pathname === "/dashboard/visit"}>Schedules Visits</Nav.Link>
+                            <Nav.Link as={Link} href="/dashboard" active={location.pathname === "/dashboard"}>Home</Nav.Link>
+                            <Nav.Link as={Link} href="/dashboard/users" active={location.pathname === "/dashboard/users"}>Users</Nav.Link>
+                            <Nav.Link as={Link} href="/dashboard/properties" active={location.pathname === "/dashboard/properties"}>Properties</Nav.Link>
+                            <Nav.Link as={Link} href="/dashboard/visit" active={location.pathname === "/dashboard/visit"}>Schedules Visits</Nav.Link>
 
                             
                             <NavDropdown title={user.name} id="basic-nav-dropdown" className="justify-content-end">
-                                <NavDropdown.Item href={'/dashboard/users/update/'+user.id}>Edit User</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} href={'/dashboard/users/update/'+user.id}>Edit User</NavDropdown.Item>
                                 <NavDropdown.Item href="/logout">Logout</NavDropdown.Item>
                             </NavDropdown> 
                         </Nav>

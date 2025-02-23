@@ -26,14 +26,22 @@ class VisitController extends Controller
      */
     public function index(Request $request)
     {
-        // Si no se incluye el parámetro 'graphic', se crea otra consulta
-        $query = Visit::with('user')
-            ->search($request->search) // Realiza la búsqueda según el parámetro 'search'
-            ->visited($request->input('visited')) // Filtra por el estado 'visited' si se proporciona
-            ->orderBy('date_visit', 'ASC') // Ordena por la fecha de visita de forma ascendente
-            ->where('date_visit', '>=', Carbon::today()) // Filtra por fechas de visita que sean hoy o futuras
-            ->pending($request->input('pending_visit')) // Filtra por el estado de 'pending_visit'
-            ->paginate(30); 
+        $cache = "schedules";
+        
+        if(Cache::has($cache)){
+            $query = Cache::get($cache);
+        } else {
+            // Si no se incluye el parámetro 'graphic', se crea otra consulta
+            $query = Visit::with('user')
+                ->search($request->search) // Realiza la búsqueda según el parámetro 'search'
+                ->visited($request->input('visited')) // Filtra por el estado 'visited' si se proporciona
+                ->orderBy('date_visit', 'ASC') // Ordena por la fecha de visita de forma ascendente
+                ->where('date_visit', '>=', Carbon::today()) // Filtra por fechas de visita que sean hoy o futuras
+                ->pending($request->input('pending_visit')) // Filtra por el estado de 'pending_visit'
+                ->paginate(30); 
+
+            Cache::put($cache, $query, now()->addMinutes(10));
+        }
 
         // Renderiza inertia
         return Inertia::render('Auth/Visit' ,[

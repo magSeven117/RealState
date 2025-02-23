@@ -90,7 +90,7 @@ export function Header () {
                                         <Link href="/properties" className={`${location.url == '/properties' && 'active'}`}>Properties</Link>
                                     </li>
                                     <li>
-                                        <a href="/contact" className={`${location.url == '/contact' && 'active'}`}>Contact Us</a>
+                                        <Link href="/contact" className={`${location.url == '/contact' && 'active'}`}>Contact Us</Link>
                                     </li>
                                     <li>
                                         

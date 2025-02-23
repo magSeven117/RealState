@@ -27,7 +27,7 @@ class AdminController extends Controller
         $cache_users = 'users';
         $cache_pending = 'pending';
         $cache_notification = 'notification';
-        Cache::flush();
+        
         if( Cache::has($cache_house) && Cache::has($cache_notification) && Cache::has($cache_visit) && Cache::has($cache_pending) && Cache::has($cache_users) ) {
             $visit = Cache::get($cache_visit);
             $house = Cache::get($cache_house);
@@ -73,7 +73,6 @@ class AdminController extends Controller
             Cache::put($cache_users, $users, now()->addMinutes(10));
         }
        
-
         return Inertia::render('Auth/Dashboard', [
             'visit' => $visit,
             'house' => $house,

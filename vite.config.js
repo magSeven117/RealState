@@ -16,8 +16,25 @@ export default defineConfig({
 
             ],
             ssr: 'resources/js/ssr.jsx',
-            refresh: true,
+            refresh: false,
         }),
         react(),
     ],
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks(id) {
+                    if (id.includes('node_modules')) {
+                        return 'vendor'; // Mantener vendor separado
+                    }
+    
+                    // Divide los componentes grandes
+                    if (id.includes('resources/js/components/')) {
+                        const name = id.split('/').pop().replace('.jsx', '');
+                        return `components/${name}`; // Crea un chunk por cada componente
+                    }
+                }
+            }
+        }
+    }
 });
