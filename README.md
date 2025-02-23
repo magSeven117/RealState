@@ -1,4 +1,4 @@
-<p align="center"><a href="https://github.com/Ndnestor098/RealState" target="_blank"><img src="/public/images/logo.png" width="100%" alt="Real State Logo"></a></p>
+<p align="center"><a href="https://github.com/Ndnestor098/RealState" target="_blank"><img src="/public/images/page.webp" width="100%" alt="Real State Logo"></a></p>
 
 # Real State
 
