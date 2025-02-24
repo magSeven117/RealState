@@ -90,7 +90,7 @@ export default function CreateProperties({ auth, typeHouse, feature }) {
         setIsSubmitting(true);
 
 
-        post("/dashboard/propertie/create", {
+        post("/dashboard/property/create", {
             onSuccess : ()=>{
                 setIsSubmitting(false);
             },
