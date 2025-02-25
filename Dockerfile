@@ -5,13 +5,13 @@ RUN apk --no-cache upgrade && \
 
 # PHP: Install php extensions
 RUN pecl channel-update pecl.php.net
-RUN pecl install pcov ssh2 swoole
+RUN pecl install pcov swoole
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-RUN docker-php-ext-install mbstring xml iconv pcntl gd zip sockets pdo  pdo_mysql bcmath soap
-RUN docker-php-ext-enable mbstring xml gd iconv zip pcov pcntl sockets bcmath pdo  pdo_mysql soap swoole
+RUN docker-php-ext-install mbstring xml pcntl gd zip pdo  pdo_mysql bcmath soap
+RUN docker-php-ext-enable mbstring xml gd zip pcov pcntl bcmath pdo  pdo_mysql soap swoole
 
 
-RUN docker-php-ext-install pdo pdo_mysql sockets
+RUN docker-php-ext-install pdo pdo_mysql
 RUN curl -sS https://getcomposer.org/installer​ | php -- \
      --install-dir=/usr/local/bin --filename=composer
 
@@ -28,5 +28,9 @@ COPY .env.example .env
 
 RUN php artisan key:generate
 RUN php artisan octane:install --server="swoole"
+
+RUN npm install
+
+RUN npm run build
 
 CMD php artisan octane:start --server="swoole" --host="0.0.0.0" --port="9000"
