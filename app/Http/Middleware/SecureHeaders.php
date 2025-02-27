@@ -15,11 +15,17 @@ class SecureHeaders
      */
     public function handle($request, Closure $next)
     {
-        $response = $next($request);
+        $policy = "
+            default-src 'self';
+            script-src 'self' 'unsafe-inline' 'unsafe-eval';
+            style-src 'self' 'unsafe-inline';
+            img-src 'self' data:;
+            font-src 'self' data:;
+            frame-src 'self' https://www.google.com;
+        ";
 
-        // $response->headers->set('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; frame-ancestors 'none';");
-
-
-        return $response;
+        header("Content-Security-Policy: " . str_replace("\n", '', $policy));
+        
+	    return $next($request);
     }
 }

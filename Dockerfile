@@ -11,6 +11,8 @@ RUN pecl channel-update pecl.php.net && \
     docker-php-ext-install mbstring xml pcntl gd zip pdo pdo_mysql bcmath soap && \
     docker-php-ext-enable mbstring xml gd zip pcov pcntl bcmath pdo pdo_mysql soap swoole redis
 
+RUN apk add redis
+
 # Instalar Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 

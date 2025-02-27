@@ -54,7 +54,7 @@ class ImageService
         // Recorre cada imagen en el array proveniente del modelo.
         foreach ($image_model as $value) {
             // Verifica si la imagen del modelo no está presente en el array de imágenes nuevas del Request.
-            if (!in_array($value, $image_old)) {
+            if (!empty($image_old) && !in_array($value, $image_old)) {
                 // Si se encuentra una imagen que no coincide, significa que hay un cambio.
                 return true;
             }
