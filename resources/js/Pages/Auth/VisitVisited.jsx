@@ -4,27 +4,12 @@ import { Alert, Button, ButtonGroup, Table } from "react-bootstrap";
 import { ModalConfirmAlert } from "@/Components/admin/ModalConfirmAlert";
 import { Head, Link, router } from "@inertiajs/react";
 
-export default function VisitPending({ auth, visit }) {
-    const [ alertConfirmVisited , setAlertConfirmVisited  ] = useState(false); // Estado para mostrar alerta de confirmación de pendiente.
-    const [ alertVisited, setAlertVisited ] = useState(false); // Estado para mostrar alerta de pendiente.
+
+export default function VisitAdministrator({ auth, visit }) {
     const [ alertConfirmDelete, setAlertConfirmDelete ] = useState(false); // Estado para mostrar alerta de confirmación de eliminación.
     const [ alertDelete, setAlertDelete ] = useState(false); // Estado para mostrar alerta de eliminación.
     const [ visit_id, setVisit_id ] = useState(); // Estado para almacenar el ID de la visita.
     let [ data, setData ] = useState(visit.data);
-    
-
-    // Maneja el cambio de estado de visitado.
-    const handleChangeVisited = () => {
-        setAlertConfirmVisited(false); // Cierra la confirmación de visita.
-        setAlertVisited(true); // Abre la alerta de confirmación de visita.
-        
-        setTimeout(() => {
-            setAlertVisited(false); // Cierra la alerta de confirmación de visita.
-            document.getElementById("row-"+visit_id).remove();
-        }, 1500);
-
-        router.post('/dashboard/visit/visited/' + visit_id);
-    };
 
     // Maneja la eliminación de una visita.
     const handleDeleteVisit = () => {
@@ -33,7 +18,7 @@ export default function VisitPending({ auth, visit }) {
         
         setTimeout(() => {
             setAlertDelete(false); // Cierra la alerta de confirmación de visita.
-            document.getElementById("row-"+visit_id).remove();
+            document.getElementById("row-"+visit_id).remove(); // Elimina la fila de la tabla de visitas.
         }, 1500);
 
         router.post('/dashboard/visit/delete/' + visit_id);
@@ -48,21 +33,22 @@ export default function VisitPending({ auth, visit }) {
             <div style={{ marginTop: "30px", padding: "0 10px" }}>
 
                 <div style={{ textAlign: "center", width: "100%" }}>
-                    <h1>Pending to visit</h1> {/* Título para propiedades visitadas */}
+                    <h1>Properties Visited</h1> {/* Título para propiedades visitadas */}
+                    
                 </div>
                 
                 <Table striped bordered hover> {/* Tabla para mostrar visitas */}
                     <thead>
                         <tr>
-                            <th>ID</th> {/* Encabezado de ID */}
-                            <th>Name</th> {/* Encabezado de Nombre */}
-                            <th>Email</th> {/* Encabezado de Email */}
-                            <th>phone</th> {/* Encabezado de Teléfono */}
-                            <th>Employee</th> {/* Encabezado de Empleados  */}
-                            <th>Scheduled Date</th> {/* Encabezado de Fecha Programada */}
-                            <th>House</th> {/* Encabezado de Casa */}
-                            <th>Mark</th> {/* Encabezado para marcar como visitado si se están viendo visitas programadas */}
-                            <th>Delete</th> {/* Encabezado para eliminar visita */}
+                            <th className="text-center">ID</th> {/* Encabezado de ID */}
+                            <th className="text-center">Name</th> {/* Encabezado de Nombre */}
+                            <th className="text-center">Email</th> {/* Encabezado de Email */}
+                            <th className="text-center">phone</th> {/* Encabezado de Teléfono */}
+                            <th className="text-center">Employee</th> {/* Encabezado de Empleados */}
+                            <th className="text-center">Scheduled Date</th> {/* Encabezado de Fecha Programada */}
+                            <th className="text-center">House</th> {/* Encabezado de Casa */}
+                            <th className="text-center">Visited</th> {/* // Encabezado para visitas si se han visto las propiedades visitadas */}
+                            <th className="text-center">Delete</th> {/* Encabezado para eliminar visita */}
                         </tr>
                     </thead>
                     <tbody>
@@ -78,9 +64,9 @@ export default function VisitPending({ auth, visit }) {
                                     
                                     <td>{item.phone}</td> {/* Muestra el teléfono */}
                                     
-                                    <td>{item.user?.name}</td> {/* Muestra los empleados de visited y pending */}
-                                    
-                                    <td style={{ color:"#10B981", fontWeight:"600" }}>{item.date_visit}</td> {/* Muestra la fecha de visita, color verde si son visitas programadas */}
+                                    <td>{item.user?.name}</td> {/* Muestra los empleados de visited */}
+
+                                    <td style={{ color: "green", fontWeight: "600"  }}>{item.date_visit}</td> {/* Muestra la fecha de visita, color verde si son visitas programadas */}
                                     
                                     <td style={{ width: "128px" }}>
                                         <Link href={'/property/' + item.house_id } target="_blank"> {/* Enlace para ver detalles de la casa */}
@@ -88,19 +74,8 @@ export default function VisitPending({ auth, visit }) {
                                         </Link>
                                     </td>
                                     
+                                    <th style={{ color: "#F59E0B", fontWeight: "600" }}>{item.visited_date}</th> {/* Muestra la fecha de visita si ya se ha visitado */}
                                     
-                                    <td style={{ width: '50px' }}>
-                                        <Button 
-                                            variant="secondary" 
-                                            onClick={() => {
-                                                setAlertConfirmVisited(true); // Muestra la alerta de confirmación para marcar como visitado
-                                                setVisit_id(item.id); // Establece el ID de la visita
-                                            }}
-                                        >
-                                            Visited
-                                        </Button> {/* Botón para marcar como pendiente */}
-                                    </td>
-                                            
                                     <td style={{ width: '50px' }}>
                                         <Button 
                                             variant="danger" 
@@ -132,32 +107,20 @@ export default function VisitPending({ auth, visit }) {
                
 
             {
-                (alertConfirmDelete || alertConfirmVisited) && ( // Verifica si hay alertas de confirmación activas
-                    <ModalConfirmAlert 
-                        title={alertConfirmVisited ? 'You are about to mark this as visited.' :'Delete Visit.'} // Título de la alerta según la acción
-                        subtitle={
-                            alertConfirmVisited 
-                                ? "By marking it as visited, it will be moved to the 'Visited' table. Do you want to continue?" 
-                                : 'You are about to delete this visit, do you want to continue?.'
-                        } 
-                        button={alertConfirmVisited ? 'Mark as Visited' : 'Delete'} // Texto del botón según la acción
-                        typeButton={alertConfirmVisited ? 'warning' : 'danger'} // Tipo de botón según la acción
+                (alertConfirmDelete) && ( // Verifica si hay alertas de confirmación activas
+                    <ModalConfirmAlert
+                        title={'Delete Visit.'}
+                        subtitle={'You are about to delete this visit, do you want to continue?.'} 
+                        button={'Delete'} // Texto del botón según la acción
+                        typeButton={'danger'} // Tipo de botón según la acción
                         buttonCancel={"Cancel"} // Texto del botón de cancelar
-                        functionButtonCancel={() => {
-                            alertConfirmVisited 
-                                ? setAlertConfirmVisited(false) 
-                                : setAlertConfirmDelete(false);
-                        }}
-                        functionButton={() => {
-                            alertConfirmVisited   
-                                ? handleChangeVisited() // Marca como visitado
-                                : handleDeleteVisit() // Elimina la visita 
-                        }} 
+                        functionButtonCancel={() => {setAlertConfirmDelete(false);}}
+                        functionButton={() => {handleDeleteVisit()}} 
                     />
                 )
             }
             {
-                ( alertDelete || alertVisited) && ( // Verifica si hay alertas activas de visita o eliminación
+                (alertDelete ) && ( // Verifica si hay alertas activas de visita o eliminación
                     <div style={{
                         width: "100%",
                         position: "fixed",
@@ -168,11 +131,9 @@ export default function VisitPending({ auth, visit }) {
                         margin: "10px 0",
                         zIndex: 9999
                     }}>
-                        <Alert variant={alertVisited ? 'danger' : 'warning' }> {/* Alerta de éxito */}
+                        <Alert variant={'danger'}> {/* Alerta de éxito */}
                             {
-                                alertVisited 
-                                    ? "The visit has been removed from the database." // Mensaje si se ha eliminado la visita
-                                    : "It has been marked as visited and moved to the 'Mark as Visited' table." // Mensaje si se ha marcado como visitado
+                                "The visit has been removed from the database." // Mensaje si se ha eliminado la visita"It has been marked as visited and moved to the 'Mark as Visited' table." // Mensaje si se ha marcado como visitado
                             }
                         </Alert>
                     </div>

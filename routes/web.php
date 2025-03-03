@@ -69,8 +69,9 @@ Route::middleware("auth")->controller(HouseController::class)->group(function ()
 
 Route::controller(VisitController::class)->group(function () {
     Route::get('/dashboard/visit', 'index')->name("visit")->middleware("auth");
+    Route::get('/dashboard/visit/pending', 'pending')->name("visit.pending")->middleware("auth");
+    Route::get('/dashboard/visit/visited', 'visited')->name("visit.visited")->middleware("auth");
 
-    Route::get('/dashboard/visit/pending', 'pending')->middleware("auth");
     
     Route::get('/visit/{id}', 'show');
     Route::post('/visit/{id}', 'create');
