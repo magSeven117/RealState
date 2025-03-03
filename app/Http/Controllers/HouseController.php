@@ -178,7 +178,7 @@ class HouseController extends Controller
     
         // Retorna la respuesta JSON con los datos de la casa.
         return Inertia::render('Auth/Properties', [
-            'auth' => Auth::user(),
+            'auth' => Auth::user()->load('roles.permissions'),
             'house' => $query, // Datos de la casa.
         ]);
         
@@ -196,7 +196,7 @@ class HouseController extends Controller
 
         // Retorna una respuesta JSON indicando que la operación fue exitosa junto con los datos de la casa.
         return Inertia::render('Auth/CreateProperty',[
-            'auth' => Auth::user(),
+            'auth' => Auth::user()->load('roles.permissions'),
             'typeHouse' => $typeHouse,
             'feature' => $feature,
         ]);
@@ -282,7 +282,7 @@ class HouseController extends Controller
 
         // Retorna una respuesta JSON indicando que la operación fue exitosa junto con los datos de la casa.
         return Inertia::render('Auth/UpdateProperty',[
-            'auth' => Auth::user(),
+            'auth' => Auth::user()->load('roles.permissions'),
             'house' => $query,
             'typeHouse' => $typeHouse,
             'feature' => $feature,

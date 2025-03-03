@@ -45,7 +45,41 @@ class VisitController extends Controller
 
         // Renderiza inertia
         return Inertia::render('Auth/Visit' ,[
-            'auth' => Auth::user(),
+            'auth' => Auth::user()->load('roles.permissions'),
+            'visit' => $query, // Datos de la consulta
+            'users' => User::all(),
+        ]);
+    }
+
+    /**
+     * Visualiza la informacion de la base de datos de visitas.
+     *
+     * @param  \Illuminate\Http\Request  $request Contiene los datos de la solicitud.
+     * 
+     * @return \Inertia\Inertia renderiza la visita Auth/Visit
+     */
+    public function pending(Request $request)
+    {
+        $cache = "schedules_pending";
+        Cache::flush();
+        if(Cache::has($cache)){
+            $query = Cache::get($cache);
+        } else {
+            // Si no se incluye el parámetro 'graphic', se crea otra consulta
+            $query = Visit::with('user')
+                ->search($request->search) // Realiza la búsqueda según el parámetro 'search'
+                ->visited($request->input('visited')) // Filtra por el estado 'visited' si se proporciona
+                ->orderBy('date_visit', 'ASC') // Ordena por la fecha de visita de forma ascendente
+                ->where('date_visit', '>=', Carbon::today()) // Filtra por fechas de visita que sean hoy o futuras
+                ->pending($request->input('pending_visit')) // Filtra por el estado de 'pending_visit'
+                ->paginate(30); 
+
+            Cache::put($cache, $query, now()->addMinutes(10));
+        }
+        return $query;
+        // Renderiza inertia
+        return Inertia::render('Auth/VisitPending' ,[
+            'auth' => Auth::user()->load('roles.permissions'),
             'visit' => $query, // Datos de la consulta
             'users' => User::all(),
         ]);

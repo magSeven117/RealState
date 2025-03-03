@@ -32,7 +32,7 @@ class UserController extends Controller
         }
 
         return Inertia::render('Auth/Users', [
-            'auth' => Auth::user(),
+            'auth' => Auth::user()->load('roles.permissions'),
             'users' => $users,
         ]);
     }
@@ -45,7 +45,7 @@ class UserController extends Controller
     public function create()
     {
         return Inertia::render('Auth/CreateUser',[
-            'auth' => Auth::user(),
+            'auth' => Auth::user()->load('roles.permissions'),
         ]);
     }
 
@@ -89,7 +89,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         return Inertia::render('Auth/UpdateUser', [
-            'auth' => Auth::user(),
+            'auth' => Auth::user()->load('roles.permissions'),
             'user' => $user
         ]);
     }

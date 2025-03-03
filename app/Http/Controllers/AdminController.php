@@ -76,7 +76,7 @@ class AdminController extends Controller
         return Inertia::render('Auth/Dashboard', [
             'visit' => $visit,
             'house' => $house,
-            'user' => Auth::user(), 
+            'user' => Auth::user()->load('roles.permissions'), 
             'users' => $users,
             'pending' => $pending,
             'notification' => $notification
