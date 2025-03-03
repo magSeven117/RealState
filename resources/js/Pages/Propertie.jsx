@@ -68,7 +68,7 @@ export default function Propertie({ data }) {
                             <div className="main-content">
                                 <div className="content-info-price">
                                     <span className="category">
-                                        {data.type_house.type_house}  {/* Tipo de casa */}
+                                        {data.type_house.name}  {/* Tipo de casa */}
                                     </span>
                                     <p className="price">${price}</p>  {/* Precio de la propiedad */}
                                 </div>

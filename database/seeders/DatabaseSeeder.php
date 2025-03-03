@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
 
             HouseSeeder::class,
             VisitSeeder::class,
+            PermissionSeeder::class,
+            RoleSeeder::class,
         ]);
 
         User::factory()->create([

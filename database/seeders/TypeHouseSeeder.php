@@ -14,20 +14,20 @@ class TypeHouseSeeder extends Seeder
     public function run(): void
     {
         $array = [
-            'Townhouse',
-            'Apartment',
-            'Penthouse',
-            'Chalet',
-            'Cabin',
-            'Mansion',
-            'Farm House',
-            'Annexe',
-            'House'
+            'townhouse',
+            'apartment',
+            'penthouse',
+            'chalet',
+            'cabin',
+            'mansion',
+            'farm house',
+            'annexe',
+            'house'
         ];
 
         foreach ($array as $item) {
             TypeHouse::create([
-                'type_house' => $item
+                'name' => $item
             ]);
         }
         

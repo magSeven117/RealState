@@ -21,7 +21,7 @@ export function RenderHouses({ currentItems }) {
                                 </Link>
                                 {/* Categoría de la propiedad */}
                                 <span className="category">
-                                    {item.type_house.type_house}
+                                    {item.type_house.name}
                                 </span>
                                 {/* Precio de la propiedad */}
                                 <h6>
