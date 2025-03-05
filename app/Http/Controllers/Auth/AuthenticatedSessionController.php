@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -36,7 +37,7 @@ class AuthenticatedSessionController extends Controller
         $user->save();
 
         $request->session()->regenerate();
-
+        Cache::flush();
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
@@ -54,7 +55,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
-
+        Cache::flush();
         return redirect('/');
     }
 }

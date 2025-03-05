@@ -41,7 +41,7 @@ export default function VisitPending({ auth, visit }) {
 
     return(
         <>  
-            <Head title="Visit Administrator" />
+            <Head title="Visit Pending Administrator" />
 
             <HeaderAdministrator user={auth}/> {/* Muestra el encabezado del administrador */}
            

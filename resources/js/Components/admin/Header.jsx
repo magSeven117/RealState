@@ -13,6 +13,8 @@ export function HeaderAdministrator({ user }) {
             permissions.push(item.name); 
         });
     });
+    console.log(permissions);
+    
     
     return (
         <>
@@ -35,18 +37,17 @@ export function HeaderAdministrator({ user }) {
                                 title="Access Control" 
                                 id="basic-nav-dropdown" 
                                 className={ permissions.includes("users") ? "justify-content-end" : "hidden" } 
-                                active={location.pathname.includes("users")}
+                                active={location.pathname.includes("users") || location.pathname.includes("roles") }
                             >
                                 <NavDropdown.Item as={Link} href="/dashboard/users">Users</NavDropdown.Item>
-                                <NavDropdown.Item as={Link} href="/dashboard/users/roles">Roles</NavDropdown.Item>
-                                <NavDropdown.Item as={Link} href="/dashboard/users/permissions">Permissions</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} href="/dashboard/roles">Roles</NavDropdown.Item>
                             </NavDropdown>
                             
                             <Nav.Link 
                                 as={Link} 
                                 href="/dashboard/properties" 
                                 active={location.pathname.includes("properties")}
-                                className={ permissions.includes("properties") ? "" : "hidden" } 
+                                style={ permissions.includes("properties") ? {} : { display:"none" }}
                             >
                                 Properties
                             </Nav.Link>
@@ -54,7 +55,7 @@ export function HeaderAdministrator({ user }) {
                             <NavDropdown 
                                 title="Visit Management" 
                                 id="basic-nav-dropdown" 
-                                className={ permissions.includes("users") ? "justify-content-end" : "hidden" } 
+                                className={ permissions.includes("visits") ? "justify-content-end" : "hidden" } 
                                 active={location.pathname.includes("visit")}
                             >
                                 <NavDropdown.Item as={Link} href="/dashboard/visit">Scheduled Visits</NavDropdown.Item>

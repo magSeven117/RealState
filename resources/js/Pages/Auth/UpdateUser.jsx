@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";  // Importa React y hooks ne
 import { HeaderAdministrator } from "@/Components/admin/Header";  // Importa el componente del encabezado
 import { Head, useForm, router } from '@inertiajs/react'
 
-export default function UpdateUser({ auth, user }) {  // Función principal del componente
-    const {data, setData, post, processing, errors, reset} = useForm({
-        email : user.email,
-        name : user.name,
-        password : "",
-        role : user.role
+export default function UpdateUser({ auth, user, roles, roles_id }) {  // Función principal del componente
+    const {data, setData, post, errors} = useForm({
+        email: user.email,
+        name: user.name,
+        password: "",
+        role: roles_id ?? "",
     });
 
     const [ isSubmit, setIsSubmit ] = useState(false);
@@ -130,25 +130,49 @@ export default function UpdateUser({ auth, user }) {  // Función principal del 
                     </div>
 
                     {/* Selección de rol */}
-                    <input
-                        style={{ fontWeight: "600", fontFamily: "Arial" }}
-                        className="input-visit"
-                        name="role"
-                        placeholder="Role"
-                        type="text"
-                        value={data.role}
-                        onChange={e => setData('role', e.target.value)}
-                        required
-                    />
-                    {/* Mensaje de error */}
-                    <div style={{ width: '100%', textAlign: 'center', }}>
-                        {
-                            errors.role 
-                            &&<span style={{ textAlign: "center", fontSize: "13px", color: "red", fontWeight: "600", width: "100%" }}>
-                                { errors.role }  
-                            </span>
-                        }
-                    </div>
+                    {
+                        roles && 
+                        <div style={{ width:"100%" }}>
+                            <div className="title" style={{ margin:"0", marginBottom:"5px" }}>
+                                <span>Features</span>  {/* Etiqueta para características */}
+                            </div>
+                            <div style={{ display: "flex", width: "100%", flexWrap: "wrap", gap: "20px", marginLeft: "5px" }}>
+                                {roles.length > 0 && roles.map((item) => (
+                                    <div key={item.id} style={{ width: "100px", display: "flex", alignItems: "center" }}>
+                                        <label className="container-checkbox">
+                                            <input  
+                                                type="checkbox" 
+                                                name="role"            
+                                                id={`role-${item.id}`}
+                                                checked={data.role.includes(item.id)} // Marca si el rol existe
+                                                onChange={(e) => {
+                                                    const selectedRoles = e.target.checked
+                                                        ? [...data.role, item.id] // Añadir rol si se marca
+                                                        : data.role.filter((r) => r !== item.id); // Eliminar si se desmarca
+
+                                                    setData("role", selectedRoles);
+                                                }}
+                                                value={item.id}
+                                            />
+                                            <div className="checkmark checkmark_feature"></div> {/* Estilo para el checkbox */}
+                                        </label>
+                                        <span style={{ textTransform: "capitalize", marginTop: "3px" }}>
+                                            {item.name}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                            {/* Mensaje de error */}
+                            <div style={{ width: '100%', textAlign: 'center', }}>
+                                {
+                                    errors.role 
+                                    &&<span style={{ textAlign: "center", fontSize: "13px", color: "red", fontWeight: "600", width: "100%" }}>
+                                        { errors.role }  
+                                    </span>
+                                }
+                            </div>
+                        </div>
+                    }
                     
                     {/* Botón para enviar el formulario */}
                     <button className="button-confirm" type="submit" style={{ margin: "0 auto 0 auto" }} disabled={isSubmit}>

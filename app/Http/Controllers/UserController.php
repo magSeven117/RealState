@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,11 +23,11 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $Cache_Name = "users_" . $request->page;
-        Cache::flush();
+        
         if(Cache::has($Cache_Name)){
             $users = Cache::get($Cache_Name);
         } else {
-            $users = User::orderBy('active', 'DESC')->paginate(15);
+            $users = User::with('roles')->orderBy('active', 'DESC')->paginate(11);
 
             Cache::put($Cache_Name, $users, now()->addMinutes(60));
         }
@@ -46,6 +47,7 @@ class UserController extends Controller
     {
         return Inertia::render('Auth/CreateUser',[
             'auth' => Auth::user()->load('roles.permissions'),
+            'roles' => Role::all(),
         ]);
     }
 
@@ -62,15 +64,18 @@ class UserController extends Controller
             'name' => 'required|string',
             'email' => 'required|email|string|unique:users,email',
             'password' => 'required|string',
-            'role' => 'required|string'
+            'role' => 'required|array'
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->input('password')),
-            'role' => $request->role,
         ]);
+
+        $user->roles()->sync(array_unique($request->role ?? []));
+
+        $user->save();
 
         Cache::flush();
 
@@ -86,11 +91,38 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        $user = User::findOrFail($id);
+        $user = User::with('roles')->findOrFail($id);
+        $permissions = Auth::user()
+            ->load('roles.permissions')
+            ->roles
+            ->flatMap(function ($role) {
+                return $role->permissions->pluck('name');
+            })
+            ->unique()
+            ->values();
 
+        if(!$permissions->contains('users')){
+            return Inertia::render('Auth/UpdateUser', [
+                'auth' => Auth::user()->load('roles.permissions'),
+                'user' => $user,
+            ]);
+        }
+
+        if(!$permissions->contains('users') && $user->id != Auth::id()){
+            return redirect(route('dashboard'))->with('error', 'You do not have permission to access this section.');
+        }
+
+        $roles_id = $user->roles->pluck('id');
+
+        
+        
+        $user = User::findOrFail($id);
+        
         return Inertia::render('Auth/UpdateUser', [
             'auth' => Auth::user()->load('roles.permissions'),
-            'user' => $user
+            'user' => $user,
+            'roles' => Role::all(),
+            'roles_id' => $roles_id,
         ]);
     }
 
@@ -114,15 +146,20 @@ class UserController extends Controller
                 
             ],
             'password' => 'required|string',
-            'role' => 'required|string'
+            'role' => 'array'
         ]);
-
-        User::findOrFail($id)->update([
+        
+        $user = User::findOrFail($id);
+        
+        $user->update([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->input('password')),
-            'role' => $request->role,
+            'password' => $request->password ? Hash::make($request->password) : $user->password, // Solo actualiza si hay password
         ]);
+
+        if ($request->has('role')) {
+            $user->roles()->sync(array_unique($request->role));
+        }        
 
         Cache::flush();
 

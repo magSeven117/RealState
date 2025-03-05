@@ -16,9 +16,6 @@ export default function Login() {
         setIsSubmitting(true);
 
         post('/login', {
-            onSuccess : ()=>{
-                window.location.href = "dashboard";
-            },
             onError : ()=>{
                 setIsSubmitting(false);
             },

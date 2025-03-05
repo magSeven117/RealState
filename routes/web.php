@@ -4,8 +4,12 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HouseController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisitController;
+use App\Http\Middleware\Properties;
+use App\Http\Middleware\Users;
+use App\Http\Middleware\Vistis;
 use App\Models\House;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -46,17 +50,24 @@ Route::controller(AdminController::class)->group(function () {
     Route::get('/dashboard', 'index')->name("dashboard")->middleware("auth");
 });
 
+Route::middleware(["auth", Users::class])->controller(RoleController::class)->group(function () {
+    Route::get('/dashboard/roles', 'index')->name("roles");
+    Route::post('/dashboard/role/create', 'store');
+    Route::post('/dashboard/role/update', 'update');
+    Route::delete('/dashboard/role/delete/{id}', 'destroy');
+});
+
 Route::middleware("auth")->controller(UserController::class)->group(function () {
-    Route::get('/dashboard/users', 'index')->name("users");
-    Route::get('/dashboard/users/create', 'create');
-    Route::post('/dashboard/users/create', 'store');
+    Route::get('/dashboard/users', 'index')->name("users")->middleware(Users::class);
+    Route::get('/dashboard/users/create', 'create')->middleware(Users::class);
+    Route::post('/dashboard/users/create', 'store')->middleware(Users::class);
     
     Route::get('/dashboard/users/update/{id}', 'edit');
     Route::post('/dashboard/users/update/{id}', 'update');
-    Route::delete('/dashboard/users/delete/{id}', 'destroy');
+    Route::delete('/dashboard/users/delete/{id}', 'destroy')->middleware(Users::class);
 });
 
-Route::middleware("auth")->controller(HouseController::class)->group(function () {
+Route::middleware(["auth", Properties::class])->controller(HouseController::class)->group(function () {
     Route::get('/dashboard/properties', 'index_administer')->name("properties");
     Route::get('/dashboard/property/create', 'create');
     Route::post('/dashboard/property/create', 'store');
@@ -68,18 +79,17 @@ Route::middleware("auth")->controller(HouseController::class)->group(function ()
 });
 
 Route::controller(VisitController::class)->group(function () {
-    Route::get('/dashboard/visit', 'index')->name("visit")->middleware("auth");
-    Route::get('/dashboard/visit/pending', 'pending')->name("visit.pending")->middleware("auth");
-    Route::get('/dashboard/visit/visited', 'visited')->name("visit.visited")->middleware("auth");
+    Route::get('/dashboard/visit', 'index')->name("visit")->middleware(["auth", Vistis::class]);
+    Route::get('/dashboard/visit/pending', 'pending')->name("visit.pending")->middleware(["auth", Vistis::class]);
+    Route::get('/dashboard/visit/visited', 'visited')->name("visit.visited")->middleware(["auth", Vistis::class]);
 
-    
     Route::get('/visit/{id}', 'show');
     Route::post('/visit/{id}', 'create');
 
-    Route::post('/dashboard/visit/pending/{id}/{id_employee}', 'markAsPending')->middleware("auth");
-    Route::post('/dashboard/visit/visited/{id}', 'markAsVisited')->middleware("auth");
+    Route::post('/dashboard/visit/pending/{id}/{id_employee}', 'markAsPending')->middleware(["auth", Vistis::class]);
+    Route::post('/dashboard/visit/visited/{id}', 'markAsVisited')->middleware(["auth", Vistis::class]);
 
-    Route::post('/dashboard/visit/delete/{id}', 'destroy')->middleware("auth");
+    Route::post('/dashboard/visit/delete/{id}', 'destroy')->middleware(["auth", Vistis::class]);
 });
 
 Route::post('/notification/{id}', [NotificationController::class, 'markRead'])->middleware('auth');

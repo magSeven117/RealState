@@ -26,7 +26,7 @@ export default function VisitAdministrator({ auth, visit }) {
 
     return(
         <>  
-            <Head title="Visit Administrator" />
+            <Head title="Visited Administrator" />
 
             <HeaderAdministrator user={auth}/> {/* Muestra el encabezado del administrador */}
            

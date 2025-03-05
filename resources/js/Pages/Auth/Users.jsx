@@ -19,17 +19,18 @@ export default function UsersAdministrator({ auth, users }) {
                 <Table striped bordered hover>
                     <thead>
                         <tr>
-                            <th>Online</th>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Modify</th>
+                            <th className="text-center">Online</th>
+                            <th className="text-center">ID</th>
+                            <th className="text-center">Name</th>
+                            <th className="text-center">Email</th>
+                            <th className="text-center">Role</th>
+                            <th className="text-center">Modify</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
                             users && users.data.map((item) => ( // Mapeamos los datos de los usuarios para mostrarlos en la tabla
+                                
                                 <tr key={item.id}>
                                     <td style={{width:"50px"}}>
                                         <Online color={item.active ? "#26d762" : "#f55151"}/>
@@ -37,7 +38,18 @@ export default function UsersAdministrator({ auth, users }) {
                                     <td style={{ textAlign: "center", width: "10px" }}>{item.id}</td>
                                     <td>{item.name}</td>
                                     <td>{item.email}</td>
-                                    <td>{item.role}</td>
+                                    <td>
+                                        {item.roles.length > 0 
+                                        ? item.roles.map((role, index)=>{
+                                            if(index === 0){
+                                                return role.name;
+                                            }
+
+                                            return " | " + role.name;
+                                        }) 
+                                        : "none"
+                                        }
+                                    </td>
                                     <td style={{ width: '50px' }}>
                                         <Link href={'/dashboard/users/update/' + item.id} style={{ width: "min-content" }}>
                                             <Button variant="warning">Modify</Button> {/* Botón para modificar el usuario */}

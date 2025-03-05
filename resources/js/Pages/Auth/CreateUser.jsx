@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";  // Importa React y hooks ne
 import { HeaderAdministrator } from "@/Components/admin/Header";  // Importa el componente del encabezado
 import { Head, useForm } from '@inertiajs/react'
 
-export default function CreateUser({ auth }) {  // Función principal del componente
+export default function CreateUser({ auth, roles }) {  // Función principal del componente
     const {data, setData, post, processing, errors, reset} = useForm({
         email : "",
         name : "",
         password : "",
-        role : ""
+        role : [],
     });
-
+    
     const [ isSubmit, setIsSubmit ] = useState(false);
 
     function submit(e) {
@@ -108,24 +108,44 @@ export default function CreateUser({ auth }) {  // Función principal del compon
                     </div>
 
                     {/* Selección de rol */}
-                    <input
-                        style={{ fontWeight: "600", fontFamily: "Arial" }}
-                        className="input-visit"
-                        name="role"
-                        placeholder="Role"
-                        type="text"
-                        value={data.role}
-                        onChange={e => setData('role', e.target.value)}
-                        required
-                    />
-                    {/* Mensaje de error */}
-                    <div style={{ width: '100%', textAlign: 'center', }}>
-                        {
-                            errors.role 
-                            &&<span style={{ textAlign: "center", fontSize: "13px", color: "red", fontWeight: "600", width: "100%" }}>
-                                { errors.role }  
-                            </span>
-                        }
+                    <div style={{ width:"100%" }}>
+                        <div className="title" style={{ margin:"0", marginBottom:"5px" }}>
+                            <span>Features</span>  {/* Etiqueta para características */}
+                        </div>
+                        <div style={{ display: "flex", width: "100%", flexWrap: "wrap", gap: "20px", marginLeft: "5px" }}>
+                            {roles.length > 0 && roles.map((item) => (
+                                <div key={item.id} style={{ width: "100px", display: "flex", alignItems: "center" }}>
+                                    <label className="container-checkbox">
+                                        <input  
+                                            type="checkbox" 
+                                            name="role"            
+                                            id={`role-${item.id}`}
+                                            onChange={(e) => {
+                                                const selectedRoles = e.target.checked
+                                                    ? [...data.role, item.id] // Añadir rol si se marca
+                                                    : data.role.filter((r) => r !== item.id); // Eliminar si se desmarca
+
+                                                setData("role", selectedRoles);
+                                            }}
+                                            value={item.id}
+                                        />
+                                        <div className="checkmark checkmark_feature"></div> {/* Estilo para el checkbox */}
+                                    </label>
+                                    <span style={{ textTransform: "capitalize", marginTop: "3px" }}>
+                                        {item.name}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                        {/* Mensaje de error */}
+                        <div style={{ width: '100%', textAlign: 'center', }}>
+                            {
+                                errors.role 
+                                &&<span style={{ textAlign: "center", fontSize: "13px", color: "red", fontWeight: "600", width: "100%" }}>
+                                    { errors.role }  
+                                </span>
+                            }
+                        </div>
                     </div>
                     
                     {/* Botón para enviar el formulario */}
