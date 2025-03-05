@@ -19,6 +19,10 @@ class UsersTest extends TestCase
     public function test_users_screen_can_be_rendered(): void
     {
         $user = User::factory()->create();
+        
+        $user->roles()->sync([1]);
+
+        $user->save();
 
         $response = $this->actingAs($user)->get(route("users"));
 
@@ -35,6 +39,10 @@ class UsersTest extends TestCase
     public function test_users_create_screen_can_be_rendered(): void
     {
         $user = User::factory()->create();
+        
+        $user->roles()->sync([1]);
+
+        $user->save();
 
         $response = $this->actingAs($user)->get("/dashboard/users/create");
 
@@ -51,6 +59,10 @@ class UsersTest extends TestCase
     public function test_users_update_screen_can_be_rendered(): void
     {
         $user = User::factory()->create();
+        
+        $user->roles()->sync([1]);
+
+        $user->save();
 
         $query = User::first();
 
@@ -71,12 +83,16 @@ class UsersTest extends TestCase
     public function test_users_can_be_created(): void
     {
         $user = User::factory()->create();
+        
+        $user->roles()->sync([1]);
+
+        $user->save();
 
         $response = $this->actingAs($user)->post("/dashboard/users/create/",[
             'name' => 'test',
             'email' => 'test@test.com',
             'password' => 'test',
-            'role' => 'testing'
+            'role' => [1,2]
         ]);
 
         $response->assertStatus(302)->assertRedirect(route("users"));
@@ -102,19 +118,21 @@ class UsersTest extends TestCase
     public function test_users_empty_input_created(): void
     {
         $user = User::factory()->create();
+        
+        $user->roles()->sync([1]);
+
+        $user->save();
 
         $response = $this->actingAs($user)->post("/dashboard/users/create/",[
             'name' => '',
             'email' => '',
             'password' => '',
-            'role' => ''
         ]);
 
         $response->assertStatus(302)->assertInvalid([
             'name',
             'email',
-            'password',
-            'role'             
+            'password',      
         ]);
     }
 
@@ -122,6 +140,10 @@ class UsersTest extends TestCase
     public function test_users_can_be_updated(): void
     {
         $user = User::factory()->create();
+        
+        $user->roles()->sync([1]);
+
+        $user->save();
 
         $query = User::find(5);
 
@@ -129,7 +151,6 @@ class UsersTest extends TestCase
             'name' => 'test',
             'email' => 'test@update.com',
             'password' => 'test',
-            'role' => 'testing'
         ]);
 
         $response->assertStatus(302)->assertRedirect(route("users"));
@@ -149,7 +170,7 @@ class UsersTest extends TestCase
             'name' => 'test',
             'email' => 'test@test.com',
             'password' => 'test',
-            'role' => 'testing'
+            'role' => [1,2]
         ]);
 
         $response->assertStatus(302)->assertRedirect(route("login"));
@@ -158,6 +179,10 @@ class UsersTest extends TestCase
     public function test_users_empty_input_updated(): void
     {
         $user = User::factory()->create();
+        
+        $user->roles()->sync([1]);
+
+        $user->save();
 
         $query = User::find(5);
 
@@ -165,14 +190,12 @@ class UsersTest extends TestCase
             'name' => '',
             'email' => '',
             'password' => '',
-            'role' => ''
         ]);
 
         $response->assertStatus(302)->assertInvalid([
             'name',
             'email',
-            'password',
-            'role'             
+            'password',        
         ]);
     }
 }

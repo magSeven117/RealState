@@ -13,8 +13,6 @@ export function HeaderAdministrator({ user }) {
             permissions.push(item.name); 
         });
     });
-    console.log(permissions);
-    
     
     return (
         <>

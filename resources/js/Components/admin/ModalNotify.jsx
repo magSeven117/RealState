@@ -7,7 +7,6 @@ export function ModalNotify({ notification }) {
     const handleMarkAsRead = (id) =>{
         router.post('/notification/'+id)
     }
-    console.log(notification);
     
     return (
         <div className="content-notify"> 

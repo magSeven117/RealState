@@ -232,7 +232,7 @@ class VisitController extends Controller
     {   
         try {
             if (!$id) {
-                return redirect(route("visit"))->with('error', 'ID no válido');
+                return redirect(route("visit.pending"))->with('error', 'ID no válido');
             }
 
             $visit = Visit::findOrFail($id);
@@ -280,10 +280,10 @@ class VisitController extends Controller
             Cache::flush();
 
             // Retorna a la pagina principal
-            return redirect()->back();         
+            return redirect(route("visit"));         
         } catch (\Throwable $e) {
             // Retorna a la pagina principal
-            return redirect()->back();
+            return redirect(route("visit"));
         }
     }
 }

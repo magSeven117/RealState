@@ -20,7 +20,7 @@ export default function UsersAdministrator({ auth, roles, permissions }) {
 
         if(data.permissions.length > 0 && data.role !== "") {
             setIsSubmit(true);
-            console.log(data);
+            
             post("/dashboard/role/update", {
                 onSuccess : () => {
                     setIsSubmit(false);
@@ -44,7 +44,7 @@ export default function UsersAdministrator({ auth, roles, permissions }) {
 
         if(data.permissions.length > 0 && data.role !== "") {
             setIsSubmit(true);
-            console.log(data);
+            
             post("/dashboard/role/create", {
                 onSuccess : () => {
                     setIsSubmit(false);

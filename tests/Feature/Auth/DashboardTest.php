@@ -20,6 +20,10 @@ class DashBoardTest extends TestCase
     {
         $user = User::factory()->create();
 
+        $user->roles()->sync([1]);
+
+        $user->save();
+
         $response = $this->actingAs($user)->get(route("dashboard"));
 
         $response->assertStatus(200);

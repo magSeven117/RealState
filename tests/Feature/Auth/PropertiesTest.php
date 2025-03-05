@@ -21,6 +21,10 @@ class PropertiesTest extends TestCase
     {
         $user = User::factory()->create();
 
+        $user->roles()->sync([1]);
+
+        $user->save();
+
         $response = $this->actingAs($user)->get(route("properties"));
 
         $response->assertStatus(200);
@@ -37,6 +41,10 @@ class PropertiesTest extends TestCase
     {
         $user = User::factory()->create();
 
+        $user->roles()->sync([1]);
+
+        $user->save();
+
         $response = $this->actingAs($user)->get("/dashboard/property/create");
 
         $response->assertStatus(200);
@@ -52,6 +60,10 @@ class PropertiesTest extends TestCase
     public function test_property_update_screen_can_be_rendered(): void
     {
         $user = User::factory()->create();
+
+        $user->roles()->sync([1]);
+
+        $user->save();
 
         $house = House::first();
 
@@ -90,6 +102,10 @@ class PropertiesTest extends TestCase
     public function test_property_empty_input_created(): void
     {
         $user = User::factory()->create();
+
+        $user->roles()->sync([1]);
+
+        $user->save();
 
         $response = $this->actingAs($user)->post("/dashboard/property/create/",[
             'address' => '',              
@@ -139,6 +155,10 @@ class PropertiesTest extends TestCase
     public function test_property_empty_input_updated(): void
     {
         $user = User::factory()->create();
+
+        $user->roles()->sync([1]);
+
+        $user->save();
 
         $query = House::find(5);
 

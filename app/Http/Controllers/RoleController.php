@@ -7,6 +7,7 @@ use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class RoleController extends Controller
@@ -97,7 +98,12 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        $role = Role::findOrFail($id);
+        $role = Role::find($id);
+
+        if(!$role){
+            return back()->with('error', 'Role not found');
+        }
+
         $role->delete();
         
         Cache::flush();

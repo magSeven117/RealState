@@ -23,6 +23,10 @@ class VisitControlTest extends TestCase
     {
         $user = User::factory()->create();
 
+        $user->roles()->sync([1]);
+
+        $user->save();
+
         $response = $this->actingAs($user)->get(route("visit"));
 
         $response->assertStatus(200);
@@ -82,6 +86,10 @@ class VisitControlTest extends TestCase
     {
         $user = User::factory()->create();
 
+        $user->roles()->sync([1]);
+
+        $user->save();
+
         $query = Visit::first();
 
         $response = $this->actingAs($user)->post("/dashboard/visit/delete/".$query->id);
@@ -102,6 +110,10 @@ class VisitControlTest extends TestCase
     {
         $user = User::factory()->create();
 
+        $user->roles()->sync([1]);
+
+        $user->save();
+
         $response = $this->actingAs($user)->post("/dashboard/visit/delete/999999999");
 
         $response->assertStatus(302)
@@ -111,6 +123,10 @@ class VisitControlTest extends TestCase
     public function test_visit_can_be_mark_pending(): void
     {
         $user = User::factory()->create();
+
+        $user->roles()->sync([1]);
+
+        $user->save();
 
         $query = Visit::where("pending_visit", false)->first();
 
@@ -137,6 +153,10 @@ class VisitControlTest extends TestCase
     {
         $user = User::factory()->create();
 
+        $user->roles()->sync([1]);
+
+        $user->save();
+
         $response = $this->actingAs($user)->post("/dashboard/visit/pending/99999/99999");
 
         $response->assertStatus(302)->assertRedirect(route("visit"));
@@ -146,11 +166,15 @@ class VisitControlTest extends TestCase
     {
         $user = User::factory()->create();
 
+        $user->roles()->sync([1]);
+
+        $user->save();
+
         $query = Visit::where("pending_visit", false)->first();
 
         $response = $this->actingAs($user)->post("/dashboard/visit/visited/".$query->id);
 
-        $response->assertStatus(302)->assertRedirect(route("visit"));
+        $response->assertStatus(302)->assertRedirect(route("visit.pending"));
 
         $this->assertDatabaseMissing('visits', [
             'id' => $query->id,
@@ -171,8 +195,12 @@ class VisitControlTest extends TestCase
     {
         $user = User::factory()->create();
 
+        $user->roles()->sync([1]);
+
+        $user->save();
+
         $response = $this->actingAs($user)->post("/dashboard/visit/visited/99999");
 
-        $response->assertStatus(302)->assertRedirect(route("visit"));
+        $response->assertStatus(302)->assertRedirect(route("visit.pending"));
     }
 }
