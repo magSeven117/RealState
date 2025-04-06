@@ -23,30 +23,29 @@ export function ContentVideo() {
         });
     }, []);
 
-
     return (
         <>
-            {/* ***** Video Section Start ***** */}
+            {/* ***** Sección de Video Inicio ***** */}
             <div className="video section">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-4 offset-lg-4">
                             <div className="text-center section-heading">
-                                <h6>| Video View</h6>
-                                <h2>Get Closer View & Different Feeling</h2>
+                                <h6>| Vista en Video</h6>
+                                <h2>Observa de Cerca & Siente la Diferencia</h2>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* ***** Video Frame Start ***** */}
+            {/* ***** Marco de Video Inicio ***** */}
             <div className="video-content">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-10 offset-lg-1">
                             <div className="video-frame">
-                                <img src='/images/video-frame.webp' alt="Video Frame" />
+                                <img src='/images/video-frame.webp' alt="Marco del Video" />
                                 <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
                                     <i className="fa fa-play"></i> {/* Icono de reproducción */}
                                 </a>
@@ -56,7 +55,7 @@ export function ContentVideo() {
                 </div>
             </div>
 
-            {/* ***** Fun Facts Start ***** */}
+            {/* ***** Datos Curiosos Inicio ***** */}
             <div className="fun-facts">
                 <div className="container">
                     <div className="row">
@@ -69,7 +68,7 @@ export function ContentVideo() {
                                             <h2 className="timer count-title count-number" style={{ fontWeight: "700" }}>
                                                 { number[0] }
                                             </h2>
-                                            <p className="count-text">Buildings<br />Finished Now</p>
+                                            <p className="count-text">Edificios<br />Finalizados</p>
                                         </div>
                                     </div>
                                     <div className="col-lg-4">
@@ -77,7 +76,7 @@ export function ContentVideo() {
                                             <h2 className="timer count-title count-number" style={{ fontWeight: "700" }}>
                                                 { number[1] }
                                             </h2>
-                                            <p className="count-text">Years<br />Experience</p>
+                                            <p className="count-text">Años de<br />Experiencia</p>
                                         </div>
                                     </div>
                                     <div className="col-lg-4">
@@ -85,7 +84,7 @@ export function ContentVideo() {
                                             <h2 className="timer count-title count-number" style={{ fontWeight: "700" }}>
                                                 { number[2] }
                                             </h2>
-                                            <p className="count-text">Awards<br />Won 2023</p>
+                                            <p className="count-text">Premios<br />Ganados en 2023</p>
                                         </div>
                                     </div>
                                 </div>
@@ -94,7 +93,7 @@ export function ContentVideo() {
                     </div>
                 </div>
             </div>
-            {/* ***** Fun Facts End ***** */}
+            {/* ***** Datos Curiosos Fin ***** */}
         </>
     );
 }

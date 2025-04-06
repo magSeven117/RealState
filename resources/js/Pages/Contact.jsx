@@ -8,47 +8,50 @@ import { Head } from "@inertiajs/react"
 import React from "react"
 
 export default function Contact() {
-    return(
+    return (
         <>
-            <Head title="Contact"/>
-            {/* ***** Header Area Start ***** */}
+            <Head title="Contacto" />
+            {/* ***** Inicio del Área de Encabezado ***** */}
             <Header />
-            {/* ***** Header Area End ***** */}
+            {/* ***** Fin del Área de Encabezado ***** */}
 
-            {/* ***** Heading Start ***** */}
-            <Heading title="Contact" />
-            {/* ***** Heading End ***** */}
-            
-            {/* ***** Main Section Start ***** */}
+            {/* ***** Inicio del Título ***** */}
+            <Heading title="Contacto" />
+            {/* ***** Fin del Título ***** */}
+
+            {/* ***** Inicio de la Sección Principal ***** */}
             <div className="contact-page section">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-6">
                             <div className="section-heading">
-                                <h6>| Contact Us</h6>
-                                <h2>Get In Touch With Our Agents</h2>
+                                <h6>| Contáctanos</h6>
+                                <h2>Ponte en contacto con nuestros agentes</h2>
                             </div>
                             <p>
-                                When you really need to download free CSS templates, please remember our website TemplateMo. Also, tell your friends about our website. Thank you for visiting. There is a variety of Bootstrap HTML CSS templates on our website. If you need more information, please contact us.
+                                Si estás buscando desarrollar un proyecto desde sus planos, nuestro equipo de expertos está listo para asesorarte en cada etapa del proceso. Contamos con una amplia experiencia en diseño arquitectónico y planificación de espacios.
+                                <br /><br />
+                                No dudes en ponerte en contacto con nosotros para obtener más información sobre cómo podemos ayudarte a hacer realidad tu proyecto con soluciones innovadoras y eficientes.
                             </p>
+
                             <InfoContact wrap={true} />
                         </div>
-                        
+
                         <div className="col-lg-6">
                             <Form />
                         </div>
-                        
+
                         <div className="col-lg-12">
                             <Map />
                         </div>
                     </div>
                 </div>
             </div>
-            {/* ***** Main Section End ***** */}
+            {/* ***** Fin de la Sección Principal ***** */}
 
-            {/* ***** Properties Section Start ***** */}
+            {/* ***** Inicio de la Sección de Propiedades ***** */}
             <Footer />
-            {/* ***** Properties Section End ***** */}
+            {/* ***** Fin de la Sección de Propiedades ***** */}
         </>
     )
 }

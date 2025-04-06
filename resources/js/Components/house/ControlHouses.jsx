@@ -7,24 +7,23 @@ export function Houses({house, features, typeHouse}) {
     return (
         <div className="section properties">
             <div className="container">
-                {/* Componente de filtrado de casas */}
+                {/* Componente de filtrado de proyectos sobre planos */}
                 <Filter features={features} typeHouse={typeHouse}/>
 
-                {/* Componente para mostrar las casas actuales */}
+                {/* Componente para mostrar los proyectos disponibles */}
                 <div className="row properties-box">
                     {
                         house.data.length !== 0 
                             ? <RenderHouses currentItems={house.data} />
                             : (
                                 <h2 style={{ textAlign: "center" }}>
-                                    No results found matching your search criteria.
+                                    No se encontraron resultados que coincidan con tu búsqueda.
                                 </h2>
                             )
                     }
                 </div>
 
                 {/* Componente de navegación para la paginación */}
-                {/* <Navigate pageCount={pageCount} handlePageClick={handlePageClick} /> */}
                 <div className="justify-center pagination">
                     {house.links.map((link, index) => (
                         <Link
@@ -38,7 +37,4 @@ export function Houses({house, features, typeHouse}) {
             </div>
         </div>
     );
-    
 }
-
-

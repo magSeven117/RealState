@@ -46,50 +46,65 @@ Route::get('/contact', function () {
     return Inertia::render('Contact');
 });
 
-Route::controller(AdminController::class)->group(function () {
-    Route::get('/dashboard', 'index')->name("dashboard")->middleware("auth");
+Route::get('/about', function () {
+    return Inertia::render('About');
 });
 
-Route::middleware(["auth", Users::class])->controller(RoleController::class)->group(function () {
-    Route::get('/dashboard/roles', 'index')->name("roles");
-    Route::post('/dashboard/role/create', 'store');
-    Route::post('/dashboard/role/update', 'update');
-    Route::delete('/dashboard/role/delete/{id}', 'destroy');
+Route::middleware(["auth", "admin.employee"])->prefix("dashboard")->group(function () {
+
+    // Admin Dashboard
+    Route::controller(AdminController::class)->group(function () {
+        Route::get('/', 'index')->name("dashboard");
+    });
+
+    // Roles
+    Route::controller(RoleController::class)->group(function () {
+        Route::get('/roles', 'index')->name("roles");
+        Route::post('/role/create', 'store');
+        Route::post('/role/update', 'update');
+        Route::delete('/role/delete/{id}', 'destroy');
+    });
+
+    // Users
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/users', 'index')->name("users")->middleware(Users::class);
+        Route::get('/users/create', 'create')->middleware(Users::class);
+        Route::post('/users/create', 'store')->middleware(Users::class);
+        
+        Route::get('/users/update/{id}', 'edit');
+        Route::post('/users/update/{id}', 'update');
+        Route::delete('/users/delete/{id}', 'destroy')->middleware(Users::class);
+    });
+
+    // Properties
+    Route::controller(HouseController::class)->middleware(Properties::class)->group(function () {
+        Route::get('/properties', 'index_administer')->name("properties");
+        Route::get('/property/create', 'create');
+        Route::post('/property/create', 'store');
+
+        Route::get('/property/update/{id}', 'edit');
+        Route::post('/property/update/{id}', 'update');
+
+        Route::delete('/property/delete/{id}', 'destroy');
+    });
+
+    // Visits
+    Route::controller(VisitController::class)->middleware(Vistis::class)->group(function () {
+        Route::get('/visit', 'index')->name("visit");
+        Route::get('/visit/pending', 'pending')->name("visit.pending");
+        Route::get('/visit/visited', 'visited')->name("visit.visited");
+
+        Route::post('/visit/pending/{id}/{id_employee}', 'markAsPending');
+        Route::post('/visit/visited/{id}', 'markAsVisited');
+
+        Route::post('/visit/delete/{id}', 'destroy');
+    });
 });
 
-Route::middleware("auth")->controller(UserController::class)->group(function () {
-    Route::get('/dashboard/users', 'index')->name("users")->middleware(Users::class);
-    Route::get('/dashboard/users/create', 'create')->middleware(Users::class);
-    Route::post('/dashboard/users/create', 'store')->middleware(Users::class);
-    
-    Route::get('/dashboard/users/update/{id}', 'edit');
-    Route::post('/dashboard/users/update/{id}', 'update');
-    Route::delete('/dashboard/users/delete/{id}', 'destroy')->middleware(Users::class);
-});
-
-Route::middleware(["auth", Properties::class])->controller(HouseController::class)->group(function () {
-    Route::get('/dashboard/properties', 'index_administer')->name("properties");
-    Route::get('/dashboard/property/create', 'create');
-    Route::post('/dashboard/property/create', 'store');
-
-    Route::get('/dashboard/property/update/{id}', 'edit');
-    Route::post('/dashboard/property/update/{id}', 'update');
-
-    Route::delete('/dashboard/property/delete/{id}', 'destroy');
-});
-
+// Fuera del dashboard
 Route::controller(VisitController::class)->group(function () {
-    Route::get('/dashboard/visit', 'index')->name("visit")->middleware(["auth", Vistis::class]);
-    Route::get('/dashboard/visit/pending', 'pending')->name("visit.pending")->middleware(["auth", Vistis::class]);
-    Route::get('/dashboard/visit/visited', 'visited')->name("visit.visited")->middleware(["auth", Vistis::class]);
-
     Route::get('/visit/{id}', 'show');
     Route::post('/visit/{id}', 'create');
-
-    Route::post('/dashboard/visit/pending/{id}/{id_employee}', 'markAsPending')->middleware(["auth", Vistis::class]);
-    Route::post('/dashboard/visit/visited/{id}', 'markAsVisited')->middleware(["auth", Vistis::class]);
-
-    Route::post('/dashboard/visit/delete/{id}', 'destroy')->middleware(["auth", Vistis::class]);
 });
 
 Route::post('/notification/{id}', [NotificationController::class, 'markRead'])->middleware('auth');

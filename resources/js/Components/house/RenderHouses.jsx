@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react'
-import React, { useState } from 'react';
+import React from 'react';
 
 // Componente para mostrar las casas
 export function RenderHouses({ currentItems }) {
@@ -36,29 +36,29 @@ export function RenderHouses({ currentItems }) {
                                 {/* Información adicional de la propiedad */}
                                 <ul style={{padding:"0px", height:"100px"}}>
                                     <li>
-                                        Bedrooms: <span>{item.quarters}</span>
+                                        Habitaciones: <span>{item.quarters}</span>
                                     </li>
                                     <li>
-                                        Bathrooms: <span>{item.bathroom}</span>
+                                        Baños: <span>{item.bathroom}</span>
                                     </li>
                                     <li>
-                                        Area: <span>{Math.floor(item.size)}m²</span>
+                                        Área: <span>{Math.floor(item.size)}m²</span>
                                     </li>
                                     {
-                                        // Verifica si alguna característica de la propiedad es 'garage' y muestra el dato correspondiente
+                                        // Verifica si alguna característica de la propiedad es 'garage' o 'parking' y muestra el dato correspondiente
                                         item.features.map((feature) => {
                                             if (feature.name === 'parking' && feature.name === 'garage') {
-                                                return (<li key={feature.name}>Parking: <span>Available</span></li>)
+                                                return (<li key={feature.name}>Parqueadero: <span>Disponible</span></li>)
                                             } else if (feature.name === 'garden') {
-                                                return (<li key={feature.name}>Garden: <span>Available</span></li>)
+                                                return (<li key={feature.name}>Jardín: <span>Disponible</span></li>)
                                             }
                                             return null;
                                         })
                                     }
                                 </ul>
-                                {/* Botón para programar una visita */}
+                                {/* Botón para ver la propiedad */}
                                 <div className="main-button">
-                                    <Link href={`/property/${item.id}`}>View The Property</Link>
+                                    <Link href={`/property/${item.id}`}>Ver la propiedad</Link>
                                 </div>
                             </div>
                         </div>

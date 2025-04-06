@@ -14,11 +14,14 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
-            // \App\Http\Middleware\SecureHeaders::class, 
-	]);
+        ]);
 
-        //
+        // ✅ Aquí defines los alias de route middleware
+        $middleware->alias([
+            'admin.employee' => \App\Http\Middleware\RoleAccess::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
+

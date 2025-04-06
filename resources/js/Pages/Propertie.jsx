@@ -27,19 +27,19 @@ export default function Propertie({ data }) {
     return (
         <>
             <Head>
-                <title>Propertie</title>
-                <meta name="description" content={`Property located in ${data.address} with excellent features and an excellent price for $${price} come see them and make the schedule`}/>
+                <title>Propiedad</title>
+                <meta name="description" content={`Propiedad ubicada en ${data.address} con excelentes características y un precio increíble de $${price}. ¡Ven a verla y agenda tu visita!`}/>
             </Head>
 
-            {/* ***** Header Area Start ***** */}
+            {/* ***** Inicio del Área de Encabezado ***** */}
             <Header />
-            {/* ***** Header Area End ***** */}
+            {/* ***** Fin del Área de Encabezado ***** */}
 
-            {/* ***** Heading Start ***** */}
-            <Heading title="Single Property" />
-            {/* ***** Heading End ***** */}
+            {/* ***** Inicio del Título ***** */}
+            <Heading title="Propiedad Individual" />
+            {/* ***** Fin del Título ***** */}
 
-            {/* ***** Content Page Start ***** */}
+            {/* ***** Inicio del Contenido de la Página ***** */}
             <div className="single-property section">
                 <div className="container">
                     <div className="row">
@@ -48,7 +48,7 @@ export default function Propertie({ data }) {
                             <div className="main-image">
                                 <img
                                     src={data.images[0]}  // URL de la imagen principal
-                                    alt={`house principal`}  // Texto alternativo
+                                    alt={`Imagen principal de la casa`}  // Texto alternativo
                                     className="image-details"  // Clase CSS para los estilos
                                     style={{ cursor: "pointer" }}  // Cambia el cursor a pointer
                                     onClick={() => handleActiveCarousel(true)}  // Activa el carrusel al hacer clic
@@ -56,7 +56,7 @@ export default function Propertie({ data }) {
                                 {/* Botón para ver más imágenes */}
                                 <div style={{ marginTop: "10px" }}>
                                     <span style={{ fontWeight: "600", cursor: "pointer" }} onClick={() => handleActiveCarousel(true)}>
-                                        View More Images
+                                        Ver más imágenes
                                     </span>
                                 </div>
                             </div>
@@ -84,7 +84,7 @@ export default function Propertie({ data }) {
                                 <div className="accordion-item">
                                     <h2 className="accordion-header">
                                         <button className="accordion-button" type="button">
-                                            Features
+                                            Características
                                         </button>
                                     </h2>
                                     <div className="accordion-collapse">
@@ -99,16 +99,16 @@ export default function Propertie({ data }) {
                                             }
                                             {/* Más características adicionales */}
                                             <p style={{ fontWeight: "600", margin: "0" }}>
-                                                &bull; Flat Space {Math.floor(data.size)}m²
+                                                &bull; Espacio total {Math.floor(data.size)}m²
                                             </p>
                                             <p style={{ fontWeight: "600", margin: "0" }}>
-                                                &bull; {data.quarters} {data.quarters > 1 ? 'Rooms' : 'Room'}
+                                                &bull; {data.quarters} {data.quarters > 1 ? 'Habitaciones' : 'Habitación'}
                                             </p>
                                             <p style={{ fontWeight: "600", margin: "0" }}>
-                                                &bull; {data.bathroom} {data.bathroom > 1 ? 'Bathrooms' : 'Bathroom'}
+                                                &bull; {data.bathroom} {data.bathroom > 1 ? 'Baños' : 'Baño'}
                                             </p>
                                             <p style={{ fontWeight: "600", margin: "0" }}>
-                                                &bull; Built in {data.date_construction.split('-')[0]}  {/* Año de construcción */}
+                                                &bull; Construida en {data.date_construction.split('-')[0]}  {/* Año de construcción */}
                                             </p>
                                         </div>
                                     </div>
@@ -131,7 +131,7 @@ export default function Propertie({ data }) {
                                         <h4>
                                             {Math.floor(data.size)}m²
                                             <br />
-                                            <span>Total Flat Space</span>
+                                            <span>Espacio total</span>
                                         </h4>
                                     </li>
                                     <li>
@@ -139,7 +139,7 @@ export default function Propertie({ data }) {
                                         <h4>
                                             {data.quarters}
                                             <br />
-                                            <span>Total {data.quarters > 1 ? 'Rooms' : 'Room'}</span>
+                                            <span>Total {data.quarters > 1 ? 'Habitaciones' : 'Habitación'}</span>
                                         </h4>
                                     </li>
                                     <li>
@@ -147,7 +147,7 @@ export default function Propertie({ data }) {
                                         <h4>
                                             {data.bathroom}
                                             <br />
-                                            <span>Total {data.bathroom > 1 ? 'Bathrooms' : 'Bathroom'}</span>
+                                            <span>Total {data.bathroom > 1 ? 'Baños' : 'Baño'}</span>
                                         </h4>
                                     </li>
                                 </ul>
@@ -156,11 +156,11 @@ export default function Propertie({ data }) {
                     </div>
                 </div>
             </div>
-            {/* ***** Content Page End ***** */}
+            {/* ***** Fin del Contenido de la Página ***** */}
 
-            {/* ***** Properties Section Start ***** */}
+            {/* ***** Inicio de la Sección de Propiedades ***** */}
             <Footer />
-            {/* ***** Properties Section End ***** */}
+            {/* ***** Fin de la Sección de Propiedades ***** */}
         </>
     );
 }

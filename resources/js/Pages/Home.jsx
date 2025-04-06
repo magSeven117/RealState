@@ -11,35 +11,35 @@ import { RenderHouses } from '@/Components/house/RenderHouses';
 export default function Home({ data }) {
     return (
         <>
-            <Head title='Home'/>
-            {/* ***** Header Area Start ***** */}
+            <Head title='Inicio'/>
+            {/* ***** Inicio del Área de Encabezado ***** */}
             <Header />
-            {/* ***** Header Area End ***** */}
+            {/* ***** Fin del Área de Encabezado ***** */}
 
-            {/* ***** Heading Carrusel Start ***** */}
+            {/* ***** Inicio del Carrusel ***** */}
             <HeadingCarrusel />
-            {/* ***** Heading Carrusel End ***** */}
+            {/* ***** Fin del Carrusel ***** */}
 
-            {/* ***** Featured Section Start ***** */}
+            {/* ***** Inicio de la Sección Destacada ***** */}
             <ContenFeature />
-            {/* ***** Featured Section End ***** */}
+            {/* ***** Fin de la Sección Destacada ***** */}
             
-            {/* ***** Video Section Start ***** */}
+            {/* ***** Inicio de la Sección de Video ***** */}
             <ContentVideo />
-            {/* ***** Video Section End ***** */}
+            {/* ***** Fin de la Sección de Video ***** */}
 
-            {/* ***** Best Deal Section Start ***** */}
+            {/* ***** Inicio de la Sección de Mejores Ofertas ***** */}
             <BestDeal />
-            {/* ***** Best Deal Section End ***** */}
+            {/* ***** Fin de la Sección de Mejores Ofertas ***** */}
 
-            {/* ***** Properties Section Start ***** */}
+            {/* ***** Inicio de la Sección de Propiedades ***** */}
             <div className="properties section">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-4 offset-lg-4">
                             <div className="text-center section-heading">
-                                <h6>| Properties</h6>
-                                <h2>We Provide The Best Property You Like</h2>
+                                <h6>| Propiedades</h6>
+                                <h2>Te ofrecemos las mejores propiedades según tus preferencias</h2>
                             </div>
                         </div>
                     </div>
@@ -50,16 +50,15 @@ export default function Home({ data }) {
                     </div>
                 </div>
             </div>
-            {/* ***** Properties Section End ***** */}
+            {/* ***** Fin de la Sección de Propiedades ***** */}
 
-            {/* ***** Contact Section Start ***** */}
+            {/* ***** Inicio de la Sección de Contacto ***** */}
             <RenderContact />
-            {/* ***** Contact Section End ***** */}
+            {/* ***** Fin de la Sección de Contacto ***** */}
 
-            {/* ***** Footer Section Start ***** */}
+            {/* ***** Inicio de la Sección del Pie de Página ***** */}
             <Footer />
-            {/* ***** Footer Section End ***** */}
+            {/* ***** Fin de la Sección del Pie de Página ***** */}
         </>
     );
 }
-    

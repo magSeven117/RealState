@@ -2664,4 +2664,21 @@ body {
   }
 }
 
+-- codigo de miguel --
+.btn-login {
+  background-color: #f35525;
+  color: #fff !important;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+}
+
+.btn-login:hover {
+  background-color: #d94c1f;
+  color: #fff;
+}
+
 
